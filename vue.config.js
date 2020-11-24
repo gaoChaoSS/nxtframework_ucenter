@@ -1,7 +1,6 @@
 module.exports = {
     publicPath: '/ucenter',
     outputDir: 'ucenter',
-    assetsDir: 'ucenter',
     indexPath: 'ucenter.html',
     devServer: {
         overlay: {
