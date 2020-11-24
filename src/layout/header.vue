@@ -64,7 +64,7 @@ export default {
   display: flex;
   align-items: center;
   border-bottom: .5px solid rgb(112 112 112 / 51%);
-  padding: 16px 20px;
+  padding: 16px 40px;
 }
 .logo-p {
   font-size: 38px;

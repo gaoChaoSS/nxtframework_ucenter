@@ -40,6 +40,9 @@ body{
   line-height: 31px;
   color: #1B1B1B;
 }
+.el-menu-item{
+  margin:0px 20px !important;
+}
 .el-header{
   /* border-bottom: 1px solid #707070; */
 }

@@ -1,9 +1,9 @@
 <template>
   <div class="footer">
     <div class="footer-item" style="margin-bottom:26px">
+      <p>联系我们</p>
       <p>关于我们</p>
-      <p>关于我们</p>
-      <p>关于我们</p>
+      <p>条款声明</p>
     </div>
     <div class="footer-item">
       <p>Copyright © 2020. NxtFramework.com All Rights Reserved.</p>
@@ -38,7 +38,7 @@ export default {
 }
 .footer-item p{
   
-  font-size: 22px;
+  font-size: 20px;
   font-family: PingFang SC;
   font-weight: normal;
   line-height: 22px;
