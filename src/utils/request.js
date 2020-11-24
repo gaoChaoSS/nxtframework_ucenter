@@ -1,5 +1,6 @@
 import axios from 'axios'
 import store from '@/store'
+import { Message } from 'element-ui'
 import { getToken, getUserId } from '@/utils/auth'
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
@@ -27,7 +28,11 @@ service.interceptors.response.use(
   response => {
     const res = response.data
     if (res.code !== 0) {
-      console.log('error')
+      Message({
+        message: res.message || 'Error',
+        type: 'error',
+        duration: 5 * 1000
+      })
       if (res.code === 50008 || res.code === 50012 || res.code === 50014) { 
         console.log('error')
       }

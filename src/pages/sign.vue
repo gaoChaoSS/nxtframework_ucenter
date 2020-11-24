@@ -21,12 +21,12 @@
         </div>
       </div>
       <div class="main-item">
-        <img class="main-item-img" src="/image/sign.png" alt="">
+        <img class="main-item-img" src="/ucenter/image/sign.png" alt="">
       </div>
     </template>
     <template v-else>
       <div class="success-card">
-        <img src="/image/sign-s.png" class="success-img" alt="">
+        <img src="/ucenter/image/sign-s.png" class="success-img" alt="">
         <p class="success-card-p">注册成功，尊敬的用户：{{loginForm.username}}</p>
         <button class="default-btn" @click="goLogin">去登录</button>  
       </div>
@@ -71,10 +71,6 @@ export default {
           // this.$router.push({ path: '/'})
         })
         .catch(() => {
-          this.$message({
-            message: '注册失败！',
-            type: 'warning'
-          });
           this.isLoading = false
         });
     },

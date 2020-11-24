@@ -2,7 +2,7 @@
   <div class="main-content">
     <template v-if="isSuccess">
       <div class="main-item">
-        <img class="main-item-img" src="/image/login.png" alt="">
+        <img class="main-item-img" src="/ucenter/image/login.png" alt="">
       </div>
       <div class="main-item">
         <div class="form-group">
@@ -24,7 +24,7 @@
     </template>
     <template v-else>
       <div class="success-card">
-        <img src="/image/sign-s.png" class="success-img" alt="">
+        <img src="/ucenter/image/sign-s.png" class="success-img" alt="">
         <p class="success-card-p">注册成功，尊敬的用户：xxxx@sfsf.com</p>
         <button class="default-btn">去登录</button>  
       </div>
@@ -61,11 +61,7 @@ export default {
           this.isLoading = false
           this.$router.push({ path: '/'})
         })
-        .catch(() => {
-          this.$message({
-            message: '登陆失败！',
-            type: 'warning'
-          });
+        .catch(() => {          
           this.isLoading = false
         });
     }
