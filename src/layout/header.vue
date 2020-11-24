@@ -5,6 +5,7 @@
       class="el-menu-demo"
       mode="horizontal"
       style="width:100%"
+      text-color="#1B1B1B"
     >
       <el-menu-item index="1">首页</el-menu-item>
       <el-menu-item index="2">产品</el-menu-item>
@@ -18,13 +19,44 @@
     </el-menu>
     <div class="right-card">
       <img src="@/assets/car.png" alt="">
-      <div class="right-item">登录/注册</div>
+      <div class="right-item" v-if="token">
+        <a href="#" @click="handleLogout()">注销</a>
+      </div>
+      <div class="right-item" v-else>
+        <router-link to="/">登录</router-link> /
+        <router-link to="/sign">注册</router-link>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import { mapGetters } from 'vuex'
+export default {
+  computed: {
+    ...mapGetters([
+      'token',
+    ]),
+  },
+  methods:{
+    handleLogout(){
+      this.$store.dispatch("user/logout", this.loginForm)
+        .then(() => {
+          this.$message({
+            message: '注销成功！',
+            type: 'success'
+          });
+          this.$router.push({ path: '/login'})
+        })
+        .catch(() => {
+          this.$message({
+            message: '注销失败！',
+            type: 'warning'
+          })
+        })
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -46,18 +78,26 @@ export default {};
 .right-card{
   display: flex;
   align-items: center;
-  width: 200px;
+  width: 300px;
 }
 .right-card img{
   height: 30px;
   width: auto;
+  margin-right: 40px;
 }
 .right-item{
   font-size: 20px;
   font-family: PingFang SC;
   font-weight: 400;
-  line-height: 31px;
   color: #1B1B1B;
   opacity: 1;
+}
+.right-item a{
+  font-size: 20px;
+  font-family: PingFang SC;
+  font-weight: 400;
+  color: #1B1B1B;
+  opacity: 1;
+  text-decoration: none;
 }
 </style>

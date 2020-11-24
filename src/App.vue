@@ -50,4 +50,10 @@ body{
   background: #F8F8F8;
   min-height: 80%;
 }
+.el-form-item__label{
+  color:#5F5F5F;
+  font-size:16px;
+  font-family: PingFang SC;
+  padding-bottom: 6px !important;
+}
 </style>

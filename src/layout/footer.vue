@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    <div class="footer-item">
+    <div class="footer-item" style="margin-bottom:26px">
       <p>关于我们</p>
       <p>关于我们</p>
       <p>关于我们</p>
@@ -41,9 +41,10 @@ export default {
   font-size: 22px;
   font-family: PingFang SC;
   font-weight: normal;
-  line-height: 30px;
+  line-height: 22px;
   color: #FFFFFF;
   padding: 0px 30px;
+  margin: 10px 0px;
   opacity: 1;
 }
 </style>

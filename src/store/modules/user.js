@@ -1,4 +1,4 @@
-import { login, logout } from '@/api/user'
+import { login, logout, register } from '@/api/user'
 import { getToken, setToken, removeToken, setUserId } from '@/utils/auth'
 import  { resetRouter } from '@/router'
 
@@ -45,14 +45,25 @@ const actions = {
             setUserId(user_id)
             console.log(getToken())
             resolve()
-        }).catch(error => {
-            reject(error)
+          }).catch(error => {
+              reject(error)
+          })
         })
+    },
+    register({ state }, userInfo) {
+      const {username, password} = userInfo
+      return new Promise((resolve, reject) => {
+        register({ username: username.trim(), password: password }).then(() => {
+            console.log(state)
+            resolve()
+          }).catch(error => {
+              reject(error)
+          })
         })
     },
 
     // user logout
-    logout({ commit, state, dispatch }) {
+    logout({ commit, state }) {
         return new Promise((resolve, reject) => {
         logout({ user_id: state.userid, token: state.token }).then(() => {
             commit('SET_TOKEN', '')
@@ -60,7 +71,6 @@ const actions = {
             commit('SET_USER_ID', '')
             removeToken()
             resetRouter()
-            dispatch('tagsView/delAllViews', null, { root: true })
 
             resolve()
         }).catch(error => {
@@ -68,7 +78,6 @@ const actions = {
             commit('SET_ROLES', [])
             commit('SET_USER_ID', '')
             removeToken()
-            dispatch('tagsView/delAllViews', null, { root: true })
             reject(error)
         })
         })
