@@ -5,6 +5,7 @@ const getters = {
     userId: state => state.user.userid,
     introduction: state => state.user.introduction,
     roles: state => state.user.roles,
+    productList: state => state.cart.productList
   }
   export default getters
   

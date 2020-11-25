@@ -52,6 +52,7 @@ body{
 .el-main{
   background: #F8F8F8;
   min-height: 80%;
+  padding: 0px;
 }
 .el-form-item__label{
   color:#5F5F5F;

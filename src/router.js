@@ -5,6 +5,7 @@ import Login from './pages/login.vue'
 import Sign from './pages/sign.vue'
 import Reset from './pages/reset.vue'
 import Info from './pages/info.vue'
+import Cart from './pages/cart.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -19,9 +20,12 @@ const routes = [
     },
     {
         path: '/', component: Info
+    },
+    {
+        path: '/cart', component: Cart
     }
 ]
-const whiteList = ['/login', '/reset', '/sign'] // no redirect whitelist
+const whiteList = ['/login', '/reset', '/sign', '/cart'] // no redirect whitelist
 const createRouter = () => new VueRouter({
     // mode: 'history', // require service support
     scrollBehavior: () => ({ y: 0 }),

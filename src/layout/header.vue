@@ -18,7 +18,7 @@
       </el-submenu>   
     </el-menu>
     <div class="right-card">
-      <img src="@/assets/car.png" alt="">
+      <img src="@/assets/car.png" alt="" @click="handleCart()">
       <div class="right-item" v-if="token">
         <a href="#" @click="handleLogout()">注销</a>
       </div>
@@ -54,6 +54,9 @@ export default {
             type: 'warning'
           })
         })
+    },
+    handleCart(){
+      this.$router.push({ path: '/cart'})
     }
   }
 }
