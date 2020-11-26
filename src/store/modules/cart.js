@@ -2,7 +2,17 @@ import { detail, addProduct, delProduct } from '@/api/cart'
 
 const state = {
     productList:[],
-    guestToken:'aaabbb'
+    guestToken:'aaabbb',
+    deliveryPerson:'',
+    deliveryProvince:'',
+    deliveryCity:'',
+    deliveryAddress: '',
+    deliveryPhone:'',
+    deliveryConfigId:1,
+    deliveryConfig:'',
+    dealPlatform:1,
+    deliveryRemark:'',
+    deliveryCountry:''
 }
 
 const mutations = {
@@ -45,6 +55,21 @@ const mutations = {
         arr.push(element)
     }); 
     state.productList = arr
+  },
+  SET_ADDRESS: (state, data) =>{
+      const {deliveryPerson,deliveryProvince,deliveryCity,
+        deliveryAddress,deliveryPhone,deliveryConfigId,
+        deliveryConfig,dealPlatform,deliveryRemark,deliveryCountry} = data;
+      state.deliveryPerson = deliveryPerson
+      state.deliveryProvince = deliveryProvince
+      state.deliveryCity = deliveryCity
+      state.deliveryAddress = deliveryAddress
+      state.deliveryPhone = deliveryPhone
+      state.deliveryConfigId = deliveryConfigId
+      state.deliveryConfig = deliveryConfig
+      state.dealPlatform = dealPlatform
+      state.deliveryRemark = deliveryRemark
+      state.deliveryCountry = deliveryCountry
   }
 }
 

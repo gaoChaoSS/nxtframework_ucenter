@@ -6,6 +6,9 @@ import Sign from './pages/sign.vue'
 import Reset from './pages/reset.vue'
 import Info from './pages/info.vue'
 import Cart from './pages/cart.vue'
+import Address from './pages/address.vue'
+import Pay from './pages/pay.vue'
+import PayResult from './pages/payresult.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -23,6 +26,15 @@ const routes = [
     },
     {
         path: '/cart', component: Cart
+    },
+    {
+        path: '/address', component: Address
+    },
+    {
+        path: '/pay', component: Pay
+    },
+    {
+        path: '/payresult', component: PayResult
     }
 ]
 const whiteList = ['/login', '/reset', '/sign', '/cart'] // no redirect whitelist

@@ -1,9 +1,5 @@
 <template>
   <div class="cart">
-    <div class="item" style="width:20px"></div>
-        <div class="checkout" :class="{ checkouted: checkout }" @click="handleCheckout()" >
-            <img class="checkout-img" src="@/assets/check.png" alt="">
-        </div>
     <div class="item" style="width:460px">
         <div class="detail">
             <img :src="image" class="detail-img" alt="">
@@ -22,7 +18,6 @@
         <el-input-number v-model="nums" @change="handleChange" :min="0" label="描述文字"></el-input-number>
     </div>
     <div class="item" style="width:200px">￥{{total}}</div>
-    <div class="item" style="width:100px"><i class="el-icon-close" style="font-size:26px" @click="handleDel"></i></div>
   </div>
 </template>
 
@@ -119,7 +114,6 @@ p{
     height: 160px;
     padding: 10px;
     box-sizing: border-box;
-    background: #fff; 
     border-bottom: 1px solid rgb(112 112 112 / 0.5);
 }
 .detail{

@@ -39,7 +39,7 @@
         </div>
         <div class="buy-info">
             <div class="buy-info-item"><p class="buy-p">总计:    </p>￥{{total}}</div>
-            <div class="buy-btn">去下单购买</div>
+            <div class="buy-btn" @click="handleGoBuy()">去下单购买</div>
         </div>
     </div>
   </div>
@@ -92,10 +92,14 @@ export default {
       handleAllCheck(){
           this.$store.commit('cart/CHECK_ALL', !this.checkouts)
           this.checkouts = !this.checkouts
+      },
+      handleGoBuy(){
+          this.$router.push({ path: '/address'})
       }
   }
 };
 </script>
+
 
 <style scoped>
 .cart-page {
@@ -103,9 +107,6 @@ export default {
   padding: 60px 100px;
   box-sizing: border-box;
 }
-</style>
-<style scoped>
-
 p{
     padding: 0px;
     margin: 0px;
@@ -133,7 +134,7 @@ p{
     /* margin-left: 20px; */
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: flex-start;
     padding: 10px;
     padding-top: 4px;
 }
