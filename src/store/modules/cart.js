@@ -81,7 +81,6 @@ const actions = {
             itemList.map(item =>{
                 item.checkout = true
              })
-            console.log(itemList)
             commit('SET_PRODUCT_LIST', itemList)
             resolve()
           }).catch(error => {
@@ -89,11 +88,11 @@ const actions = {
           })
         })
     },
-    addProduct({ state}, data) {
+    // eslint-disable-next-line no-empty-pattern
+    addProduct({ }, data) {
         const {  product } = data;
         return new Promise((resolve, reject) => {
             addProduct({ product}).then(() => {
-                console.log(state)
                 resolve()
             }).catch(error => {
                 reject(error)

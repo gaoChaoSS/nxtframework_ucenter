@@ -2,20 +2,20 @@
     <div class="address-page">
         <div class="info-card" v-if="!token">
             <div class="form-group" >
-                <el-form label-position="right" label-width="160px" :model="loginForm">
+                <el-form label-position="right" label-width="160px" :model="login">
                     <el-form-item label="用户名" class="label">
-                        <el-input v-model="loginForm.username" style="width:470px"></el-input>
+                        <el-input v-model="login.username" style="width:470px"></el-input>
                     </el-form-item>
                 </el-form>
                 <el-form :inline="true" :model="formInline" label-width="160px"  class="demo-form-inline">
                     <el-form-item label="密码">
-                        <el-input  type="password" v-model="loginForm.password" style="width:300px"></el-input>                        
+                        <el-input  type="password" v-model="login.password" style="width:300px"></el-input>                        
                     </el-form-item>
                     <el-form-item>
                         <div class="buy-btn" >立即注册</div>
                     </el-form-item>
                 </el-form>
-                <el-form label-position="right" label-width="160px" :model="loginForm">
+                <el-form label-position="right" label-width="160px" :model="login">
                     <el-form-item label="">
                         <p class="default-p-1">已有账号？</p>
                         <router-link to="/login" class="p-bank">登录</router-link>
@@ -28,37 +28,44 @@
                 收货信息
             </div>
             <div class="form-group" style="margin-top:30px">
-                <el-form label-position="right" label-width="160px" :model="loginForm">
-                    <el-form-item label="用户名/Name" class="label">
+                <el-form label-position="right" label-width="160px" :model="loginForm" :rules="rules" ref="loginForm">
+                    <el-form-item label="用户名/Name" class="label" prop="deliveryPerson">
                         <el-input v-model="loginForm.deliveryPerson" style="width:200px"></el-input>
                     </el-form-item>
-                    <el-form-item label="国家/Country">
-                        <el-select v-model="loginForm.deliveryCountry" clearable placeholder="请选择">
+                    <el-form-item label="国家地区/Country" prop="deliveryCountry">
+                        <el-select v-model="loginForm.deliveryCountry" clearable placeholder="请选择" @change="deliveryCountry">
                             <el-option
-                            v-for="item in CountryOptions"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
+                            v-for="item in deliveryPersonOption"
+                            :key="item.id"
+                            :label="item.regionName"
+                            :value="item.id">
                             </el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="省份/Province">
-                        <el-select v-model="loginForm.deliveryProvince" clearable placeholder="请选择">
+                    <el-form-item label="省份/Province" prop="deliveryProvince">
+                        <el-select v-model="loginForm.deliveryProvince" clearable placeholder="请选择" @change="deliveryProvince">
                             <el-option
-                            v-for="item in ProvinceOptions"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
+                            v-for="item in deliveryProvinceOption"
+                            :key="item.id"
+                            :label="item.regionName"
+                            :value="item.id">
                             </el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="城市/City">
-                        <el-input   v-model="loginForm.deliveryCityName" style="width:200px"></el-input>
+                    <el-form-item label="城市/City" prop="deliveryCity">
+                        <el-select v-model="loginForm.deliveryCity" clearable placeholder="请选择">
+                            <el-option
+                            v-for="item in deliveryCityOption"
+                            :key="item.id"
+                            :label="item.regionName"
+                            :value="item.id">
+                            </el-option>
+                        </el-select>
                     </el-form-item>
-                     <el-form-item label="地址/Address">
+                     <el-form-item label="地址/Address" prop="deliveryAddress">
                         <el-input  v-model="loginForm.deliveryAddress" style="width:800px"></el-input>
                     </el-form-item>
-                    <el-form-item label="电话/Phone">
+                    <el-form-item label="电话/Phone" prop="deliveryPhone">
                         <el-input  v-model="loginForm.deliveryPhone" style="width:200px"></el-input>
                     </el-form-item>
                 </el-form>
@@ -69,18 +76,12 @@
                 配送方式
             </div>
             <div class="info-content">
-                <div class="back-btn  active">
-                    中国邮政
-                </div>
-                <div class="back-btn">
-                    顺丰
-                </div>
-                <div class="back-btn">
-                    其它随机快递
+                <div class="back-btn" v-for="(item, index) in deliveryOption" :key="index" @click="changePayType(item.id)" :class="{active:loginForm.deliveryConfigId==item.id}">
+                    {{item.name}}
                 </div>
             </div>
             <p class="default-p" style="margin-left:40px">配送费</p>
-            <p class="price-p">￥8.00</p>
+            <p class="price-p">￥{{deliveryCost}}</p>
         </div>
         <div class="info-card">
             <div class="info-title">
@@ -134,25 +135,28 @@
 
 <script>
 import Cart from '@/components/cartShow.vue'
-import { mapGetters} from 'vuex';
+import { mapGetters, mapState} from 'vuex';
 export default {
     data(){
         return {
-            loginForm:{
+            login:{
                 username:'',
                 password:'',
-                deliveryPerson:'',
-                deliveryCountry:'',
-                deliveryProvince:'',
-                deliveryCity:'',
+            },
+            loginForm:{
+                deliveryPerson:null,
+                deliveryCountry:"",
+                deliveryProvince:null,
+                deliveryCity:null,
                 deliveryProvinceName:'',
                 deliveryCityName:'',
-                deliveryAddress: '',
-                deliveryPhone:'',
+                deliveryAddress: '5',
+                deliveryPhone:'13555',
                 deliveryConfigId:1,
                 deliveryConfig:'',
                 dealPlatform:1,
-                deliveryRemark:''
+                deliveryRemark:'dddd',
+                deliveryPostcode:"cccc"
             },
             labelPosition: 'top',
             CountryOptions: [{
@@ -165,7 +169,27 @@ export default {
                 label: '广东省'
                 }
             ],
-            value:''
+            value:'',
+            rules:{
+                deliveryCity:[
+                    { type: 'date', required: true, message: '请选择城市！', trigger: 'change' },
+                ],
+                deliveryCountry:[
+                    { type: 'date', required: true, message: '请选择国家或者地区！', trigger: 'change' },
+                ],
+                deliveryProvince:[
+                      { type: 'date', required: true, message: '请选择省份！', trigger: 'change' },
+                ],
+                deliveryPerson:[
+                    { required: true, message: '请输入用户名!', trigger: 'blur' },
+                ],
+                deliveryAddress:[
+                    { required: true, message: '请输入地址!', trigger: 'blur' },
+                ],
+                deliveryPhone: [
+                    { required: true, message: '请输入手机号', trigger: 'blur' },
+                ]
+            }
         }
     },
 
@@ -176,17 +200,60 @@ export default {
         ...mapGetters([
             'productList',
             'token'
-        ])
+        ]),
+        ...mapState({
+            deliveryPersonOption:state =>state.order.deliveryPersonOption,
+            deliveryProvinceOption:state => state.order.deliveryProvinceOption,
+            deliveryCityOption: state => state.order.deliveryCityOption,
+            deliveryOption: state => state.order.deliveryOption,
+            deliveryCost: state => state.order.deliveryCost
+        })
     },
     created(){
+        this.$store.dispatch('order/deliveryConfigList')
+        this.$store.dispatch('order/deliveryRegionList', 0)
+        console.log(this.deliveryOption)
+        // this.$store.dispatch('order/deliveryCost',this.loginForm)
+        // this.$store.dispatch('order/pay',{id:33,paymentMethod:"balance"})
+        // this.$store.dispatch('order/statusPaid',{id:34})
         this.$store.dispatch('cart/detail', 'aaabbb')
     },
     methods:{
+        changePayType(value){
+            console.log(value)
+            this.$store.dispatch('order/deliveryCost',this.loginForm)
+            this.loginForm.deliveryConfigId = value
+        },
         handleGoBuy(){
-            console.log(this)
-            this.$store.commit('cart/SET_ADDRESS', this.loginForm);
-            console.log(this.$store)
-            this.$router.push({ path: '/pay'})
+            this.$refs['loginForm'].validate((valid) => {
+                if (valid) {
+                    // console.log(this.$refs['loginForm'])
+                    // alert('submit!');
+                    this.$store.commit('cart/SET_ADDRESS', this.loginForm)
+                    this.$store.dispatch('order/create',this.loginForm)                    
+                        .then(() => {
+                            this.$router.push({ path: '/pay'})
+                        })
+                        .catch(() => {
+                            this.$message({
+                                message: '提交失败！',
+                                type: 'error'
+                            });
+                        })
+                } else {
+                    // console.log('error submit!!');
+                    return false;
+                }
+            });
+            // console.log(this.loginForm)
+        },
+        deliveryCountry(){
+            if(this.loginForm.deliveryCountry)
+            this.$store.dispatch('order/deliveryProvince', this.loginForm.deliveryCountry)
+        },
+        deliveryProvince(){
+            if(this.loginForm.deliveryProvince)
+            this.$store.dispatch('order/deliveryCity', this.loginForm.deliveryProvince)
         }
     }
 }

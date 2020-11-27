@@ -1,10 +1,10 @@
 <template>
     <div class="address-page">
-        <div class="title-card" v-if="state">
+        <div class="title-card" v-if="orderState == 1">
             <img src="@/assets/pay-success.png" class="title-img" alt="">
             <p class="title-success">订单付款成功</p>
         </div>
-        <div class="title-card" v-else>
+        <div class="title-card" v-else-if="orderState == -1">
             <img src="@/assets/pay-error.png" class="title-img" alt="">
             <p class="title-error">付款失败</p>
         </div>
@@ -82,6 +82,7 @@
 
 <script>
 import Cart from '@/components/cartShow.vue'
+// import _ from 'lodash'
 import { mapGetters, mapState} from 'vuex';
 export default {
     data(){
@@ -108,13 +109,22 @@ export default {
             device: state => state.app.device,
             showSettings: state => state.settings.showSettings,
             needTagsView: state => state.settings.tagsView,
-            fixedHeader: state => state.settings.fixedHeader
+            fixedHeader: state => state.settings.fixedHeader,
+            orderId: state=> state.order.orderId,
+            orderState: state => state.order.orderState
         }),
         ...mapGetters([
             'productList'
         ])
     },
-    created(){
+    watch:{
+        orderState:function(){
+           clearInterval(this.debouncedGetAnswer);
+        }
+    },
+    created() {
+        // var order_id = this.orderId
+        console.log(this.orderId)
         this.$store.dispatch('cart/detail', 'aaabbb');
         this.payType= [
             {img: require("@/assets/weixin.png"),title: '微信'},
@@ -123,6 +133,13 @@ export default {
             {img: require("@/assets/balance.png"),title: '全额：'+ this.value}
         ]
     },
+    mounted(){
+        console.log('123123')
+        this.debouncedGetAnswer = setInterval(this.debouncedGetAnswer, 10000);
+    },
+    beforeDestroy() {
+      clearInterval(this.debouncedGetAnswer);
+    },
     methods:{
         changePayType(value){
             console.log(value)
@@ -130,6 +147,12 @@ export default {
         },
         handleGoInfo(){
             this.$router.push('/info')
+        },
+        debouncedGetAnswer(){
+            if(this.orderState == 1 || this.orderState == -1){
+                clearInterval(this.debouncedGetAnswer)
+            }
+            this.$store.dispatch('order/statusPaid', this.orderId)
         }
     }
 }

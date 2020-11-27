@@ -40,7 +40,7 @@
                 支付方式
             </div>
             <div class="info-content">
-                <div class="back-btn" v-for="(item, index) in payType" :key="index" @click="changePayType(item.title)" :class="{active:valuePay==item.title}">
+                <div class="back-btn" v-for="(item, index) in payType" :key="index" @click="changePayType(item.title,item.value)" :class="{active:valuePay==item.title}">
                     <img :src="item.img" class="back-img" alt="">
                     {{item.title}}
                 </div>
@@ -78,7 +78,7 @@
             </div>
         </div>
         <div class="cart-info">
-            <div class="back-btn">
+            <div class="back-btn" @click="handleBack()"> 
                 <i class="el-icon-back" style="font-size: 30px;margin-right:20px"></i>
                 返回修改
             </div>
@@ -103,7 +103,7 @@ export default {
             value: 11,
             payType:[
             ],
-            
+            paymentMethod:'wxpay',
             valuePay:'微信'
         }
     },
@@ -116,6 +116,7 @@ export default {
             deliveryRemark: state => state.cart.deliveryRemark,
             deliveryAddress: state => state.cart.deliveryAddress,
             deliveryPhone: state => state.cart.deliveryPhone,
+            orderId: state => state.order.orderId
         }),
         ...mapGetters([
             'productList'
@@ -124,18 +125,20 @@ export default {
     created(){
         this.$store.dispatch('cart/detail', 'aaabbb');
         this.payType= [
-            {img: require("@/assets/weixin.png"),title: '微信'},
-            {img: require("@/assets/alipay.png"),title: '支付宝'},
-            {img: require("@/assets/paypal.png"),title: 'Paypal'},
-            {img: require("@/assets/balance.png"),title: '全额：'+ this.value}
+            {img: require("@/assets/weixin.png"),title: '微信', value: 'wxpay'},
+            {img: require("@/assets/alipay.png"),title: '支付宝', value: 'alipay'},
+            {img: require("@/assets/paypal.png"),title: 'Paypal', value: 'paypal'},
+            {img: require("@/assets/balance.png"),title: '全额：'+ this.value, value: 'balance'}
         ]
     },
     methods:{
-        changePayType(value){
+        changePayType(value,type){
             console.log(value)
             this.valuePay = value
+            this.paymentMethod = type
         },
         handleGoBuy(){
+            this.$store.dispatch('order/pay',{id:this.orderId,paymentMethod:this.paymentMethod})
             this.$confirm('已提交付款，等待支付结果', {
                 confirmButtonText: '已完成付款',
                 cancelButtonText: '取消',
@@ -148,6 +151,9 @@ export default {
                     message: '已取消删除'
                 });
             });
+        },
+        handleBack(){
+            this.$router.back()
         }
     }
 }
