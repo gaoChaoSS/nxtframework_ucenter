@@ -60,4 +60,23 @@ body{
   font-family: PingFang SC;
   padding-bottom: 6px !important;
 }
+.el-breadcrumb{
+  font-size: 16px;
+}
+.el-tabs__nav-scroll {
+  overflow: hidden;
+  background: #fff;
+  padding: 0px 40px;
+  box-sizing: border-box;
+  width: 100%;
+}
+.el-tabs__nav-wrap::after{
+  background: #fff;
+}
+.el-tabs__nav{
+  padding: 6px 0px;
+}
+.el-tabs__item{
+  font-size: 18px;
+}
 </style>
