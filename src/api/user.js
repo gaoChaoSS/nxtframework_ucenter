@@ -22,3 +22,10 @@ export function register(data) {
     data
   })
 }
+
+export function balance() {
+  return request({
+    url: '/api/user/transaction/balance',
+    method: 'post'
+  })
+}

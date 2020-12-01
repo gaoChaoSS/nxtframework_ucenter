@@ -29,7 +29,7 @@
             </div>
             <div class="form-group" style="margin-top:30px">
                 <el-form label-position="right" label-width="160px" :model="loginForm" :rules="rules" ref="loginForm">
-                    <el-form-item label="用户名/Name" class="label" prop="deliveryPerson">
+                    <el-form-item label="姓名/Name" class="label" prop="deliveryPerson">
                         <el-input v-model="loginForm.deliveryPerson" style="width:200px"></el-input>
                     </el-form-item>
                     <el-form-item label="国家地区/Country" prop="deliveryCountry">
@@ -113,6 +113,7 @@
                     :productId="item.productId"
                 />
             </div>
+            <div class="buy-info-item"><p class="default-p">总计:    </p><span class="price-p">￥{{total}}</span></div>
         </div>
 
         <div class="info-card">
@@ -122,7 +123,7 @@
             </div>
         </div>
         <div class="cart-info">
-            <div class="back-btn">
+            <div class="back-btn" @click="handleGoCart()">
                 <i class="el-icon-back" style="font-size: 30px;margin-right:20px"></i>
                 返回购物车
             </div>
@@ -206,8 +207,18 @@ export default {
             deliveryProvinceOption:state => state.order.deliveryProvinceOption,
             deliveryCityOption: state => state.order.deliveryCityOption,
             deliveryOption: state => state.order.deliveryOption,
-            deliveryCost: state => state.order.deliveryCost
-        })
+            deliveryCost: state => state.order.deliveryCost,
+            orderId: state => state.order.orderId
+        }),
+        total: function(){
+            // eslint-disable-next-line no-unused-vars
+            var total = 0;
+            this.productList.map(item => {
+                if(item.checkout)
+                total += (item.productPrice * item.quantity)
+            })
+            return total
+        }
     },
     created(){
         this.$store.dispatch('order/deliveryConfigList')
@@ -232,7 +243,7 @@ export default {
                     this.$store.commit('cart/SET_ADDRESS', this.loginForm)
                     this.$store.dispatch('order/create',this.loginForm)                    
                         .then(() => {
-                            this.$router.push({ path: '/pay'})
+                            this.$router.push({ name: 'pay',query:{id: this.orderId}})
                         })
                         .catch(() => {
                             this.$message({
@@ -254,6 +265,9 @@ export default {
         deliveryProvince(){
             if(this.loginForm.deliveryProvince)
             this.$store.dispatch('order/deliveryCity', this.loginForm.deliveryProvince)
+        },
+        handleGoCart(){
+            this.$router.push('/cart')
         }
     }
 }
@@ -423,5 +437,15 @@ export default {
     color:#fff;
     font-size: 18px;
 }
+.buy-info-item{
+    display: inline-block;
+    width: 100%;
+    text-align: right;
+    padding-right: 40px;
+    box-sizing: border-box;
 
+}
+.buy-p{
+
+}
 </style>

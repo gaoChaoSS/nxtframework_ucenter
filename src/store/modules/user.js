@@ -1,4 +1,4 @@
-import { login, logout, register } from '@/api/user'
+import { login, logout, register, balance } from '@/api/user'
 import { getToken, setToken, removeToken, setUserId } from '@/utils/auth'
 import  { resetRouter } from '@/router'
 
@@ -8,6 +8,7 @@ const state = {
   name: '',
   avatar: '',
   introduction: '',
+  balance: 0,
   roles: []
 }
 
@@ -29,6 +30,9 @@ const mutations = {
   },
   SET_USER_ID: (state, userid) => {
     state.userid = userid
+  },
+  SET_BALANCE: (state, balance) => {
+    state.balance = balance
   }
 }
 
@@ -83,7 +87,16 @@ const actions = {
         })
         })
     },
-
+    balance({commit}) {
+      return new Promise((resolve, reject) =>{
+        balance().then((res) => {
+          commit('SET_BALANCE', res.result)
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    }
     
 
 

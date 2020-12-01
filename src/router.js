@@ -21,9 +21,9 @@ const routes = [
   },{
     path: '/cart', component: Cart
   },{
-    path: '/address', component: Address
+    path: '/order_form_create', component: Address, name: 'address'
   },{
-    path: '/pay', component: Pay
+    path: '/order_form_pay', component: Pay, name:'pay',props: true
   },{
     path: '/payresult', component: PayResult
   },{

@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="item" style="width:200px">￥{{price}}</div>
-    <div class="item" style="width:240px">
+    <div class="item" style="width:240px" >
         <el-input-number v-model="nums" @change="handleChange" :min="0" label="描述文字"></el-input-number>
     </div>
     <div class="item" style="width:200px">￥{{total}}</div>
@@ -70,6 +70,10 @@ export default {
                 "skuValueName": "XL"
             }
             ]
+        },
+        isEdit:{
+            default: false,
+            type:Boolean
         }
     },
     data() {

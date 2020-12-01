@@ -94,7 +94,7 @@ export default {
           this.checkouts = !this.checkouts
       },
       handleGoBuy(){
-          this.$router.push({ path: '/address'})
+          this.$router.push({ name: 'address'})
       },
       handleBack(){
           this.$router.back();

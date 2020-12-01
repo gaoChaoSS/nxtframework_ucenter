@@ -104,7 +104,8 @@ export default {
             payType:[
             ],
             paymentMethod:'wxpay',
-            valuePay:'微信'
+            valuePay:'微信',
+            id: 0
         }
     },
     components:{
@@ -116,20 +117,25 @@ export default {
             deliveryRemark: state => state.cart.deliveryRemark,
             deliveryAddress: state => state.cart.deliveryAddress,
             deliveryPhone: state => state.cart.deliveryPhone,
-            orderId: state => state.order.orderId
+            orderId: state => state.order.orderId,
+            balance: state => state.user.balance
         }),
         ...mapGetters([
             'productList'
         ])
     },
     created(){
+        this.id = this.$route.query.id 
+        this.$store.dispatch('user/balance')
         this.$store.dispatch('cart/detail');
         this.payType= [
             {img: require("@/assets/weixin.png"),title: '微信', value: 'wxpay'},
             {img: require("@/assets/alipay.png"),title: '支付宝', value: 'alipay'},
             {img: require("@/assets/paypal.png"),title: 'Paypal', value: 'paypal'},
-            {img: require("@/assets/balance.png"),title: '全额：'+ this.value, value: 'balance'}
+            {img: require("@/assets/balance.png"),title: '全额：'+ this.balance, value: 'balance'}
         ]
+        console.log(this.payType)
+        console.log(this.id)
     },
     methods:{
         changePayType(value,type){
@@ -144,7 +150,7 @@ export default {
                 cancelButtonText: '取消',
                 center: true
             }).then(() => {
-                this.$router.push('/payresult')
+                this.$router.push({path:'/payresult', query:{id : this.id}})
             }).catch(() => {
                 this.$message({
                     type: 'info',
