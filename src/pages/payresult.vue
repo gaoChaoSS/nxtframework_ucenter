@@ -125,7 +125,7 @@ export default {
     created() {
         // var order_id = this.orderId
         console.log(this.orderId)
-        this.$store.dispatch('cart/detail', 'aaabbb');
+        this.$store.dispatch('cart/detail');
         this.payType= [
             {img: require("@/assets/weixin.png"),title: '微信'},
             {img: require("@/assets/alipay.png"),title: '支付宝'},

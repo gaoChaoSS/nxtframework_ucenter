@@ -33,7 +33,7 @@
         :productId="item.productId"
     />
     <div class="cart-info">
-        <div class="back-btn">
+        <div class="back-btn" @click="handleBack()">
             <i class="el-icon-back" style="font-size: 30px;margin-right:20px"></i>
             继续购物
         </div>
@@ -72,7 +72,7 @@ export default {
   },
   created(){
      console.log(this.$store)
-     this.$store.dispatch('cart/detail', 'aaabbb');
+     this.$store.dispatch('cart/detail');
     //  this.$store.commit('cart/SET_PRODUCT_LIST', this.productData)
      console.log(this.productList)
   },
@@ -95,6 +95,9 @@ export default {
       },
       handleGoBuy(){
           this.$router.push({ path: '/address'})
+      },
+      handleBack(){
+          this.$router.back();
       }
   }
 };

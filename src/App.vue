@@ -79,4 +79,8 @@ body{
 .el-tabs__item{
   font-size: 18px;
 }
+.el-loading-spinner i{
+  color:#fff;
+  font-size:50px;
+}
 </style>

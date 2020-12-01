@@ -216,7 +216,7 @@ export default {
         // this.$store.dispatch('order/deliveryCost',this.loginForm)
         // this.$store.dispatch('order/pay',{id:33,paymentMethod:"balance"})
         // this.$store.dispatch('order/statusPaid',{id:34})
-        this.$store.dispatch('cart/detail', 'aaabbb')
+        this.$store.dispatch('cart/detail')
     },
     methods:{
         changePayType(value){

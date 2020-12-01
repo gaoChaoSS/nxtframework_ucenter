@@ -123,7 +123,7 @@ export default {
         ])
     },
     created(){
-        this.$store.dispatch('cart/detail', 'aaabbb');
+        this.$store.dispatch('cart/detail');
         this.payType= [
             {img: require("@/assets/weixin.png"),title: '微信', value: 'wxpay'},
             {img: require("@/assets/alipay.png"),title: '支付宝', value: 'alipay'},

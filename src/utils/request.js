@@ -2,12 +2,13 @@ import axios from 'axios'
 import store from '@/store'
 import { Message } from 'element-ui'
 import { getToken, getUserId } from '@/utils/auth'
+import { Loading } from 'element-ui';
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
   timeout: 100000, // request timeout
   headers: { 'Content-Type': 'application/json' }
 })
-
+// const Loadings = Loading;h
 // request interceptor
 service.interceptors.request.use(
   config => {
@@ -16,6 +17,7 @@ service.interceptors.request.use(
       config.headers['user_id'] = getUserId()
     }
     console.log(config)
+    startLoading()
     return config
   },
   error => {
@@ -27,6 +29,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const res = response.data
+    endLoading()
     if (res.status !== 0) {
       Message({
         message: res.message || 'Error',
@@ -46,5 +49,24 @@ service.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+
+let loading;
+function startLoading(){
+  const options = {
+    lock: true,
+    text: '',
+    spinner: 'el-icon-loading',
+    background: 'rgba(0, 0, 0, 0.7)',
+    customClass:'customClass'
+  }
+	loading = Loading.service(options)
+}
+//结束
+function endLoading(){
+  
+  setTimeout(() => {
+    loading.close();
+  }, 500);
+}
 
 export default service
