@@ -30,6 +30,9 @@ const routes = [
     path: '/', component: () => import('@/layout/user.vue'),
     children: [{
       path: '/',
+      component: () => import('@/pages/info.vue')
+    },{
+      path: '/order',
       component: () => import('@/pages/myorder.vue')
     },{
       path: '/service',

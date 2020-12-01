@@ -20,7 +20,8 @@
     <div class="right-card">
       <img src="@/assets/car.png" alt="" @click="handleCart()">
       <div class="right-item" v-if="token">
-        <a href="#" @click="handleLogout()">注销</a>
+        <router-link to="/order" class="item-a">我的订单</router-link> 
+        <router-link to="/" class="item-a">个人中心</router-link>
       </div>
       <div class="right-item" v-else>
         <router-link to="/">登录</router-link> /
@@ -81,7 +82,7 @@ export default {
 .right-card{
   display: flex;
   align-items: center;
-  width: 300px;
+  /* width: 300px; */
 }
 .right-card img{
   height: 30px;
@@ -94,6 +95,7 @@ export default {
   font-weight: 400;
   color: #1B1B1B;
   opacity: 1;
+  display: flex;
 }
 .right-item a{
   font-size: 20px;
@@ -102,5 +104,16 @@ export default {
   color: #1B1B1B;
   opacity: 1;
   text-decoration: none;
+}
+.item-a{
+  
+  font-size: 22px;
+  font-family: PingFang SC;
+  font-weight: 400;
+  line-height: 31px;
+  color: #1B1B1B;
+  border-left: 1px solid #7070706e;
+  width: 100px;
+  padding: 0px 30px;
 }
 </style>
