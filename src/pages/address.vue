@@ -12,7 +12,7 @@
                         <el-input  type="password" v-model="login.password" style="width:300px"></el-input>                        
                     </el-form-item>
                     <el-form-item>
-                        <div class="buy-btn" >立即注册</div>
+                        <div class="buy-btn" @click="handleSign">立即注册</div>
                     </el-form-item>
                 </el-form>
                 <el-form label-position="right" label-width="160px" :model="login">
@@ -268,6 +268,17 @@ export default {
         },
         handleGoCart(){
             this.$router.push('/cart')
+        },
+        handleSign(){
+            this.$store.dispatch("user/register", this.login)
+                .then(() => {
+                    this.$store.dispatch("user/login", this.login)
+                    this.$message({
+                        message: '注册成功！',
+                        type: 'success'
+                    });
+                })
+                .catch(() => {});
         }
     }
 }

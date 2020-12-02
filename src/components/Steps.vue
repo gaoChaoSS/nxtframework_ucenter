@@ -36,7 +36,7 @@ export default {
 <style>
  .steps{
     display: flex;
-    height: 56px;
+    height: 46px;
     width: 100%;
     align-items: center;
     margin-bottom: 20px;
@@ -62,7 +62,7 @@ export default {
 	outline: none;
 	display: flex;
 	float: left;
-	font-size: 20px;
+	font-size: 16px;
 	line-height: 36px;
 	color: white;
 	/*need more margin on the left of links to accomodate the numbers*/
@@ -127,7 +127,7 @@ export default {
 	border-radius: 0 5px 0 50px;
     content: '';
     position: absolute;
-    top: 0px;
+    top: -5px;
     right: -26px;
     width: 56px;
     height: 56px;
@@ -154,7 +154,7 @@ export default {
     line-height: 28px;
     margin: 8px 0;
     position: absolute;
-    top: 5px;
+    top: 0px;
     left: 60px;
     background: #444;
     background: linear-gradient(#444, #222);

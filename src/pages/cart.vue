@@ -52,7 +52,7 @@ import Steps from '@/components/Steps';
 export default {
   data() {
     return {
-      checkouts: true,
+      checkouts: false,
       productData: [],
     };
   },
@@ -90,7 +90,12 @@ export default {
           console.log('checkout')
       },
       handleAllCheck(){
-          this.$store.commit('cart/CHECK_ALL', !this.checkouts)
+        //   this.$store.commit('cart/CHECK_ALL', !this.checkouts)
+          this.productList.forEach(element => {
+              if(element.checkout == !this.checkout){
+                this.$store.dispatch('cart/selectProduct',{id: element.id, selected: !element.checkout})
+              }
+          });
           this.checkouts = !this.checkouts
       },
       handleGoBuy(){

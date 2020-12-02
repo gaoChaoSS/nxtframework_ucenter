@@ -1,4 +1,4 @@
-import { detail, addProduct, delProduct } from '@/api/cart'
+import { detail, addProduct, delProduct, selectProduct } from '@/api/cart'
 import { getGuestToken } from '@/utils/auth'
 const state = {
     productList:[],
@@ -79,7 +79,7 @@ const actions = {
         detail({ guestToken:state.guestToken }).then(response => {
             const { itemList } = response.result
             itemList.map(item =>{
-                item.checkout = true
+                item.checkout = item.selected
              })
             commit('SET_PRODUCT_LIST', itemList)
             resolve()
@@ -104,6 +104,16 @@ const actions = {
         return new Promise((resolve, reject) => {
             delProduct({guestToken:state.guestToken,product:data}).then(() => {
                 // commit('DEl_PRODUCT', {id:data.id})
+                resolve()
+            }).catch(error => {
+                reject(error)
+            })
+        })
+    },
+    selectProduct({state, commit}, data) {
+        return new Promise((resolve, reject) => {
+            selectProduct({getGuestToken: state.guestToken, product: data}).then(() => {
+                commit('CHECK_PRODUCT', data)
                 resolve()
             }).catch(error => {
                 reject(error)

@@ -27,3 +27,12 @@ export function delProduct(data) {
         data
     })
 }
+
+// 选择商品
+export function selectProduct(data) {
+  return request({
+    url:'/api/shopping_cart/select_product',
+    method: 'post',
+    data
+  })
+}

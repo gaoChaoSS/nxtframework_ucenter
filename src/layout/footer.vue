@@ -28,7 +28,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding:40px 0px;
+  padding:30px 0px;
   padding-bottom: 30px;
 }
 .footer-item{
@@ -37,8 +37,7 @@ export default {
   align-items: center;
 }
 .footer-item p{
-  
-  font-size: 20px;
+  font-size: 16px;
   font-family: PingFang SC;
   font-weight: normal;
   line-height: 22px;

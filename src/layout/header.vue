@@ -22,6 +22,7 @@
       <div class="right-item" v-if="token">
         <router-link to="/order" class="item-a">我的订单</router-link> 
         <router-link to="/" class="item-a">个人中心</router-link>
+        <a href="#" class="item-a" @click="handleLogout()">注销</a>
       </div>
       <div class="right-item" v-else>
         <router-link to="/">登录</router-link> /
@@ -68,16 +69,16 @@ export default {
   display: flex;
   align-items: center;
   border-bottom: .5px solid rgb(112 112 112 / 51%);
-  padding: 16px 40px;
+  padding: 8px 40px;
 }
 .logo-p {
-  font-size: 38px;
+  font-size: 22px;
   font-family: HYYaKuHeiW;
   font-weight: 600;
   line-height: 46px;
   color: #014785;
   opacity: 1;
-  margin-right: 100px;
+  margin-right: 50px;
 }
 .right-card{
   display: flex;
@@ -90,7 +91,7 @@ export default {
   margin-right: 40px;
 }
 .right-item{
-  font-size: 20px;
+  font-size: 10px;
   font-family: PingFang SC;
   font-weight: 400;
   color: #1B1B1B;
@@ -98,7 +99,7 @@ export default {
   display: flex;
 }
 .right-item a{
-  font-size: 20px;
+  font-size: 16px;
   font-family: PingFang SC;
   font-weight: 400;
   color: #1B1B1B;
@@ -107,7 +108,7 @@ export default {
 }
 .item-a{
   
-  font-size: 22px;
+  font-size: 16px;
   font-family: PingFang SC;
   font-weight: 400;
   line-height: 31px;
@@ -115,5 +116,6 @@ export default {
   border-left: 1px solid #7070706e;
   width: 100px;
   padding: 0px 30px;
+  text-align: center;
 }
 </style>

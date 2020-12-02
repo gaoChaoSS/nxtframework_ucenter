@@ -35,7 +35,7 @@ body{
   border-bottom: none;
 }
 .el-menu-item,.el-submenu__title{
-  font-size: 20px;
+  font-size: 16px;
   font-family: PingFang SC;
   line-height: 31px;
   color: #1B1B1B;

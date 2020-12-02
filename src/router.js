@@ -45,7 +45,7 @@ const routes = [
     path: '/serive-1', component: () => import('@/pages/serive-1.vue')
   }
 ]
-const whiteList = ['/login', '/reset', '/sign', '/cart'] // no redirect whitelist
+const whiteList = ['/login', '/reset', '/sign', '/cart','/order_form_create'] // no redirect whitelist
 const createRouter = () => new VueRouter({
     // mode: 'history', // require service support
     scrollBehavior: () => ({ y: 0 }),

@@ -99,7 +99,8 @@ export default {
             this.$store.commit('cart/SET_PRODUCT_NUM', {id:this.id, num: value})
         },
         handleCheckout(){
-            this.$store.commit('cart/CHECK_PRODUCT', {id: this.id})
+            this.$store.dispatch('cart/selectProduct',{id: this.id, selected: !this.checkout})
+            // this.$store.commit('cart/CHECK_PRODUCT', {id: this.id})
         },
         handleDel() {
             this.$store.dispatch('cart/delProduct',{id:this.id,quantity:this.nums})
