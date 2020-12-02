@@ -45,6 +45,7 @@ service.interceptors.response.use(
     }
   },
   error => {
+    endLoading()
     console.log('err' + error) // for debug    
     return Promise.reject(error)
   }

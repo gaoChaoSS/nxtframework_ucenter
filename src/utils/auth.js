@@ -25,5 +25,9 @@ export function setUserId(id) {
 }
 
 export function getGuestToken() {
-  return Cookies.get(GuestToken)
+  return Cookies.get(GuestToken) == '' ? null :Cookies.get(GuestToken)
+}
+
+export function setGuestToken(token) {
+  return Cookies.set(GuestToken, token)
 }

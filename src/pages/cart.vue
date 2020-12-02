@@ -99,6 +99,14 @@ export default {
           this.checkouts = !this.checkouts
       },
       handleGoBuy(){
+          let arr = [];
+          this.productList.forEach(element => {
+              if(element.checkout){
+                arr.push(element)
+              }
+          })
+          console.log(arr)
+          this.$store.commit('cart/BUY_PRODUCT', arr)
           this.$router.push({ name: 'address'})
       },
       handleBack(){

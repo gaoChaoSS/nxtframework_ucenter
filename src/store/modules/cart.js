@@ -1,7 +1,8 @@
 import { detail, addProduct, delProduct, selectProduct } from '@/api/cart'
-import { getGuestToken } from '@/utils/auth'
+import { getGuestToken, setGuestToken } from '@/utils/auth'
 const state = {
     productList:[],
+    cartProductList:[],
     guestToken:getGuestToken(),
     deliveryPerson:'',
     deliveryProvince:'',
@@ -70,6 +71,12 @@ const mutations = {
       state.dealPlatform = dealPlatform
       state.deliveryRemark = deliveryRemark
       state.deliveryCountry = deliveryCountry
+  },
+  BUY_PRODUCT:(state, data) =>{
+    state.cartProductList = data
+  },
+  SET_GUESTTOKEN:(state, data) => {
+    state.guestToken = data
   }
 }
 
@@ -77,10 +84,14 @@ const actions = {
     detail({ state,commit }) {
         return new Promise((resolve, reject) => {
         detail({ guestToken:state.guestToken }).then(response => {
-            const { itemList } = response.result
+            const { itemList, guestToken} = response.result
             itemList.map(item =>{
                 item.checkout = item.selected
              })
+             if(guestToken != state.getGuestToken) {
+                setGuestToken(guestToken)
+                commit('SET_GUESTTOKEN', guestToken)
+             }
             commit('SET_PRODUCT_LIST', itemList)
             resolve()
           }).catch(error => {
@@ -100,7 +111,6 @@ const actions = {
         })
     },
     delProduct({state}, data) {
-        // const {  product } = data;
         return new Promise((resolve, reject) => {
             delProduct({guestToken:state.guestToken,product:data}).then(() => {
                 // commit('DEl_PRODUCT', {id:data.id})

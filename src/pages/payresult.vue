@@ -113,9 +113,9 @@ export default {
             orderId: state=> state.order.orderId,
             orderState: state => state.order.orderState
         }),
-        ...mapGetters([
-            'productList'
-        ])
+        ...mapGetters({
+            productList:'cartProductList'
+        }),
     },
     watch:{
         orderState:function(){

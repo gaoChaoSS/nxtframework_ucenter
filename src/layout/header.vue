@@ -44,10 +44,6 @@ export default {
     handleLogout(){
       this.$store.dispatch("user/logout", this.loginForm)
         .then(() => {
-          this.$message({
-            message: '注销成功！',
-            type: 'success'
-          });
           this.$router.push({ path: '/login'})
         })
         .catch(() => {

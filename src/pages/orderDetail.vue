@@ -130,9 +130,9 @@ export default {
         Flow
     },
     computed:{
-        ...mapGetters([
-            'productList'
-        ])
+        ...mapGetters({
+            productList:'cartProductList'
+        }),
     },
     watch:{
         orderState:function(){

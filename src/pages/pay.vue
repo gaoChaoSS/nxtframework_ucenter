@@ -120,9 +120,9 @@ export default {
             orderId: state => state.order.orderId,
             balance: state => state.user.balance
         }),
-        ...mapGetters([
-            'productList'
-        ])
+        ...mapGetters({
+            productList:'cartProductList'
+        }),
     },
     created(){
         this.id = this.$route.query.id 

@@ -198,10 +198,10 @@ export default {
         Cart
     },
     computed:{
-        ...mapGetters([
-            'productList',
-            'token'
-        ]),
+        ...mapGetters({
+            productList:'cartProductList',
+            token:'token'
+        }),
         ...mapState({
             deliveryPersonOption:state =>state.order.deliveryPersonOption,
             deliveryProvinceOption:state => state.order.deliveryProvinceOption,
@@ -246,10 +246,10 @@ export default {
                             this.$router.push({ name: 'pay',query:{id: this.orderId}})
                         })
                         .catch(() => {
-                            this.$message({
-                                message: '提交失败！',
-                                type: 'error'
-                            });
+                            // this.$message({
+                            //     message: '提交失败！',
+                            //     type: 'error'
+                            // });
                         })
                 } else {
                     // console.log('error submit!!');
@@ -272,7 +272,7 @@ export default {
         handleSign(){
             this.$store.dispatch("user/register", this.login)
                 .then(() => {
-                    this.$store.dispatch("user/login", this.login)
+                    this.$store.dispatch("user/login", this.loginForm)
                     this.$message({
                         message: '注册成功！',
                         type: 'success'

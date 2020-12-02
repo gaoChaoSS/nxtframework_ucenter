@@ -123,9 +123,9 @@ export default {
         Flow
     },
     computed:{
-        ...mapGetters([
-            'productList'
-        ])
+        ...mapGetters({
+            cartProductList:'productList'
+        }),
     },
     watch:{
         orderState:function(){
