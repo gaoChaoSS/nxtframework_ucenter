@@ -28,13 +28,21 @@
   </div>
 </template>
 <script>
+  import { mapState } from 'vuex' 
   export default {
     data() {
       return {
         activeName: 'first',
-        balance:1,
         profit:1
       };
+    },
+    computed:{
+      ...mapState({
+        balance: state => state.user.balance
+      })
+    },
+    created(){
+      this.$store.dispatch('user/balance')
     },
     methods: {
       handleClick(tab, event) {

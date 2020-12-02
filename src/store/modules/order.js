@@ -1,5 +1,6 @@
 import { create, deliveryConfigList, deliveryRegionList,
-    deliveryCost, pay, statusPaid
+    deliveryCost, pay, statusPaid,
+    detail
 } from '@/api/order'
 
 const state = {
@@ -60,6 +61,9 @@ const mutations = {
     },
     SET_ORDER_STATE: (state, data) =>{
         state.orderState = data
+    },
+    SET_PRODUCTIST: (state, data) =>{
+        state.productList = data
     }
 }
 
@@ -157,6 +161,18 @@ const actions = {
           }).catch(error => {
               reject(error)
           })
+        })
+    },
+    detail({ commit }, data) {
+        return new Promise((resolve, reject) => {
+            detail({id: data}).then((response) => {
+                const {orderFormProductList} = response.result
+                commit('SET_ADDRESS', response.result)
+                commit('SET_PRODUCTIST',orderFormProductList)
+                resolve()
+            }).catch(error => {
+                reject(error)
+            })
         })
     }
 }

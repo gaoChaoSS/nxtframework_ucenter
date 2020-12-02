@@ -51,3 +51,11 @@ export function statusPaid(data) {
       data
     })
 }
+
+export function detail(data) {
+  return request({
+    url: '/api/order_form/detail',
+    method: 'post',
+    data
+  })
+}

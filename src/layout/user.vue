@@ -16,8 +16,8 @@
             <i class="el-icon-caret-bottom nav-item-title-icon"></i>
           </div>
           <div class="nav-content">
-            <div class="nav-link">我的订单</div>
-            <div class="nav-link">售后管理</div>
+            <router-link class="nav-link" to="/order" :class="isActive('/order')?'active':''">我的订单</router-link>
+            <router-link class="nav-link" to="/service" :class="isActive('/service')?'active':''">售后管理</router-link>
           </div>
         </div>
         <div class="nav-item">
@@ -27,8 +27,8 @@
             <i class="el-icon-caret-bottom nav-item-title-icon"></i>
           </div>
           <div class="nav-content">
-            <div class="nav-link">余额</div>
-            <div class="nav-link">收益</div>
+            <router-link to="/order" class="nav-link">余额</router-link>
+            <router-link to="/order" class="nav-link">收益</router-link>
           </div>
         </div>
       </div>
@@ -40,7 +40,17 @@
 </template>
 
 <script>
-export default {};
+// import { mapState } from 'vuex';
+export default {
+  created() {
+    // console.log(this.$router);
+  },
+  methods: {
+    isActive(tag){
+      return tag ===  this.$route.path
+    }
+  },
+};
 </script>
 
 <style scoped>
@@ -114,5 +124,10 @@ export default {};
   margin-bottom: 16px;
   color: #5F5F5F;;
   font-family: PingFang SC;
+  text-decoration: none;
+}
+.nav-link.active{
+  color: #014785;
+  font-weight: 600;
 }
 </style>

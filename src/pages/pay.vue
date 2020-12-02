@@ -15,7 +15,7 @@
                 </div>
                 <div class="item">
                     <p class="title">收货地址：</p>
-                    <p class="content-p">{{deliveryAddress}}</p>
+                    <p class="content-p">{{deliveryCountry}} , {{deliveryProvince}} , {{deliveryCity}} , {{deliveryAddress}}</p>
                 </div>
                 <div class="item">
                     <p class="title">联系电话：</p>
@@ -91,7 +91,7 @@
 
 <script>
 import Cart from '@/components/cartShow.vue'
-import { mapGetters,mapState} from 'vuex';
+import { mapState} from 'vuex';
 export default {
     data(){
         return {
@@ -113,26 +113,27 @@ export default {
     },
     computed:{
         ...mapState({
-            deliveryPerson: state => state.cart.deliveryPerson,
-            deliveryRemark: state => state.cart.deliveryRemark,
-            deliveryAddress: state => state.cart.deliveryAddress,
-            deliveryPhone: state => state.cart.deliveryPhone,
+            deliveryCountry: state => state.order.deliveryCountry,
+            deliveryProvince: state => state.order.deliveryProvince,
+            deliveryCity: state => state.order.deliveryCity,
+            deliveryPerson: state => state.order.deliveryPerson,
+            deliveryRemark: state => state.order.deliveryRemark,
+            deliveryAddress: state => state.order.deliveryAddress,
+            deliveryPhone: state => state.order.deliveryPhone,
             orderId: state => state.order.orderId,
-            balance: state => state.user.balance
-        }),
-        ...mapGetters({
-            productList:'cartProductList'
+            balance: state => state.user.balance,
+            productList: state => state.order.productList
         }),
     },
     created(){
         this.id = this.$route.query.id 
         this.$store.dispatch('user/balance')
-        this.$store.dispatch('cart/detail');
+        this.$store.dispatch('order/detail',this.id);
         this.payType= [
             {img: require("@/assets/weixin.png"),title: '微信', value: 'wxpay'},
             {img: require("@/assets/alipay.png"),title: '支付宝', value: 'alipay'},
             {img: require("@/assets/paypal.png"),title: 'Paypal', value: 'paypal'},
-            {img: require("@/assets/balance.png"),title: '全额：'+ this.balance, value: 'balance'}
+            {img: require("@/assets/balance.png"),title: '金额：'+ this.balance, value: 'balance'}
         ]
         console.log(this.payType)
         console.log(this.id)
@@ -144,7 +145,7 @@ export default {
             this.paymentMethod = type
         },
         handleGoBuy(){
-            this.$store.dispatch('order/pay',{id:this.orderId,paymentMethod:this.paymentMethod})
+            this.$store.dispatch('order/pay',{id:this.id,paymentMethod:this.paymentMethod})
             this.$confirm('已提交付款，等待支付结果', {
                 confirmButtonText: '已完成付款',
                 cancelButtonText: '取消',

@@ -83,7 +83,7 @@
 <script>
 import Cart from '@/components/cartShow.vue'
 // import _ from 'lodash'
-import { mapGetters, mapState} from 'vuex';
+import {  mapState} from 'vuex';
 export default {
     data(){
         return {
@@ -95,7 +95,7 @@ export default {
             value: 11,
             payType:[
             ],
-            
+            id:0,
             valuePay:'微信',
             state:1,
         }
@@ -105,17 +105,18 @@ export default {
     },
     computed:{
         ...mapState({
-            sidebar: state => state.app.sidebar,
-            device: state => state.app.device,
-            showSettings: state => state.settings.showSettings,
-            needTagsView: state => state.settings.tagsView,
-            fixedHeader: state => state.settings.fixedHeader,
             orderId: state=> state.order.orderId,
-            orderState: state => state.order.orderState
-        }),
-        ...mapGetters({
-            productList:'cartProductList'
-        }),
+            orderState: state => state.order.orderState,
+            deliveryCountry: state => state.order.deliveryCountry,
+            deliveryProvince: state => state.order.deliveryProvince,
+            deliveryCity: state => state.order.deliveryCity,
+            deliveryPerson: state => state.order.deliveryPerson,
+            deliveryRemark: state => state.order.deliveryRemark,
+            deliveryAddress: state => state.order.deliveryAddress,
+            deliveryPhone: state => state.order.deliveryPhone,
+            balance: state => state.user.balance,
+            productList: state => state.order.productList
+        })
     },
     watch:{
         orderState:function(){
@@ -125,7 +126,8 @@ export default {
     created() {
         // var order_id = this.orderId
         console.log(this.orderId)
-        this.$store.dispatch('cart/detail');
+        this.id = this.$route.query.id 
+        this.$store.dispatch('order/detail',this.id);
         this.payType= [
             {img: require("@/assets/weixin.png"),title: '微信'},
             {img: require("@/assets/alipay.png"),title: '支付宝'},
@@ -134,7 +136,8 @@ export default {
         ]
     },
     mounted(){
-        console.log('123123')
+        // console.log('123123')
+        this.debouncedGetAnswer()
         this.debouncedGetAnswer = setInterval(this.debouncedGetAnswer, 10000);
     },
     beforeDestroy() {
@@ -146,13 +149,13 @@ export default {
             this.valuePay = value
         },
         handleGoInfo(){
-            this.$router.push('/info')
+            this.$router.push('/order')
         },
         debouncedGetAnswer(){
             if(this.orderState == 1 || this.orderState == -1){
                 clearInterval(this.debouncedGetAnswer)
             }
-            this.$store.dispatch('order/statusPaid', this.orderId)
+            this.$store.dispatch('order/statusPaid', this.id)
         }
     }
 }
