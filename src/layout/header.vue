@@ -25,7 +25,7 @@
         <a href="#" class="item-a" @click="handleLogout()">注销</a>
       </div>
       <div class="right-item" v-else>
-        <router-link to="/">登录</router-link> /
+        <router-link to="/">登录</router-link> / 
         <router-link to="/sign">注册</router-link>
       </div>
     </div>
@@ -97,6 +97,7 @@ export default {
   color: #1B1B1B;
   opacity: 1;
   display: flex;
+  min-width: 120px;
 }
 .right-item a{
   font-size: 16px;
