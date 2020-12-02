@@ -112,7 +112,7 @@ const actions = {
     },
     selectProduct({state, commit}, data) {
         return new Promise((resolve, reject) => {
-            selectProduct({getGuestToken: state.guestToken, product: data}).then(() => {
+            selectProduct({guestToken: state.guestToken, product: data}).then(() => {
                 commit('CHECK_PRODUCT', data)
                 resolve()
             }).catch(error => {
