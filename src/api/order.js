@@ -59,3 +59,12 @@ export function detail(data) {
     data
   })
 }
+
+
+export function list(data) {
+  return request({
+    url: '/api/order_form/list',
+    method: 'post',
+    data
+  })
+}

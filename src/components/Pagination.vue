@@ -23,12 +23,12 @@ export default {
         margin-top: 20px;
     }
     .prov{
-        width: 93px;
-        height: 36px;
+        width: 80px;
+        height: 32px;
         background: #CECECE;
         text-align: center;
-        padding: 4px 10px;
-        font-size: 18px;
+        padding: 4px 4px;
+        font-size: 10px;
         font-family: PingFang SC;
         font-weight: 400;
         color: #1B1B1B;
@@ -38,8 +38,8 @@ export default {
         box-sizing: border-box;
     }
     .number{
-        width: 100px;
-        height: 36px;
+        width: 80px;
+        height: 32px;
         display: flex;
         background: #fff;
         border: 1px solid #5F5F5F;
@@ -48,14 +48,16 @@ export default {
         align-items: center;
         color: #1B1B1B;
         letter-spacing: 4px;
+        font-size:10px;
+
     }
     .next{
-        width: 93px;
-        height: 36px;
+        width: 80px;
+        height: 32px;
         background: #014785;
         text-align: center;
         padding: 4px 10px;
-        font-size: 18px;
+        font-size: 10px;
         font-family: PingFang SC;
         font-weight: 400;
         color: #fff; 

@@ -1,35 +1,37 @@
 <template>
   <div class="order">
       <div class="title">
-          <p>{{time}}</p>
-          <p style="margin-left:20px">订单号: {{orderId}}</p>
+          <p>{{datelineCreateReadable}}</p>
+          <p style="margin-left:20px">订单号: {{id}}</p>
       </div>
       <div class="content">
           <div class="product-list" >
               <div class="product" v-for="(item, index) in Lists" :key="index">
-                  <img :src="item.img" alt="">
+                  <img :src="item.picUrl" alt="">
                   <div class="product-content">
-                        <p class="product-name">{{item.title}}</p>
+                        <p class="product-name">{{item.productName}}</p>
                         <div class="product-arr">
-                            <div class="arr-item" v-for="(arr, key) in item.arr" :key="key">
-                                {{arr.key}} {{arr.value}}
+                            <div class="arr-item" v-for="(arr, key) in item.productSku" :key="key">
+                                {{arr.skuKeyName}} {{arr.skuValueName}}
                             </div>
                         </div>
                   </div>
-                  <p class="num">x{{item.num}}</p>
+                  <p class="num">x{{item.quantity}}</p>
               </div>
           </div>
           <div class="row">
-             <p>{{price | price}}</p>
+             <p>{{amountFinally | price}}</p>
           </div>
           <div class="row">
               <p>{{state | state}}</p>
               <div class="button" @click="handleDetail()">订单详情</div>
           </div>
           <div class="row">
+            <div>
               <a href="">评价</a>
               <a href="">申请售后</a>
               <a href="">再次购买</a>
+            </div>
           </div>
       </div>
   </div>
@@ -42,7 +44,7 @@ export default {
             default: 1,
             type: Number
         },
-        time:{
+        datelineCreateReadable:{
             default: '2020-10-31 20:53:17',
             type: String
         },
@@ -54,25 +56,25 @@ export default {
             // eslint-disable-next-line vue/require-valid-default-prop
             default:()=>[
                 {
-                    img:'/image/login.png',
-                    title:'扫地机器人 智能家电 ',
-                    num: 1,
-                    arr:[
+                    picUrl:'/image/login.png',
+                    productName:'扫地机器人 智能家电 ',
+                    quantity: 1,
+                    productSku:[
                         {key:'颜色', value: '白色'}
                     ]
                 },
                 {
-                    img:'/image/login.png',
-                    title:'扫地机器人 智能家电 ',
-                    num: 1,
-                    arr:[
+                    picUrl:'/image/login.png',
+                    productName:'扫地机器人 智能家电 ',
+                    quantity: 1,
+                    productSku:[
                         {key:'颜色', value: '白色'}
                     ]
                 }
             ],
             type: Array
         },
-        price:{
+        amountFinally:{
             default: 30.01,
             type: Number
         },
@@ -92,13 +94,18 @@ export default {
     },
     methods: {
         handleDetail(){
-            this.$router.push('/detail')
+            this.$router.push({path:'/detail', query:{id: this.id}})
         }
     }
 }
 </script>
 
 <style scoped>
+a{
+    font-size: 10px;
+    margin-right: 10px;
+    display: inline-block;
+}
 .order{
     /* display: flex; */
     width: 100%;
@@ -106,7 +113,7 @@ export default {
     background: #fff;
 }
 .title{
-    font-size: 18px;
+    font-size: 14px;
     width: 100%;
     border-bottom: 1px solid #70707080;
     display: flex;
@@ -117,7 +124,7 @@ export default {
 }
 
 .title p{
-    font-size: 18px;
+    font-size: 14px;
     color: #5F5F5F;
 }
 .content{
@@ -127,7 +134,7 @@ export default {
 p {
     margin: 0px;
     padding:0px;
-    font-size: 20px;
+    font-size: 10px;
     font-family: PingFang SC;
     font-weight: 400;
     color: #1B1B1B;
@@ -139,7 +146,7 @@ p {
 }
 .product{
     display: flex;
-    padding: 20px 20px;
+    padding: 10px;
     box-sizing: border-box;
     justify-content: space-between;
     position: relative;
@@ -164,20 +171,19 @@ p {
     
 }
 .product img{
-    width: 100px;
-    height: 110px;
+    width: 60px;
+    height: 60px;
 }
 .product-name{
     width: 100%;
-    font-size: 20px;
     margin-bottom: 20px;
-    font-size: 20px;
+    font-size: 10px;
     font-family: PingFang SC;
     font-weight: 400;
     color: #1B1B1B;
 }
 .product-arr{
-    font-size: 16px;
+    font-size: 10px;
     font-family: PingFang SC;
     font-weight: 400;
     line-height: 23px;
@@ -193,12 +199,15 @@ p {
     /* justify-content: center; */
     min-width: 200px;
     padding-top: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    box-sizing: border-box;
     border-left: 1px solid #70707079;
 }
 .num{
     align-self: flex-end; 
     margin-bottom:10px;
-    font-size: 16px;
+    font-size: 10px;
     font-family: PingFang SC;
     font-weight: 400;
     line-height: 23px;
@@ -206,13 +215,13 @@ p {
 }
 .button{
     background: #014785;
-    font-size: 18px;
+    font-size: 10px;
     font-family: PingFang SC;
     font-weight: 400;
     line-height: 26px;
     color: #FFFFFF;
     width: 120px;
-    padding: 6px 10px;
+    padding: 4px 6px;
     box-sizing: border-box;
     text-align: center;
     margin-top: 10px;

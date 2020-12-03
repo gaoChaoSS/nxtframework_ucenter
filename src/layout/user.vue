@@ -57,12 +57,13 @@ export default {
 .layout-user{
   display: flex;
   flex-wrap: wrap;
-  padding: 40px 100px;
+  padding: 40px 0px;
   box-sizing: border-box;
   background: #F8F8F8;
+  justify-content: center;
 }
 .top{
-  width: 100%;
+  width: 1200px;
   margin-bottom: 20px;
 }
 .nav{
@@ -75,7 +76,7 @@ export default {
 }
 .main{
   display: flex;
-  width: 100%;
+  width: 1200px;
   background: #F8F8F8;
 }
 .nav-item{

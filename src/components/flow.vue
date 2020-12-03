@@ -36,44 +36,44 @@ export default {
 .flow {
   display: flex;
   flex-direction: column;
-  width: 260px;
+  width: 200px;
   margin-left: 20px;
   /* align-items: center; */
 }
 .flow-item {
     display: flex;
     /* flex-direction: column; */
-    width: 260px;
+    width: 200px;
     align-items: center;
-    margin-bottom: 6px;
-    height: 80px;
+    margin-bottom: 2px;
+    height: 30px;
 }
 .flow-arror {
-    padding: 10px 6px;
-    height: 60px;
+    padding: 2px 2px;
+    height: 30px;
     box-sizing: border-box;
 }
 .time{
     width: 100%;    
-    font-size: 18px;
+    font-size: 12px;
     font-family: PingFang SC;
     font-weight: 400;
     line-height: 26px;
     color: #5F5F5F;
 }
 .flow-icon{
-    width: 40px;
-    height: 40px;
+    width: 22px;
+    height: 22px;
 }
 .title{
-    font-size: 22px;
+    font-size: 14px;
     font-family: PingFang SC;
-    font-weight: 400;
+    font-weight: 500;
     line-height: 31px;
     color: #014785;
     padding: 0px;
     margin: 0px;
-    width: 130px;
-    margin-left: 18px;
+    width: 120px;
+    margin-left: 8px;
 }
 </style>

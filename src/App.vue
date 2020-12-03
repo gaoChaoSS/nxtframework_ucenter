@@ -77,10 +77,10 @@ body{
   background: #fff;
 }
 .el-tabs__nav{
-  padding: 6px 0px;
+  padding: 2px 0px;
 }
 .el-tabs__item{
-  font-size: 18px;
+  font-size: 12px;
 }
 .el-loading-spinner i{
   color:#fff;
