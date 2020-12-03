@@ -4,7 +4,7 @@
         <div class="checkout" :class="{ checkouted: checkout }" @click="handleCheckout()" >
             <img class="checkout-img" src="@/assets/check.png" alt="">
         </div>
-    <div class="item" style="width:460px">
+    <div class="item" style="width:360px">
         <div class="detail">
             <img :src="image" class="detail-img" alt="">
             <div class="info">
@@ -17,12 +17,12 @@
             </div>
         </div>
     </div>
-    <div class="item" style="width:200px">￥{{price}}</div>
+    <div class="item" style="width:120px">￥{{price}}</div>
     <div class="item" style="width:240px" >
         <el-input-number v-model="nums" @change="handleChange" :min="0" label="描述文字"></el-input-number>
     </div>
-    <div class="item" style="width:200px">￥{{total}}</div>
-    <div class="item" style="width:100px"><i class="el-icon-close" style="font-size:26px" @click="handleDel"></i></div>
+    <div class="item" style="width:160px">￥{{total}}</div>
+    <div class="item" style="width:80px"><i class="el-icon-close" style="font-size:26px" @click="handleDel"></i></div>
   </div>
 </template>
 
@@ -111,7 +111,9 @@ export default {
 </script>
 
 <style scoped>
-
+div{
+    font-size: 12px;
+}
 p{
     padding: 0px;
     margin: 0px;
@@ -120,8 +122,8 @@ p{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    height: 160px;
+    width: 1200px;
+    height: 140px;
     padding: 10px;
     box-sizing: border-box;
     background: #fff; 
@@ -131,8 +133,8 @@ p{
     display: flex;
 }
 .detail-img{
-    height: 100px;
-    width: 120px;
+    height: 80px;
+    width: 100px;
 }
 .info{
     /* margin-left: 20px; */

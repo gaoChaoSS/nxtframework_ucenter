@@ -6,19 +6,19 @@
             <div class="checkout" :class="{ checkouted: checkouts }" @click="handleAllCheck()" >
                 <img class="checkout-img" src="@/assets/check.png" alt="">
             </div>
-        <div class="item" style="width:460px">
+        <div class="item" style="width:360px">
             产品
         </div>
-        <div class="item" style="width:200px">
+        <div class="item" style="width:120px">
             单价
         </div>
         <div class="item" style="width:240px">
             数量
         </div>
-        <div class="item" style="width:200px">
+        <div class="item" style="width:160px">
             合计
         </div>
-        <div class="item" style="width:100px">
+        <div class="item" style="width:80px">
             移除
         </div>
     </div>
@@ -34,7 +34,7 @@
     />
     <div class="cart-info">
         <div class="back-btn" @click="handleBack()">
-            <i class="el-icon-back" style="font-size: 30px;margin-right:20px"></i>
+            <i class="el-icon-back" style="font-size: 20px;margin-right:10px"></i>
             继续购物
         </div>
         <div class="buy-info">
@@ -119,20 +119,27 @@ export default {
 
 <style scoped>
 .cart-page {
-  background: #fff;
-  padding: 60px 100px;
-  box-sizing: border-box;
+    background: #fff;
+    /* padding: 60px 100px; */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 0px;
 }
 p{
     padding: 0px;
     margin: 0px;
+}
+div{
+    font-size: 12px;
 }
 .cart-list{
         display: flex;
     padding: 60px 100px;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    width: 1200px;
     height: 60px;
     padding: 10px;
     box-sizing: border-box;
@@ -179,14 +186,14 @@ p{
 .cart-info{
     display: flex; 
     justify-content: space-between;
-    width: 100%;
+    width: 1200px;
     box-sizing: border-box;
-    padding: 0 100px;
+    padding: 0 60px;
     margin:60px 0px;
 }
 .back-btn{
-    width: 200px;
-    height: 46px;
+    width: 120px;
+    height: 36px;
     color: #014785;
     border: 1px solid #014785;
     line-height: 46px;
@@ -194,6 +201,7 @@ p{
     justify-content: center;
     align-items: center;
     text-align: center;
+    font-size: 10px;
 }
 .buy-info{
     display: flex;
@@ -210,8 +218,8 @@ p{
     margin-right: 100px;
 }
 .buy-btn{
-    width: 200px;
-    height: 46px;
+    width: 120px;
+    height: 36px;
     background: #014785;
     border: 1px solid #014785;
     line-height: 46px;
@@ -219,8 +227,8 @@ p{
     justify-content: center;
     align-items: center;
     text-align: center;
-    color:#fff;
-    font-size: 18px;
+    color: #fff;
+    font-size: 10px;
 }
 
 </style>

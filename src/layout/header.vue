@@ -65,10 +65,10 @@ export default {
   display: flex;
   align-items: center;
   border-bottom: .5px solid rgb(112 112 112 / 51%);
-  padding: 8px 40px;
+  padding: 2px 20px;
 }
 .logo-p {
-  font-size: 22px;
+  font-size: 20px;
   font-family: HYYaKuHeiW;
   font-weight: 600;
   line-height: 46px;
@@ -82,7 +82,7 @@ export default {
   /* width: 300px; */
 }
 .right-card img{
-  height: 30px;
+  height: 24px;
   width: auto;
   margin-right: 40px;
 }
@@ -96,7 +96,7 @@ export default {
   min-width: 120px;
 }
 .right-item a{
-  font-size: 16px;
+  font-size: 11px;
   font-family: PingFang SC;
   font-weight: 400;
   color: #1B1B1B;
@@ -105,14 +105,14 @@ export default {
 }
 .item-a{
   
-  font-size: 16px;
+  font-size: 11px;
   font-family: PingFang SC;
   font-weight: 400;
   line-height: 31px;
   color: #1B1B1B;
   border-left: 1px solid #7070706e;
   width: 100px;
-  padding: 0px 30px;
+  padding: 0px 10px;
   text-align: center;
 }
 </style>

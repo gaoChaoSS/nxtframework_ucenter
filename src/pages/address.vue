@@ -27,7 +27,7 @@
             <div class="info-title">
                 收货信息
             </div>
-            <div class="form-group" style="margin-top:30px">
+            <div class="form-group" style="margin-top:20px">
                 <el-form label-position="right" label-width="160px" :model="loginForm" :rules="rules" ref="loginForm">
                     <el-form-item label="姓名/Name" class="label" prop="deliveryPerson">
                         <el-input v-model="loginForm.deliveryPerson" style="width:200px"></el-input>
@@ -124,7 +124,7 @@
         </div>
         <div class="cart-info">
             <div class="back-btn" @click="handleGoCart()">
-                <i class="el-icon-back" style="font-size: 30px;margin-right:20px"></i>
+                <i class="el-icon-back" style="font-size: 20px;margin-right:10px"></i>
                 返回购物车
             </div>
             <div class="buy-info">
@@ -286,66 +286,70 @@ export default {
 
 <style scoped>
 .address-page{
-    width: 100%;
-    box-sizing: border-box;
-    padding: 60px 100px;
     background: #fff;
+    /* padding: 60px 100px; */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 0px;
 }
 .info-card{
     background: #F8F8F8;
-    width: 100%;
+    width: 1200px;
     /* height: 200px; */
-    padding: 30px 0px;
-    margin-top: 20px;
+    padding: 15px 0px;
+    margin-top: 14px;
 }
 .info-title{
     /* font-size: 24px;
     font-weight: 600;
      */
-    font-size: 28px;
+    font-size: 14px;
     font-family: PingFang SC;
     font-weight: bold;
-    line-height: 40px;
+    line-height: 32px;
     color: #014785;
-    padding-left: 60px;
+    padding-left: 40px;
     position: relative;
 }
 .info-title:before{
     content: '';
     width: 4px;
-    height: 34px;
+    height: 26px;
     position: absolute;
     top: 4px;
     background: #014785;
-    left: 44px;
+    left: 30px;
 
 }
 .info-content{
     display: flex;
-    margin-left: 40px;
-    margin-top: 40px;
+    margin-left: 20px;
+    margin-top: 20px;
     /* flex-wrap: wrap; */
 }
 .content{
-    margin:0px 40px;
+    margin:0px 20px;
 }
 .back-btn{
-    width: 200px;
-    height: 46px;
+    width: 140px;
+    height: 40px;
     color: #5F5F5F;
     border: 2px solid #5F5F5F;
-    line-height: 46px;
+    line-height: 39px;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     margin-right: 20px;
+    font-size: 14px;
 }
 .back-btn.active{
     border: 2px solid #014785;
 }
 .default-p{    
-    font-size: 20px;
+    font-size: 10px;
     font-family: PingFang SC;
     font-weight: 400;
     line-height: 29px;
@@ -354,7 +358,7 @@ export default {
     margin-right: 20px;
 }
 .price-p{
-    font-size: 20px;
+    font-size: 10px;
     font-family: PingFang SC;
     font-weight: bold;
     line-height: 28px;
@@ -362,7 +366,7 @@ export default {
     display: inline-block;
 }
 .cart-list{
-        display: flex;
+    display: flex;
     padding: 60px 100px;
     justify-content: space-between;
     align-items: center;
@@ -371,7 +375,7 @@ export default {
     padding: 10px;
     box-sizing: border-box;
     background: #f8f8f8;
-    margin-top: 60px;
+    margin-top: 20px;
 }
 .detail{
     display: flex;
@@ -395,8 +399,8 @@ export default {
     /* margin: 0px 40px; */
 }
 .buy-btn{
-    width: 160px;
-    height: 38px;
+    width: 120px;
+    height: 30px;
     background: #014785;
     border: 1px solid #014785;
     line-height: 46px;
@@ -405,10 +409,10 @@ export default {
     align-items: center;
     text-align: center;
     color:#fff;
-    font-size: 18px;
+    font-size: 10px;
 }
 .p-bank{
-    font-size: 20px;
+    font-size: 10px;
     font-family: PingFang SC;
     font-weight: 400;
     line-height: 29px;
@@ -416,7 +420,7 @@ export default {
     display: inline-block;
 }
 .default-p-1{
-    font-size: 20px;
+    font-size: 10px;
     font-family: PingFang SC;
     font-weight: 400;
     line-height: 29px;
@@ -430,7 +434,7 @@ export default {
 .cart-info{
     display: flex; 
     justify-content: space-between;
-    width: 100%;
+    width: 1200px;
     box-sizing: border-box;
     /* padding: 0 100px; */
     margin:60px 0px;
@@ -446,7 +450,7 @@ export default {
     align-items: center;
     text-align: center;
     color:#fff;
-    font-size: 18px;
+    font-size: 14px;
 }
 .buy-info-item{
     display: inline-block;

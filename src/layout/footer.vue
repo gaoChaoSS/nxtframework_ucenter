@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    <div class="footer-item" style="margin-bottom:26px">
+    <div class="footer-item" style="margin-bottom:14px">
       <p>联系我们</p>
       <p>关于我们</p>
       <p>条款声明</p>
@@ -28,8 +28,10 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding:30px 0px;
-  padding-bottom: 30px;
+  padding:10px 0px;
+  padding-bottom: 20px;
+  /* position:sticky;
+  bottom: 0px; */
 }
 .footer-item{
   display: flex;
@@ -37,13 +39,13 @@ export default {
   align-items: center;
 }
 .footer-item p{
-  font-size: 16px;
+  font-size: 11px;
   font-family: PingFang SC;
   font-weight: normal;
   line-height: 22px;
   color: #FFFFFF;
   padding: 0px 30px;
-  margin: 10px 0px;
+  margin: 5px 0px;
   opacity: 1;
 }
 </style>

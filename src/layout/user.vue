@@ -66,9 +66,9 @@ export default {
   margin-bottom: 20px;
 }
 .nav{
-  width: 260px;
-  height: 600px;
-  padding: 30px 34px;
+  width: 200px;
+  height: 400px;
+  padding: 30px 20px;
   box-sizing: border-box;
   background: #fff;
   margin-right: 20px;
@@ -94,10 +94,9 @@ export default {
   align-items: center;
 }
 .nav-item-p{
-  font-size:20px;
   padding:0px;
   margin:0px;
-  font-size: 20px;
+  font-size: 10px;
   font-family: PingFang SC;
   font-weight: 400;
   line-height: 29px;
@@ -120,7 +119,7 @@ export default {
   margin-top: 10px;
 }
 .nav-link{
-  font-size: 18px;
+  font-size: 10px;
   margin-bottom: 16px;
   color: #5F5F5F;;
   font-family: PingFang SC;

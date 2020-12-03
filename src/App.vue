@@ -35,13 +35,13 @@ body{
   border-bottom: none;
 }
 .el-menu-item,.el-submenu__title{
-  font-size: 16px;
+  font-size: 11px;
   font-family: PingFang SC;
   line-height: 31px;
   color: #1B1B1B;
 }
 .el-menu-item{
-  margin:0px 20px !important;
+  margin:0px 6px !important;
 }
 .el-header{
   /* border-bottom: 1px solid #707070; */
@@ -51,14 +51,17 @@ body{
 }
 .el-main{
   background: #F8F8F8;
-  min-height: 80%;
+  min-height: 800px;
   padding: 0px;
 }
 .el-form-item__label{
   color:#5F5F5F;
-  font-size:16px;
+  font-size:14px;
   font-family: PingFang SC;
-  padding-bottom: 6px !important;
+  padding-bottom: 2px !important;
+}
+.el-form-item{
+  margin-bottom: 16px;
 }
 .el-breadcrumb{
   font-size: 16px;

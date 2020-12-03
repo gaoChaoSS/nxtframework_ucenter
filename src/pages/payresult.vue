@@ -12,7 +12,7 @@
             <div class="info-title">
                 收货信息
             </div>
-            <div class="content" style="margin-top:30px">
+            <div class="content" style="margin-top:10px">
                 <div class="item">
                     <p class="title">邮箱：</p>
                     <p class="content-p">sssss@aaa.com</p>
@@ -163,52 +163,55 @@ export default {
 
 <style scoped>
 .address-page{
-    width: 100%;
-    box-sizing: border-box;
-    padding: 60px 100px;
     background: #fff;
+    /* padding: 60px 100px; */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 0px;
 }
 .info-card{
     background: #F8F8F8;
-    width: 100%;
+    width: 1200px;
     /* height: 200px; */
-    padding: 30px 0px;
-    margin-top: 20px;
+    padding: 15px 0px;
+    margin-top: 14px;
 }
 .info-title{
     /* font-size: 24px;
     font-weight: 600;
      */
-    font-size: 28px;
+    font-size: 14px;
     font-family: PingFang SC;
     font-weight: bold;
-    line-height: 40px;
+    line-height: 32px;
     color: #014785;
-    padding-left: 60px;
+    padding-left: 40px;
     position: relative;
 }
 .info-title:before{
     content: '';
     width: 4px;
-    height: 34px;
+    height: 26px;
     position: absolute;
     top: 4px;
     background: #014785;
-    left: 44px;
+    left: 30px;
 
 }
 .info-content{
     display: flex;
-    margin-left: 40px;
-    margin-top: 40px;
+    margin-left: 20px;
+    margin-top: 20px;
     /* flex-wrap: wrap; */
 }
 .content{
-    margin:0px 40px;
+    margin:0px 20px;
 }
 .back-btn{
-    width: 200px;
-    height: 46px;
+    width: 120px;
+    height: 36px;
     color: #5F5F5F;
     border: 2px solid #5f5f5f54;
     line-height: 46px;
@@ -217,12 +220,13 @@ export default {
     align-items: center;
     text-align: center;
     margin-right: 20px;
+    font-size:10px;
 }
 .back-btn.active{
     border: 2px solid #014785;
 }
 .default-p{    
-    font-size: 20px;
+    font-size: 10px;
     font-family: PingFang SC;
     font-weight: 400;
     line-height: 29px;
@@ -231,7 +235,7 @@ export default {
     margin-right: 20px;
 }
 .price-p{
-    font-size: 20px;
+    font-size: 10px;
     font-family: PingFang SC;
     font-weight: bold;
     line-height: 28px;
@@ -240,15 +244,15 @@ export default {
 }
 .cart-list{
         display: flex;
-    padding: 60px 100px;
+    padding: 20px 100px;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    height: 60px;
+    height: 36px;
     padding: 10px;
     box-sizing: border-box;
     background: #f8f8f8;
-    margin-top: 60px;
+    margin-top: 10px;
 }
 .detail{
     display: flex;
@@ -313,8 +317,8 @@ export default {
     margin:60px 0px;
 }
 .buy-btn-1{
-    width: 240px;
-    height: 46px;
+    width: 160px;
+    height: 36px;
     background: #014785;
     border: 1px solid #014785;
     line-height: 46px;
@@ -322,15 +326,15 @@ export default {
     justify-content: center;
     align-items: center;
     text-align: center;
-    color:#fff;
-    font-size: 18px;
+    color: #fff;
+    font-size: 10px;
 }
 .item{
     display: flex;
-    margin-top: 10px;
+    margin-top: 6px;
 }
 .title{
-    font-size: 20px;
+    font-size: 14px;
     font-family: PingFang SC;
     font-weight: 400;
     line-height: 29px;
@@ -340,8 +344,7 @@ export default {
     margin: 0px;
 }
 .content-p{
-    
-    font-size: 20px;
+    font-size: 14px;
     font-family: PingFang SC;
     font-weight: 400;
     line-height: 29px;

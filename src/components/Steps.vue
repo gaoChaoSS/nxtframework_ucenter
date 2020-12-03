@@ -37,7 +37,7 @@ export default {
  .steps{
     display: flex;
     height: 46px;
-    width: 100%;
+    width: 1200px;
     align-items: center;
     margin-bottom: 20px;
 }
@@ -62,7 +62,7 @@ export default {
 	outline: none;
 	display: flex;
 	float: left;
-	font-size: 16px;
+	font-size: 14px;
 	line-height: 36px;
 	color: white;
 	/*need more margin on the left of links to accomodate the numbers*/

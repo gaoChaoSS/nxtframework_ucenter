@@ -78,14 +78,14 @@
   width: 100%;
   margin-left: 20px;
   text-align: left;   
-  font-size: 20px;
+  font-size: 14px;
   font-family: PingFang SC;
   font-weight: 400;
   line-height: 29px;
   color: #1B1B1B;
 }
 .btn-group{
-  min-width: 240px;
+  min-width: 160px;
   display: flex;
   align-items: center;
 }
@@ -97,8 +97,8 @@
     margin-top: 20px;
 }
 .btn{
-  height: 40px;
-  padding: 0px 40px;
+  height: 36px;
+  padding: 0px 16px;
   background: #014785;
   border: 1px solid #014785;
   display: flex;
@@ -108,8 +108,8 @@
   margin-right: 10px;
 }
 .btns{
-  height: 40px;
-  padding: 0px 40px;
+  height: 36px;
+  padding: 0px 16px;
   background: #fff;
   border: 1px solid #014785;
   display: flex;
@@ -121,7 +121,7 @@
     /* font-size: 24px;
     font-weight: 600;
      */
-    font-size: 28px;
+    font-size: 22px;
     font-family: PingFang SC;
     font-weight: bold;
     line-height: 40px;
@@ -152,14 +152,14 @@
     margin:0px 40px;
 }
 p {
-  font-size: 20px;
+  font-size: 12px;
   font-family: PingFang SC;
   font-weight: 400;
   line-height: 29px;
   color: #5F5F5F;
 }
 .info-title-a{
-  font-size: 18px;
+  font-size: 12px;
   color:#0082FF;
   text-decoration: none;
   float: right;
