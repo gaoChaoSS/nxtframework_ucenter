@@ -43,6 +43,9 @@ body{
 .el-menu-item{
   margin:0px 6px !important;
 }
+.el-menu-item a{
+  color: #1B1B1B;
+}
 .el-header{
   /* border-bottom: 1px solid #707070; */
 }
@@ -83,7 +86,10 @@ body{
   font-size: 12px;
 }
 .el-loading-spinner i{
-  color:#fff;
+  color:#014785;
   font-size:50px;
+}
+a{
+  text-decoration: none;
 }
 </style>

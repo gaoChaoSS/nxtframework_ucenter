@@ -7,14 +7,32 @@
       style="width:100%"
       text-color="#1B1B1B"
     >
-      <el-menu-item index="1">首页</el-menu-item>
-      <el-menu-item index="2">产品</el-menu-item>
-      <el-menu-item index="3">资讯</el-menu-item>
+      <el-menu-item index="1">
+        <a href="/">首页</a>
+      </el-menu-item>
+      <el-menu-item index="2">
+        <a href="/product/list">产品</a>
+      </el-menu-item>
+      <el-menu-item index="3">
+        <a href="/news">资讯</a>
+      </el-menu-item>
       <el-submenu index="4">
         <template slot="title">关于</template>
-        <el-menu-item index="4-1">选项1</el-menu-item>
-        <el-menu-item index="4-2">选项2</el-menu-item>
-        <el-menu-item index="4-3">选项3</el-menu-item>
+        <el-menu-item index="4-1">
+          <a href="/about">关于我们</a>
+        </el-menu-item>
+        <el-menu-item index="4-2">
+          <a href="/connect_us">联系我们</a>
+        </el-menu-item>
+        <el-menu-item index="4-3">
+          <a href="/buy_guide">购买指南</a>
+        </el-menu-item>
+        <el-menu-item index="4-4">
+          <a href="/terms_state">条款声明</a>
+        </el-menu-item>
+        <el-menu-item index="4-4">
+          <a href="/privacy_policy">隐私政策</a>
+        </el-menu-item>
       </el-submenu>   
     </el-menu>
     <div class="right-card">
