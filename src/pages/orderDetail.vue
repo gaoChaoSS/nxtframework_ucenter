@@ -19,15 +19,15 @@
                 </div>
                 <div class="item">
                     <p class="title">姓名:</p>
-                    <p class="content-p">张三</p>
+                    <p class="content-p">{{deliveryPerson}}</p>
                 </div>
                 <div class="item">
                     <p class="title">收货地址：</p>
-                    <p class="content-p">广东省,深圳市,宝安区,南瓜街道,西瓜村89号</p>
+                    <p class="content-p">{{deliveryCountry}} , {{deliveryProvince}} , {{deliveryCity}} , {{deliveryAddress}}</p>
                 </div>
                 <div class="item">
                     <p class="title">联系电话：</p>
-                    <p class="content-p">136xxxxxxxx</p>
+                    <p class="content-p">{{deliveryPhone}}</p>
                 </div>
                 <div class="item">
                     <p class="title">支付方式：</p>
@@ -35,11 +35,11 @@
                 </div>
                 <div class="item">
                     <p class="title">配送方式：</p>
-                    <p class="content-p">顺丰</p>
+                    <p class="content-p">{{deliveryConfigName}}</p>
                 </div>
                 <div class="item">
                     <p class="title">备注：</p>
-                    <p class="content-p">sssss@aaa.com</p>
+                    <p class="content-p">{{deliveryRemark}}</p>
                 </div>  
             </div>
         </div>
@@ -49,16 +49,16 @@
             </div>
             <div class="content">
                 <div class="cart-list">
-                    <div class="item" style="width:460px">
+                    <div class="item" style="width:360px">
                         产品
                     </div>
-                    <div class="item" style="width:200px">
+                    <div class="item" style="width:120px">
                         单价
                     </div>
                     <div class="item" style="width:240px">
                         数量
                     </div>
-                    <div class="item" style="width:200px">
+                    <div class="item" style="width:160px">
                         合计
                     </div>
                 </div>
@@ -142,7 +142,9 @@ export default {
             deliveryAddress: state => state.order.deliveryAddress,
             deliveryPhone: state => state.order.deliveryPhone,
             balance: state => state.user.balance,
-            productList: state => state.order.productList
+            productList: state => state.order.productList,
+            deliveryConfigName: state => state.order.deliveryConfigName,
+
         }),
         total: function(){
             // eslint-disable-next-line no-unused-vars
@@ -227,7 +229,8 @@ export default {
     /* flex-wrap: wrap; */
 }
 .content{
-    margin:0px 20px;
+    margin:0px 30px;
+    margin-left: 40px;
 }
 .back-btn{
     width: 120px;
@@ -379,9 +382,6 @@ export default {
 </style>
 
 <style scoped>
-.content{
-    margin:0px 20px;
-}
 .default-p{    
     font-size: 10px;
     font-family: PingFang SC;
@@ -467,6 +467,7 @@ export default {
     width: 1200px;
     display: flex;
     justify-content: center;
+    margin-bottom: 20px;
 }
 .buy-info-item{
     display: inline-block;

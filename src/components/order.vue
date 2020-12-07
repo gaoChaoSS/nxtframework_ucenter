@@ -28,9 +28,9 @@
           </div>
           <div class="row">
             <div>
-              <a href="">评价</a>
-              <a href="">申请售后</a>
-              <a href="">再次购买</a>
+              <router-link :to="{path:'/',query:{orderid:this.id}}">评价</router-link>
+              <router-link :to="{path:'serive_detail',query:{orderid:this.id}}">申请售后</router-link>
+              <router-link :to="{path:'/',query:{orderid:this.id}}">再次购买</router-link>
             </div>
           </div>
       </div>
@@ -190,7 +190,8 @@ p {
     color: #5F5F5F;
 }
 .arr-item{
-
+    display: inline-block;
+    margin-right: 10px;
 }
 .row{
     display: flex;

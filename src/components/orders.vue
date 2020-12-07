@@ -1,28 +1,28 @@
 <template>
   <div class="order">
       <div class="title">
-          <p>{{time}}</p>
+          <p>{{datelineCreateReadable}}</p>
           <p style="margin-left:20px">订单号: {{orderId}}</p>
       </div>
       <div class="content">
           <div class="product-list" >
               <div class="product" v-for="(item, index) in Lists" :key="index">
-                  <img :src="item.img" alt="">
+                  <img :src="item.picUrl" alt="">
                   <div class="product-content">
-                        <p class="product-name">{{item.title}}</p>
+                        <p class="product-name">{{item.productName}}</p>
                         <div class="product-arr">
-                            <div class="arr-item" v-for="(arr, key) in item.arr" :key="key">
-                                {{arr.key}} {{arr.value}}
+                            <div class="arr-item" v-for="(arr, key) in item.sku" :key="key">
+                                {{arr.skuKeyName}} {{arr.skuValueName}}
                             </div>
                         </div>
                   </div>
-                  <p class="num">x{{item.num}}</p>          
-                  <p class="num"> {{price | price}}</p>  
-                  <p class="state"> 等待受理</p>  
+                  <p class="num">x{{item.quantity}}</p>          
+                  <p class="num"> {{item.amountRefund | price}}</p>  
+                  <p class="state" v-html="stated"></p>  
               </div>
           </div>
           <div class="row">
-              <a href="">评价</a>
+              <router-link :to="{path:'/serive_detail', query:{id: id}}" style="margin-top:20px">售后详情</router-link>
           </div>
       </div>
   </div>
@@ -35,37 +35,43 @@ export default {
             default: 1,
             type: Number
         },
-        time:{
+        datelineCreateReadable:{
             default: '2020-10-31 20:53:17',
             type: String
         },
         orderId: {
             default: '21312312312312',
+            type: [String, Number]
+        },
+        statusText:{
+            default:'完成',
             type: String
         },
         Lists:{
             // eslint-disable-next-line vue/require-valid-default-prop
             default:()=>[
                 {
-                    img:'/image/login.png',
-                    title:'扫地机器人 智能家电 ',
-                    num: 1,
-                    arr:[
-                        {key:'颜色', value: '白色'}
-                    ]
+                    picUrl:'/image/login.png',
+                    productName:'扫地机器人 智能家电 ',
+                    quantity: 1,
+                    sku:[
+                        {skuKeyName:'颜色', skuValueName: '白色'}
+                    ],
+                    
                 },
                 {
-                    img:'/image/login.png',
-                    title:'扫地机器人 智能家电 ',
-                    num: 1,
-                    arr:[
-                        {key:'颜色', value: '白色'}
-                    ]
+                    picUrl:'/image/login.png',
+                    productName:'扫地机器人 智能家电 ',
+                    quantity: 1,
+                    sku:[
+                        {skuKeyName:'颜色', skuValueName: '白色'}
+                    ],
+                    statusText:'完成'
                 }
             ],
             type: Array
         },
-        price:{
+        amountFinally:{
             default: 30.01,
             type: Number
         },
@@ -74,11 +80,14 @@ export default {
             type: Number
         }
     },
-    filters: {
-        state: function (value) {
-            if (!value) return ''
-            if(value == 1) return '已完成'
+    computed:{
+        stated: function () {
+            if(this.statusText == '完成') return `<p style="color:#00AE9C">完成</p>`
+            return this.statusText;
         },
+    },
+    filters: {
+        
         price: function (value) {
             return  '￥'+value;
         }
@@ -203,7 +212,7 @@ p {
 .state{
     min-width: 220px;
     /* height: 100%; */
-    font-size: 20px;
+    font-size: 16px;
     font-family: PingFang SC;
     font-weight: 400;
     line-height: 26px;

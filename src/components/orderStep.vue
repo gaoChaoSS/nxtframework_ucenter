@@ -7,23 +7,23 @@
       <div class="content">
           <div class="product-list" >
               <div class="product" v-for="(item, index) in Lists" :key="index">
-                  <div style="width:80px;align-self: center; text-align: center;">
-                      <el-checkbox v-model="item.checked" style="align-self: center;" v-show="isChecked" />
+                  <div style="width:60px;align-self: center; text-align: center;">
+                      <el-checkbox v-model="item.checked" style="align-self: center;" v-show="isChecked" @change="handleChange" />
                   </div>
-                  <img :src="item.img" alt="">
+                  <img :src="item.picUrl" alt="">
                   <div class="product-content">
-                        <p class="product-name">{{item.title}}</p>
+                        <p class="product-name">{{item.productName}}</p>
                         <div class="product-arr">
-                            <div class="arr-item" v-for="(arr, key) in item.arr" :key="key">
-                                {{arr.key}} {{arr.value}}
+                            <div class="arr-item" v-for="(arr, key) in item.sku" :key="key">
+                                {{arr.skuValueName}} {{arr.skuKeyName}}
                             </div>
                         </div>
                   </div>
-                  <p class="num">x{{item.num}}</p>          
-                  <div style="    width: 160px;align-items: self-end; display: flex;">
-                    <el-input-number v-model="item.sum" :min="0" :max="item.num" style="align-self: flex-end;" v-show="isChecked" />
+                  <p class="num">x{{item.quantity}}</p>          
+                  <div style="    width: 120px;align-items: self-end; display: flex;">
+                    <el-input-number v-model="item.sum" :min="0" :max="item.quantity" style="align-self: flex-end;" v-show="isChecked" />
                   </div>
-                  <p class="num"> {{item.price | price}}</p>  
+                  <p class="num"> {{item.productPriceDeal | price}}</p>  
               </div>
           </div>
           <div class="row">
@@ -46,35 +46,24 @@ export default {
         },
         orderId: {
             default: '21312312312312',
-            type: String
+            type: [String,Number]
         },
         Lists:{
             // eslint-disable-next-line vue/require-valid-default-prop
             default:()=>[
                 {
                     checked:true,
-                    img:'/image/login.png',
-                    title:'扫地机器人 智能家电 ',
-                    num: 2,
+                    picUrl:'/image/login.png',
+                    productName:'扫地机器人 智能家电 ',
+                    quantity: 2,
                     sum: 1,
-                    price: 13.00,
-                    arr:[
-                        {key:'颜色', value: '白色'}
+                    productPriceDeal: 13.00,
+                    sku:[
+                        {skuKeyName:'颜色', skuValueName: '白色'}
                     ]
-                },
-                {
-                    checked: false,
-                    img:'/image/login.png',
-                    title:'扫地机器人 智能家电 ',
-                    price: 133,
-                    num: 1,
-                    sum: 1,
-                    arr:[
-                        {key:'颜色', value: '白色'}
-                    ]
-                }
+                },                
             ],
-            type: Array
+            type: [Array, Object]
         },
         price:{
             default: 30.01,
@@ -85,7 +74,7 @@ export default {
             type: Number
         },
         isChecked:{
-            default: true,
+            default: false,
             type:Boolean
         }
     },
@@ -94,11 +83,14 @@ export default {
             let sum = 0
             this.Lists.map(item => {
                 if(item.checked) {
-                    sum += item.sum * item.price
+                    sum += item.sum * item.productPriceDeal
                 }
             })
-            return '$'+ sum
+            return '$'+ sum.toFixed(2)
         }
+    },
+    created(){
+        console.log(this.Lists);
     },
     filters: {
         state: function (value) {
@@ -112,6 +104,10 @@ export default {
     methods: {
         handleDetail(){
             this.$router.push('/detail')
+        },
+        handleChange()
+        {
+            this.$store.commit('refund/CHECK_PRODUCT', this.id)
         }
     }
 }
@@ -125,7 +121,7 @@ export default {
     background: #F8F8F8;
 }
 .title{
-    font-size: 18px;
+    font-size: 12px;
     width: 100%;
     border-bottom: 1px solid #70707080;
     display: flex;
@@ -136,7 +132,7 @@ export default {
 }
 
 .title p{
-    font-size: 18px;
+    font-size: 10px;
     color: #5F5F5F;
 }
 .content{
@@ -180,7 +176,7 @@ p {
     display: flex;
     flex-direction: column;
     margin-left: 20px;
-    width: 700px;
+    width: 280px;
     
 }
 .product img{
@@ -189,15 +185,14 @@ p {
 }
 .product-name{
     width: 100%;
-    font-size: 20px;
-    margin-bottom: 20px;
-    font-size: 20px;
+    font-size: 14px;
+    margin-bottom: 10px;    
     font-family: PingFang SC;
     font-weight: 400;
     color: #1B1B1B;
 }
 .product-arr{
-    font-size: 16px;
+    font-size: 10px;
     font-family: PingFang SC;
     font-weight: 400;
     line-height: 23px;
@@ -211,14 +206,14 @@ p {
     flex-direction: column;
     align-items: center;
     /* justify-content: center; */
-    min-width: 360px;
+    min-width: 200px;
     padding-top: 20px;
     border-left: 1px solid #70707079;
 }
 .num{
     align-self: flex-end; 
     margin-bottom:10px;
-    font-size: 16px;
+    font-size: 10px;
     font-family: PingFang SC;
     font-weight: 400;
     line-height: 23px;

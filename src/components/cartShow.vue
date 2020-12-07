@@ -132,10 +132,12 @@ p{
     flex-direction: column;
     justify-content: flex-start;
     padding: 10px;
-    padding-top: 4px;
+    padding-top: 0px;
 }
 .title{
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
+    margin-bottom: 10px;
+    font-size: 16px;
 }
 
 .checkout{
@@ -155,5 +157,10 @@ p{
 .checkout-img{
     width: 100%;
     height: auto;
+}
+.att{
+    display: inline-block;
+    margin-right: 10px;
+    color: #1B1B1B;
 }
 </style>

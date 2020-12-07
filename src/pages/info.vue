@@ -21,14 +21,25 @@
           <router-link to="/order" class="info-title-a">查看所有订单</router-link>
       </div>
       <div class="info-content">
-          <img src="@/assets/info/3.png" alt="" width="120px">
-          <p>您最近没有待处理订单</p>
+          <template  v-if="list">
+            <Order v-for="(item, index) in list" :key="index"
+              :Lists="item.orderFormProductList"
+              :amountFinally = "item.amountFinally"
+              :datelineCreateReadable = "item.datelineCreateReadable"
+              :id = "item.id"
+            />
+          </template>
+          <template v-else> 
+            <img src="@/assets/info/3.png" alt="" width="120px">
+            <p>您最近没有待处理订单</p>
+          </template>
       </div>
     </div>
   </div>
 </template>
 <script>
-  import { mapState } from 'vuex' 
+import Order from '@/components/order'
+  import { mapState, mapGetters } from 'vuex' 
   export default {
     data() {
       return {
@@ -39,10 +50,17 @@
     computed:{
       ...mapState({
         balance: state => state.user.balance
+      }),
+      ...mapGetters({
+        list: 'orderList'
       })
+    },
+    components:{
+      Order
     },
     created(){
       this.$store.dispatch('user/balance')
+      this.$store.dispatch('order/list', {offset:0, limit: 3})
     },
     methods: {
       handleClick(tab, event) {

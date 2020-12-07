@@ -42,7 +42,7 @@ const routes = [
   },{
     path: '/detail', component: () => import('@/pages/orderDetail.vue')
   },{
-    path: '/serive-1', component: () => import('@/pages/serive-1.vue')
+    path: '/serive_detail', component: () => import('@/pages/serive-1.vue'), props: true
   }
 ]
 const whiteList = ['/login', '/reset', '/sign', '/cart','/order_form_create'] // no redirect whitelist

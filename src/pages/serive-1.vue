@@ -8,7 +8,12 @@
                 :time ="item.time"
             />
         </div>
-        <Order />
+        <div class="back">
+            <Order                 
+                :Lists="refundList"
+                :isChecked ="state==1"
+            />
+        </div>
         <div class="info-card">
             <div class="content" style="margin-top:30px">
                 <div class="item">
@@ -21,28 +26,29 @@
                         :value="item.value">
                         </el-option>
                     </el-select>
-                    <p class="content-p" v-else>sssss@aaa.com</p>
+                    <p class="content-p" v-else>{{reasonTypeText}}</p>
                 </div>
                 <div class="item">
                     <p class="title">问题描述：:</p>
                     <el-input type="textarea" v-model="desc" v-if="state==1" :rows="6" resize="none" style="width:700px; "></el-input>
-                    <p class="content-p" v-else>张三</p>
+                    <p class="content-p" v-else>{{reasionDescription}}</p>
                 </div>
                 <div class="item">
                     <p class="title">图片信息：</p>
                     <div class="row">
-                        <div class="blacks" v-for="(item, index) in imgarr" :key="index">
+                        <div class="blacks" v-for="(item, index) in reasonImageList" :key="index">
                             <el-avatar shape="square" :size="60" :src="item" />
                         </div>
                         <div class="upload-item" v-if="state == 1">
                             <el-upload
                                 class="upload-demo"
                                 ref="upload"
-                                action="https://jsonplaceholder.typicode.com/posts/"
+                                action="/api/user/uploadimage"
+                                :headers="headers"
                                 :on-preview="handlePreview"
                                 :on-remove="handleRemove"
-                                :file-list="fileList"
-                                :auto-upload="false">
+                                :multiple="true"
+                                :file-list="fileList">
                                 <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
                                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
                                 <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -57,6 +63,9 @@
                     <p class="title" style="margin-left:200px">运单号码：</p>
                     <p class="content-p">{{valuePay}}</p>
                 </div>
+                <div class="item">
+                    <div class="button" @click="handleCreate()">提交申请</div>
+                </div>
             </div>
         </div>
         
@@ -66,8 +75,8 @@
 <script>
 import Order from '@/components/orderStep.vue'
 import Flow from  '@/components/flow.vue'
-// import _ from 'lodash'
-import { mapGetters} from 'vuex';
+import { getToken, getUserId } from '@/utils/auth'
+import {  mapState} from 'vuex';
 export default {
     data(){
         return {
@@ -75,8 +84,9 @@ export default {
                 username:'',
                 password:''
             },
+            id: 0,
             labelPosition: 'top',
-            value: 11,
+            value: '',
             payType:[
             ],
             desc:'',
@@ -85,10 +95,17 @@ export default {
                 '/image/login.png',
                 '/image/login.png'
             ],
-            options:[],
+            options:[                                
+                {value:0, label:'无理由' },
+                {value:1, label:'质量问题'}
+            ],
             valuePay:'微信',
             state:2,
             fileList: [],
+            headers:{
+                'token':getToken(),
+                'user_id':getUserId()
+            },
             flow:[
                 {
                     title:'申请退货', icon:require('@/assets/icon/1.png'), 
@@ -123,9 +140,27 @@ export default {
         Flow
     },
     computed:{
-        ...mapGetters({
-            cartProductList:'productList'
-        }),
+        ...mapState({
+            amountFinally: state => state.refund.amountFinally ,
+            amountRefundTotal: state => state.refund.amountRefundTotal,
+            datelineCreate: state => state.refund.datelineCreate,
+            datelineCreateReadable: state => state.refund.datelineCreateReadable,
+            datelineEnd: state => state.refund.datelineEnd,
+            datelineEndReadable: state => state.refund.datelineEndReadable,
+            deliveryPerson: state => state.refund.deliveryPerson,
+            deliveryPhone: state => state.refund.deliveryPhone,
+            orderFormId: state => state.refund.orderFormId,
+            orderFormRefundProductList: state => state.refund.orderFormRefundProductList,
+            orderFormSerialNum: state => state.refund.orderFormSerialNum,
+            reasionDescription: state => state.refund.reasionDescription,
+            reasonImageList: state => state.refund.reasonImageList,
+            reasonType: state => state.refund.reasonType,
+            reasonTypeText: state => state.refund.reasonTypeText,
+            status: state => state.refund.status,
+            statusText: state => state.refund.statusText,
+            refundList: state => state.refund.refundList,
+            productList: state => state.order.productList,
+        })
     },
     watch:{
         orderState:function(){
@@ -133,8 +168,23 @@ export default {
         }
     },
     created() {
-        // var order_id = this.orderI
-        console.log('sss')
+        if(this.$route.query.id){
+            this.id = this.$route.query.id
+            this.$store.dispatch('refund/detail',{id: this.id})
+        }else{
+            this.state = 1;
+            this.id = this.$route.query.orderid
+            this.$store.dispatch('order/detail', this.id).then(()=>{
+                var arr = [];
+                this.productList.map(item => {
+                    item.checked = true
+                    item.sum = item.quantity
+                    arr.push(item)
+                })
+                this.$store.commit('refund/SET_REFUND_LIST',arr)
+            })
+            
+        }
     },
     mounted(){
     },
@@ -156,6 +206,24 @@ export default {
         },
         handlePreview(file) {
             console.log(file);
+        },
+        handleCreate(){
+            var arr = [];
+            this.refundList.map(item => {
+                if(item.checked){
+                    let temp = {};
+                    temp.orderFormProductId = item.id
+                    temp.quantity =item.sum
+                    arr.push(temp)
+                }
+            })
+            this.$store.dispatch('refund/create', {
+                orderFormProductList:arr,
+                reasonType:this.reasonType,
+                reasionDescription: this.reasionDescription,
+                imageIdList:[],
+                id:this.id
+            })
         }
     }
 }
@@ -167,13 +235,20 @@ export default {
     box-sizing: border-box;
     padding: 60px 100px;
     background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .info-card{
     background: #F8F8F8;
-    width: 100%;
+    width: 1200px;
     /* height: 200px; */
     padding: 30px 0px;
     margin-top: 20px;
+}
+.back{
+    width: 1200px;
 }
 .info-title{
     /* font-size: 24px;
@@ -382,6 +457,7 @@ export default {
     display: flex;
     justify-content: center;
     margin-bottom: 30px;
+    width: 1200px;
 }
 .blacks{
     margin: 0 10px;
@@ -401,5 +477,20 @@ export default {
 .upload-item{
     width:100%;
     margin-top:10px
+}
+.button{
+    background: #014785;
+    font-size: 10px;
+    font-family: PingFang SC;
+    font-weight: 400;
+    line-height: 26px;
+    color: #FFFFFF;
+    width: 120px;
+    padding: 4px 6px;
+    box-sizing: border-box;
+    text-align: center;
+    margin-top: 10px;
+    margin-left: 196px;
+    /* letter-spacing: 50px; */
 }
 </style>

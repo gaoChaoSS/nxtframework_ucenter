@@ -7,7 +7,10 @@
           :datelineCreateReadable = "item.datelineCreateReadable"
           :id = "item.id"
          />
-        <Pagination />
+        <Pagination 
+          @handleNumber="changeNumber($event)"
+          :number="number[0]"
+        />
     </el-tab-pane>
     <el-tab-pane label="待付款" name="second">待付款</el-tab-pane>
     <el-tab-pane label="待收货" name="third">待收货</el-tab-pane>
@@ -21,7 +24,10 @@
   export default {
     data() {
       return {
-        activeName: 'first'
+        activeName: 'first',
+        number:[
+          1,1,1,1
+        ]
       };
     },
     computed: {
@@ -34,12 +40,17 @@
         Pagination
     },
     created(){
-      this.$store.dispatch('order/list', {offset:0, limit: 10})
+      this.$store.dispatch('order/list', {offset:(this.number[0] - 1)*10, limit: 10})
       console.log(this.list)
     },
     methods: {
       handleClick(tab, event) {
         console.log(tab, event);
+      },
+      changeNumber(value){
+        this.number[value.item] = value.number
+        this.$store.dispatch('order/list', {offset:(this.number[0] - 1)*10, limit: 10})
+        this.$forceUpdate();
       }
     }
   };

@@ -1,16 +1,31 @@
 <template>
   <div class="pagination">
-      <div class="prov">
+      <div class="prov" @click="handleNumber(-1)">
           上一页
       </div>
-      <div class="number">1/3</div>
-      <div class="next">下一页</div>
+      <div class="number">{{ number }}/3</div>
+      <div class="next" @click="handleNumber(1)">下一页</div>
   </div>
 </template>
 
 <script>
 export default {
-
+    props:{
+        number:{
+            type: Number,
+            default: 1
+        },
+        item:{
+            type: Number,
+            default: 0
+        }
+    },
+    methods:{
+        handleNumber(value){
+            // console.log('handleNumber')
+            this.$emit('handleNumber',{number: this.number+value, item: this.item})
+        }
+    }
 }
 </script>
 

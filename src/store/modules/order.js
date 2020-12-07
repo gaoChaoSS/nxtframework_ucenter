@@ -23,6 +23,7 @@ const state = {
     deliveryCost:0,
     orderId:0,
     orderState:0,
+    deliveryConfigName:'',
     orderList:[]
 }
 
@@ -30,7 +31,7 @@ const mutations = {
     SET_ADDRESS: (state, data) =>{
         const {deliveryPerson,deliveryProvince,deliveryCity,
             deliveryAddress,deliveryPhone,deliveryConfigId,
-            deliveryConfig,dealPlatform,deliveryRemark,deliveryCountry} = data;
+            deliveryConfig,dealPlatform,deliveryRemark,deliveryCountry,deliveryConfigName} = data;
         state.deliveryPerson = deliveryPerson
         state.deliveryProvince = deliveryProvince
         state.deliveryCity = deliveryCity
@@ -41,6 +42,7 @@ const mutations = {
         state.dealPlatform = dealPlatform
         state.deliveryRemark = deliveryRemark
         state.deliveryCountry = deliveryCountry
+        state.deliveryConfigName = deliveryConfigName
     },
     SET_PERSON_OPTION: (state, data) => {
         state.deliveryPersonOption = data
