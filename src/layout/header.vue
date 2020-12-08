@@ -36,7 +36,10 @@
       </el-submenu>   
     </el-menu>
     <div class="right-card">
-      <img src="@/assets/car.png" alt="" @click="handleCart()">
+      <div class="cart-img">
+        <img src="@/assets/car.png" alt="" @click="handleCart()">
+        <p class="count" v-if="countAll">{{countAll}}</p>
+      </div>
       <div class="right-item" v-if="token">
         <router-link to="/order" class="item-a">我的订单</router-link> 
         <router-link to="/" class="item-a">个人中心</router-link>
@@ -51,12 +54,15 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 export default {
   computed: {
     ...mapGetters([
       'token',
     ]),
+    ...mapState({
+      countAll: state => state.cart.countAll
+    })
   },
   methods:{
     handleLogout(){
@@ -97,6 +103,7 @@ export default {
 .right-card{
   display: flex;
   align-items: center;
+  position: relative;
   /* width: 300px; */
 }
 .right-card img{
@@ -132,5 +139,22 @@ export default {
   width: 100px;
   padding: 0px 10px;
   text-align: center;
+}
+.count{
+  background: #F3664B;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: -20px;
+  right: 24px;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+.cart-img{
+  position: relative;
 }
 </style>

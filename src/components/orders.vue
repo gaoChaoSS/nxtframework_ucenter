@@ -108,12 +108,12 @@ export default {
     background: #fff;
 }
 .title{
-    font-size: 12px;
+    font-size: 14px;
     width: 100%;
     border-bottom: 1px solid #70707080;
     display: flex;
     /* margin-bottom: 10px; */
-    padding: 6px 20px;
+    padding: 12px 20px;
     box-sizing: border-box;
     color: #5F5F5F;
 }

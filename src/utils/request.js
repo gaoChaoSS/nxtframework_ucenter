@@ -16,7 +16,6 @@ service.interceptors.request.use(
       config.headers['token'] = getToken()
       config.headers['user_id'] = getUserId()
     }
-    console.log(config)
     startLoading()
     return config
   },

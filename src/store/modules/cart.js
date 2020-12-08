@@ -1,4 +1,4 @@
-import { detail, addProduct, delProduct, selectProduct } from '@/api/cart'
+import { detail, addProduct, delProduct, selectProduct ,info} from '@/api/cart'
 import { getGuestToken, setGuestToken } from '@/utils/auth'
 const state = {
     productList:[],
@@ -13,7 +13,8 @@ const state = {
     deliveryConfig:'',
     dealPlatform:1,
     deliveryRemark:'',
-    deliveryCountry:''
+    deliveryCountry:'',
+    countAll:0
 }
 
 const mutations = {
@@ -77,6 +78,9 @@ const mutations = {
   },
   SET_GUESTTOKEN:(state, data) => {
     state.guestToken = data
+  },
+  SET_COUNT: (state, data) => {
+    state.countAll =  data
   }
 }
 
@@ -124,6 +128,18 @@ const actions = {
         return new Promise((resolve, reject) => {
             selectProduct({guestToken: state.guestToken, product: data}).then(() => {
                 commit('CHECK_PRODUCT', data)
+                resolve()
+            }).catch(error => {
+                reject(error)
+            })
+        })
+    },
+    // eslint-disable-next-line no-empty-pattern
+    info({ commit }) {
+        return new Promise((resolve, reject) => {
+            info({}).then((res) => {
+                commit('SET_COUNT',res.result.countAll)
+                // console.log(res)
                 resolve()
             }).catch(error => {
                 reject(error)

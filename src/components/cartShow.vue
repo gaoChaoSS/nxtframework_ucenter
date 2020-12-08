@@ -78,7 +78,7 @@ export default {
     },
     computed:{
         total: function() {
-            return this.num * this.price
+            return (this.num * this.price).toFixed(2)
         }
     },
     methods: {

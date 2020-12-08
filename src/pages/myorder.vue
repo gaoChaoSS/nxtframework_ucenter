@@ -1,20 +1,65 @@
 <template>
   <el-tabs v-model="activeName" @tab-click="handleClick">
     <el-tab-pane label="全部订单" name="first">
-        <Order v-for="(item, index) in list" :key="index"
+        <Order v-for="(item, index) in lists[0]" :key="index"
           :Lists="item.orderFormProductList"
           :amountFinally = "item.amountFinally"
           :datelineCreateReadable = "item.datelineCreateReadable"
+          :orderId = "item.serialNum"
           :id = "item.id"
+          :statusText = "item.statusText"
          />
         <Pagination 
           @handleNumber="changeNumber($event)"
           :number="number[0]"
+          :item ="0"
         />
     </el-tab-pane>
-    <el-tab-pane label="待付款" name="second">待付款</el-tab-pane>
-    <el-tab-pane label="待收货" name="third">待收货</el-tab-pane>
-    <el-tab-pane label="待评价" name="fourth">待评价</el-tab-pane>
+    <el-tab-pane label="待付款" name="second">
+      <Order v-for="(item, index) in lists[1]" :key="index"
+          :Lists="item.orderFormProductList"
+          :amountFinally = "item.amountFinally"
+          :datelineCreateReadable = "item.datelineCreateReadable"
+          :orderId = "item.serialNum"
+          :id = "item.id"
+          :statusText = "item.statusText"
+         />
+        <Pagination 
+          @handleNumber="changeNumber($event)"
+          :number="number[1]"
+          :item ="1"
+        />
+    </el-tab-pane>
+    <el-tab-pane label="待收货" name="third">
+        <Order v-for="(item, index) in lists[2]" :key="index"
+          :Lists="item.orderFormProductList"
+          :amountFinally = "item.amountFinally"
+          :datelineCreateReadable = "item.datelineCreateReadable"
+          :orderId = "item.serialNum"
+          :id = "item.id"
+          :statusText = "item.statusText"
+         />
+        <Pagination 
+          @handleNumber="changeNumber($event)"
+          :number="number[2]"
+          :item ="2"
+        />
+    </el-tab-pane>
+    <el-tab-pane label="待评价" name="fourth">
+        <Order v-for="(item, index) in lists[3]" :key="index"
+          :Lists="item.orderFormProductList"
+          :amountFinally = "item.amountFinally"
+          :datelineCreateReadable = "item.datelineCreateReadable"
+          :orderId = "item.serialNum"
+          :id = "item.id"
+          :statusText = "item.statusText"
+         />
+        <Pagination 
+          @handleNumber="changeNumber($event)"
+          :number="number[3]"
+          :item ="3"
+        />
+    </el-tab-pane>
   </el-tabs>
 </template>
 <script>
@@ -27,6 +72,9 @@
         activeName: 'first',
         number:[
           1,1,1,1
+        ],
+        lists:[
+          [],[],[],[]
         ]
       };
     },
@@ -40,7 +88,9 @@
         Pagination
     },
     created(){
-      this.$store.dispatch('order/list', {offset:(this.number[0] - 1)*10, limit: 10})
+      for(let i = 0 ; i < 4; i++){
+        this.loadData({item:i,number: 1})
+      }
       console.log(this.list)
     },
     methods: {
@@ -48,9 +98,26 @@
         console.log(tab, event);
       },
       changeNumber(value){
+        this.loadData(value)
+      },
+      loadData(value){
         this.number[value.item] = value.number
-        this.$store.dispatch('order/list', {offset:(this.number[0] - 1)*10, limit: 10})
-        this.$forceUpdate();
+        let data = {offset:(this.number[value.item] - 1)*10, limit: 10}
+        if(value.item == 1){
+          data.isPaid = true
+        }
+        if(value.item == 2){
+          data.isDelivery = true
+        }
+        if(value.item == 3){
+          data.isReviews = true
+        }
+        this.$store.dispatch('order/list', data).then(() => {
+            console.log(value)
+            this.lists[value.item] = this.list
+            console.log(this.lists[value.item])
+            this.$forceUpdate();
+        })
       }
     }
   };

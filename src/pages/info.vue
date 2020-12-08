@@ -10,14 +10,14 @@
     </div>
     <div class="info-item">
       <img src="@/assets/info/2.png" alt="" class="info-item-img">
-      <p class="info-item-title">推广收益   {{profit}}</p>
+      <p class="info-item-title">推广收益   {{balanceAll}}</p>
       <div class="btn-group">
         <div class="btn">转到余额</div>
       </div>
     </div>
     <div class="info-card">
       <div class="info-title">
-          支付方式
+          最近订单
           <router-link to="/order" class="info-title-a">查看所有订单</router-link>
       </div>
       <div class="info-content">
@@ -26,7 +26,9 @@
               :Lists="item.orderFormProductList"
               :amountFinally = "item.amountFinally"
               :datelineCreateReadable = "item.datelineCreateReadable"
+              :orderId = "item.serialNum"
               :id = "item.id"
+              :statusText = "item.statusText"
             />
           </template>
           <template v-else> 
@@ -49,7 +51,8 @@ import Order from '@/components/order'
     },
     computed:{
       ...mapState({
-        balance: state => state.user.balance
+        balance: state => state.user.balance,
+        balanceAll: state => state.commission.balanceAll
       }),
       ...mapGetters({
         list: 'orderList'
@@ -60,6 +63,8 @@ import Order from '@/components/order'
     },
     created(){
       this.$store.dispatch('user/balance')
+      this.$store.dispatch('commission/detail')
+      this.$store.dispatch('cart/info')
       this.$store.dispatch('order/list', {offset:0, limit: 3})
     },
     methods: {
@@ -124,6 +129,7 @@ import Order from '@/components/order'
   align-items: center;
   color:#fff;
   margin-right: 10px;
+  cursor: pointer;
 }
 .btns{
   height: 36px;
@@ -134,6 +140,7 @@ import Order from '@/components/order'
   justify-content: center;
   align-items: center;
   color:#014785;
+  cursor: pointer;
 }
 .info-title{
     /* font-size: 24px;

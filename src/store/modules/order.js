@@ -24,13 +24,19 @@ const state = {
     orderId:0,
     orderState:0,
     deliveryConfigName:'',
-    orderList:[]
+    orderList:[],        
+    datelineCreateReadable:'',
+    datelinePaidReadable:'',
+    datelineDeliveryReadable:'',
+    datelineReceivedReadable:'',
 }
 
 const mutations = {
     SET_ADDRESS: (state, data) =>{
         const {deliveryPerson,deliveryProvince,deliveryCity,
             deliveryAddress,deliveryPhone,deliveryConfigId,
+            datelineCreateReadable,datelinePaidReadable,
+            datelineDeliveryReadable,datelineReceivedReadable,
             deliveryConfig,dealPlatform,deliveryRemark,deliveryCountry,deliveryConfigName} = data;
         state.deliveryPerson = deliveryPerson
         state.deliveryProvince = deliveryProvince
@@ -43,6 +49,10 @@ const mutations = {
         state.deliveryRemark = deliveryRemark
         state.deliveryCountry = deliveryCountry
         state.deliveryConfigName = deliveryConfigName
+        state.datelineCreateReadable = datelineCreateReadable
+        state.datelinePaidReadable = datelinePaidReadable
+        state.datelineDeliveryReadable = datelineDeliveryReadable
+        state.datelineReceivedReadable = datelineReceivedReadable
     },
     SET_PERSON_OPTION: (state, data) => {
         state.deliveryPersonOption = data
@@ -182,11 +192,9 @@ const actions = {
         })
     },
     list({ commit }, data) {
-        console.log(data)
         return new Promise((resolve, reject) => {
             list({...data}).then((response) => {
-                console.log(response.result)
-                commit('SET_ORDER_LIST', response.result)
+                commit('SET_ORDER_LIST', response.result)                
                 resolve()
             }).catch(error => {
                 reject(error)

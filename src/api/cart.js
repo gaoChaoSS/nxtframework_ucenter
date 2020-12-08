@@ -36,3 +36,12 @@ export function selectProduct(data) {
     data
   })
 }
+
+//购物车基本信息
+export function info(data) {
+  return request({
+    url: '/api/shopping_cart/info',
+    method: 'post',
+    data
+  })
+}

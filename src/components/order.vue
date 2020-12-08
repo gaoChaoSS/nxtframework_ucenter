@@ -2,7 +2,7 @@
   <div class="order">
       <div class="title">
           <p>{{datelineCreateReadable}}</p>
-          <p style="margin-left:20px">订单号: {{id}}</p>
+          <p style="margin-left:20px">订单号: {{orderId}}</p>
       </div>
       <div class="content">
           <div class="product-list" >
@@ -23,14 +23,13 @@
              <p>{{amountFinally | price}}</p>
           </div>
           <div class="row">
-              <p>{{state | state}}</p>
+              <p>{{statusText}}</p>
               <div class="button" @click="handleDetail()">订单详情</div>
           </div>
           <div class="row">
             <div>
               <router-link :to="{path:'/',query:{orderid:this.id}}">评价</router-link>
               <router-link :to="{path:'serive_detail',query:{orderid:this.id}}">申请售后</router-link>
-              <router-link :to="{path:'/',query:{orderid:this.id}}">再次购买</router-link>
             </div>
           </div>
       </div>
@@ -42,7 +41,7 @@ export default {
     props:{
         id: {
             default: 1,
-            type: Number
+            type: [String, Number]
         },
         datelineCreateReadable:{
             default: '2020-10-31 20:53:17',
@@ -50,7 +49,7 @@ export default {
         },
         orderId: {
             default: '21312312312312',
-            type: String
+            type: [String, Number]
         },
         Lists:{
             // eslint-disable-next-line vue/require-valid-default-prop
@@ -81,6 +80,10 @@ export default {
         state:{
             default: 1,
             type: Number
+        },
+        statusText:{
+            default:'',
+            type:String
         }
     },
     filters: {
@@ -226,6 +229,7 @@ p {
     box-sizing: border-box;
     text-align: center;
     margin-top: 10px;
+    cursor: pointer;
     /* letter-spacing: 50px; */
 }
 </style>

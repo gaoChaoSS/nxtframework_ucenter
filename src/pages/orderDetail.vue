@@ -67,7 +67,7 @@
                     :name="item.productName"
                     :image="item.picUrl"
                     :skus="item.sku"
-                    :price="item.productPrice"
+                    :price="item.productPriceDeal + item.manualPriceDiscount"
                     :num="item.quantity"
                     :checkout="item.checkout"
                     :productId="item.productId"
@@ -97,6 +97,7 @@ export default {
             
             valuePay:'微信',
             state:1,
+            step:2,
             flow:[
                 {
                     title:'提交订单', icon:require('@/assets/icon/1.png'), 
@@ -111,17 +112,17 @@ export default {
                 {
                     title:'发货', icon:require('@/assets/icon/1.png'), 
                     arrorImg:require('@/assets/icon/arror.png'), 
-                    time:'2020-10-30 20:53:17'
+                    time:''
                 },
                 {
                     title:'等待收货', icon:require('@/assets/icon/1.png'), 
                     arrorImg:require('@/assets/icon/arror.png'),
-                    time:'2020-10-30 20:53:17'
+                    time:''
                 },
                 {
                     title:'完成', icon:require('@/assets/icon/1.png'), 
                     arrorImg:'', 
-                    time:'2020-10-30 20:53:17'
+                    time:''
                 }
             ]
         }
@@ -144,15 +145,19 @@ export default {
             balance: state => state.user.balance,
             productList: state => state.order.productList,
             deliveryConfigName: state => state.order.deliveryConfigName,
+            datelineCreateReadable: state => state.order.datelineCreateReadable,
+            datelinePaidReadable: state => state.order.datelinePaidReadable,
+            datelineDeliveryReadable: state => state.order.datelineDeliveryReadable,
+            datelineReceivedReadable: state => state.order.datelineReceivedReadable
 
         }),
         total: function(){
             // eslint-disable-next-line no-unused-vars
             var total = 0;
             this.productList.map(item => {
-                total += (item.productPrice * item.quantity)
+                total += ((item.productPriceDeal + item.manualPriceDiscount) * item.quantity)
             })
-            return total
+            return total.toFixed(2)
         }
     },
     watch:{
@@ -163,7 +168,21 @@ export default {
     created() {
         // var order_id = this.orderI
         this.id = this.$route.query.id 
-        this.$store.dispatch('order/detail',this.id);
+        this.$store.dispatch('order/detail',this.id).then(() =>{
+            this.flow[0].time = this.datelineCreateReadable
+            this.flow[1].time = this.datelinePaidReadable
+            this.flow[2].time = this.datelineDeliveryReadable
+            this.flow[3].time = this.datelineReceivedReadable
+            this.flow[4].time = this.datelineReceivedReadable
+            for(let i = 0; i < 5; i++){
+                if(this.flow[i].time){
+                    this.flow[i].icon = require('@/assets/icon/order/'+(i+1)+'-2.png')
+                }else{
+                    this.flow[i].icon = require('@/assets/icon/order/'+(i+1)+'-1.png')
+                }
+            }
+            this.flow[4].arrorImg = ''
+        })
         this.payType= [
             {img: require("@/assets/weixin.png"),title: '微信'},
             {img: require("@/assets/alipay.png"),title: '支付宝'},
