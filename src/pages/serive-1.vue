@@ -45,9 +45,7 @@
                                 ref="upload"
                                 action="/api/user/uploadimage"
                                 :headers="headers"
-                                :on-preview="handlePreview"
-                                :on-remove="handleRemove"
-                                :multiple="true"
+                                :before-upload="beforeUpload"
                                 :file-list="fileList">
                                 <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
                                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
@@ -224,6 +222,17 @@ export default {
                 imageIdList:[],
                 id:this.id
             })
+        },
+        beforeUpload(file) {
+            const isImg = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/gif'
+            const isLt20M = file.size / 1024 / 1024 < 20
+            if (!isImg) {
+                this.$message.error('上传图片只能是 JPG、PNG、GIF 格式之一!')
+            }
+            if (!isLt20M) {
+                this.$message.error('上传图片大小不能超过 20MB!')
+            }
+            return isImg && isLt20M
         }
     }
 }

@@ -108,18 +108,18 @@ export default {
     background: #fff;
 }
 .title{
-    font-size: 18px;
+    font-size: 12px;
     width: 100%;
     border-bottom: 1px solid #70707080;
     display: flex;
     /* margin-bottom: 10px; */
-    padding: 12px 20px;
+    padding: 6px 20px;
     box-sizing: border-box;
     color: #5F5F5F;
 }
 
 .title p{
-    font-size: 18px;
+    font-size: 10px;
     color: #5F5F5F;
 }
 .content{
@@ -141,7 +141,7 @@ p {
 }
 .product{
     display: flex;
-    padding: 20px 20px;
+    padding: 14px 20px;
     padding-right: 0px;
     box-sizing: border-box;
     justify-content: space-between;
@@ -167,14 +167,13 @@ p {
     
 }
 .product img{
-    width: 100px;
-    height: 110px;
+    width: 80px;
+    height: 80px;
 }
 .product-name{
     width: 100%;
-    font-size: 20px;
-    margin-bottom: 20px;
-    font-size: 20px;
+    margin-bottom: 10px;
+    font-size: 16px;
     font-family: PingFang SC;
     font-weight: 400;
     color: #1B1B1B;
@@ -201,7 +200,7 @@ p {
 .num{
     align-self: flex-end; 
     margin-bottom:10px;
-    font-size: 16px;
+    font-size: 12px;
     font-family: PingFang SC;
     font-weight: 400;
     line-height: 23px;
@@ -244,5 +243,10 @@ p {
     text-align: center;
     margin-top: 10px;
     /* letter-spacing: 50px; */
+}
+.arr-item{
+    font-size:10px;
+    display: inline-block;
+    margin-right: 10px;
 }
 </style>
