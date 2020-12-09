@@ -181,6 +181,9 @@ export default {
             this.id = this.$route.query.id
             this.$store.dispatch('refund/detail',{id: this.id}).then(() => {
                 console.log(this.$store.state.refund)
+                this.reasonImageLists = this.reasonImageList
+                this.reasonTypeTexts = this.reasonTypeText
+                this.reasionDescriptions = this.reasionDescription
             })
         }else{
             this.state = 1;
@@ -197,9 +200,7 @@ export default {
             })
             
         }
-        this.reasonImageLists = this.reasonImageList
-        this.reasonTypeTexts = this.reasonTypeText
-        this.reasionDescriptions = this.reasionDescription
+
         // this.$forceUpdate()
     },
     mounted(){
