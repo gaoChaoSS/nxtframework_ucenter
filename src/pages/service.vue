@@ -4,7 +4,7 @@
         <Order v-for="(item, index) in list" :key="index"
           :lists="item.orderFormRefundProductList"
           :id="item.id"
-          :orderId="item.orderFormId"
+          :orderId="item.serialNum"
           :datelineCreateReadable="item.datelineCreateReadable"
           :amountFinally="item.amountFinally"
           :statusText="item.statusText"

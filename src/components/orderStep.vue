@@ -1,7 +1,7 @@
 <template>
   <div class="order">
       <div class="title">
-          <p>{{time}}</p>
+          <p>{{datelineCreateReadable}}</p>
           <p style="margin-left:20px">订单号: {{orderId}}</p>
       </div>
       <div class="content">
@@ -21,7 +21,7 @@
                   </div>
                   <p class="num">x{{item.quantity}}</p>          
                   <div style="    width: 120px;align-items: self-end; display: flex;">
-                    <el-input-number v-model="item.sum" :min="0" :max="item.quantity" style="align-self: flex-end;" v-show="isChecked" />
+                    <el-input-number v-model="item.sum" :min="0" :max="item.quantity" style="align-self: flex-end;" v-show="isChecked" @change="handleChangeNum" />
                   </div>
                   <p class="num"> {{item.productPriceDeal | price}}</p>  
               </div>
@@ -40,7 +40,7 @@ export default {
             default: 1,
             type: Number
         },
-        time:{
+        datelineCreateReadable:{
             default: '2020-10-31 20:53:17',
             type: String
         },
@@ -86,11 +86,12 @@ export default {
                     sum += item.sum * item.productPriceDeal
                 }
             })
-            return '$'+ sum.toFixed(2)
+            return '￥'+ sum.toFixed(2)
         }
     },
     created(){
         console.log(this.Lists);
+        
     },
     filters: {
         state: function (value) {
@@ -104,6 +105,12 @@ export default {
     methods: {
         handleDetail(){
             this.$router.push('/detail')
+        },
+        handleChangeNum(value)
+        {
+            // console.log(oldvalue)
+            console.log(value)
+            this.$store.commit('refund/CHECK_NUM', {id:this.id, sum: value})
         },
         handleChange()
         {

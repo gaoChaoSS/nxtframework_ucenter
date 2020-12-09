@@ -1,6 +1,6 @@
 <template>
   <el-tabs v-model="activeName" @tab-click="handleClick">
-    <el-tab-pane label="全部订单" name="first">
+    <el-tab-pane label="全部订单" name="first" :item="0">
         <Order v-for="(item, index) in lists[0]" :key="index"
           :Lists="item.orderFormProductList"
           :amountFinally = "item.amountFinally"
@@ -15,7 +15,7 @@
           :item ="0"
         />
     </el-tab-pane>
-    <el-tab-pane label="待付款" name="second">
+    <el-tab-pane label="待付款" name="second" :item="1">
       <Order v-for="(item, index) in lists[1]" :key="index"
           :Lists="item.orderFormProductList"
           :amountFinally = "item.amountFinally"
@@ -30,7 +30,7 @@
           :item ="1"
         />
     </el-tab-pane>
-    <el-tab-pane label="待收货" name="third">
+    <el-tab-pane label="待收货" name="third" :item="2">
         <Order v-for="(item, index) in lists[2]" :key="index"
           :Lists="item.orderFormProductList"
           :amountFinally = "item.amountFinally"
@@ -45,7 +45,7 @@
           :item ="2"
         />
     </el-tab-pane>
-    <el-tab-pane label="待评价" name="fourth">
+    <el-tab-pane label="待评价" name="fourth" :item="3">
         <Order v-for="(item, index) in lists[3]" :key="index"
           :Lists="item.orderFormProductList"
           :amountFinally = "item.amountFinally"
@@ -88,14 +88,13 @@
         Pagination
     },
     created(){
-      for(let i = 0 ; i < 4; i++){
-        this.loadData({item:i,number: 1})
-      }
-      console.log(this.list)
+      this.loadData({item:0,number: 1})
     },
     methods: {
-      handleClick(tab, event) {
-        console.log(tab, event);
+      handleClick(tab) {
+        console.log(tab.$attrs.item)
+        this.loadData({item:tab.$attrs.item,number: 1})
+        // console.log(tab, event);
       },
       changeNumber(value){
         this.loadData(value)

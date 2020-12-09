@@ -12,6 +12,8 @@
             <Order                 
                 :Lists="refundList"
                 :isChecked ="state==1"
+                :datelineCreateReadable = "datelineCreateReadable"
+                :orderId = "orderFormSerialNum"
             />
         </div>
         <div class="info-card">
@@ -26,17 +28,17 @@
                         :value="item.value">
                         </el-option>
                     </el-select>
-                    <p class="content-p" v-else>{{reasonTypeText}}</p>
+                    <p class="content-p" v-else>{{reasonTypeTexts}}</p>
                 </div>
                 <div class="item">
                     <p class="title">问题描述：:</p>
                     <el-input type="textarea" v-model="desc" v-if="state==1" :rows="6" resize="none" style="width:700px; "></el-input>
-                    <p class="content-p" v-else>{{reasionDescription}}</p>
+                    <p class="content-p" v-else>{{reasionDescriptions}}</p>
                 </div>
                 <div class="item">
                     <p class="title">图片信息：</p>
                     <div class="row">
-                        <div class="blacks" v-for="(item, index) in reasonImageList" :key="index">
+                        <div class="blacks" v-for="(item, index) in reasonImageLists" :key="index">
                             <el-avatar shape="square" :size="60" :src="item" />
                         </div>
                         <div class="upload-item" v-if="state == 1">
@@ -45,8 +47,9 @@
                                 ref="upload"
                                 action="/api/user/uploadimage"
                                 :headers="headers"
+                                :http-request="handleUploadHttpRequest"
                                 :before-upload="beforeUpload"
-                                :file-list="fileList">
+                                :auto-upload="false">
                                 <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
                                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
                                 <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -61,7 +64,7 @@
                     <p class="title" style="margin-left:200px">运单号码：</p>
                     <p class="content-p">{{valuePay}}</p>
                 </div>
-                <div class="item">
+                <div class="item" v-if="state==1">
                     <div class="button" @click="handleCreate()">提交申请</div>
                 </div>
             </div>
@@ -74,6 +77,7 @@
 import Order from '@/components/orderStep.vue'
 import Flow from  '@/components/flow.vue'
 import { getToken, getUserId } from '@/utils/auth'
+import { uploadPic } from '@/api/refund'
 import {  mapState} from 'vuex';
 export default {
     data(){
@@ -83,8 +87,9 @@ export default {
                 password:''
             },
             id: 0,
+            listObj:{},
             labelPosition: 'top',
-            value: '',
+            value: 0,
             payType:[
             ],
             desc:'',
@@ -100,33 +105,36 @@ export default {
             valuePay:'微信',
             state:2,
             fileList: [],
+            reasonImageListId:[],
+            reasonImageLists:[],
             headers:{
                 'token':getToken(),
-                'user_id':getUserId()
+                'user_id':getUserId(),
+                // 'Content-Type':'application/octet-stream'
             },
             flow:[
                 {
-                    title:'申请退货', icon:require('@/assets/icon/1.png'), 
+                    title:'申请退货', icon:require('@/assets/icon/refund/1-2.png'), 
                     arrorImg:require('@/assets/icon/arror.png'), 
-                    time:'2020-10-30 20:53:17'
+                    time:''
                 },
                 {
-                    title:'等待受理', icon:require('@/assets/icon/1.png'), 
+                    title:'等待受理', icon:require('@/assets/icon/refund/2-1.png'), 
                     arrorImg:require('@/assets/icon/arror.png'), 
-                    time:'2020-10-30 20:53:17'
+                    time:''
                 },
                 {
-                    title:'买家退货', icon:require('@/assets/icon/1.png'), 
+                    title:'买家退货', icon:require('@/assets/icon/refund/3-1.png'), 
                     arrorImg:require('@/assets/icon/arror.png'), 
-                    time:'2020-10-30 20:53:17'
+                    time:''
                 },
                 {
-                    title:'收到退货', icon:require('@/assets/icon/1.png'), 
+                    title:'收到退货', icon:require('@/assets/icon/refund/4-1.png'), 
                     arrorImg:require('@/assets/icon/arror.png'),
                     time:''
                 },
                 {
-                    title:'退款完成', icon:require('@/assets/icon/1.png'), 
+                    title:'退款完成', icon:require('@/assets/icon/refund/5-1.png'), 
                     arrorImg:'', 
                     time:''
                 }
@@ -163,28 +171,39 @@ export default {
     watch:{
         orderState:function(){
            clearInterval(this.debouncedGetAnswer);
+        },
+        datelineCreateReadable:function(){
+            console.log('sdfsd');
         }
     },
     created() {
         if(this.$route.query.id){
             this.id = this.$route.query.id
-            this.$store.dispatch('refund/detail',{id: this.id})
+            this.$store.dispatch('refund/detail',{id: this.id}).then(() => {
+                console.log(this.$store.state.refund)
+            })
         }else{
             this.state = 1;
             this.id = this.$route.query.orderid
-            this.$store.dispatch('order/detail', this.id).then(()=>{
+            this.$store.dispatch('refund/allow', {id: this.id}).then(()=>{
                 var arr = [];
-                this.productList.map(item => {
+                this.refundList.map(item => {
                     item.checked = true
                     item.sum = item.quantity
                     arr.push(item)
                 })
                 this.$store.commit('refund/SET_REFUND_LIST',arr)
+                // console.log(this.$store.state.refund.datelineCreateReadable)
             })
             
         }
+        this.reasonImageLists = this.reasonImageList
+        this.reasonTypeTexts = this.reasonTypeText
+        this.reasionDescriptions = this.reasionDescription
+        // this.$forceUpdate()
     },
     mounted(){
+        // console.log(this.$store.state.refund.datelineCreateReadable)
     },
     beforeDestroy() {
       clearInterval(this.debouncedGetAnswer);
@@ -197,13 +216,44 @@ export default {
             this.$router.push('/info')
         },
         submitUpload() {
-            this.$refs.upload.submit();
+            // console.log(this.$refs);
+            this.$refs.upload.submit(this.listObj);
         },
         handleRemove(file, fileList) {
             console.log(file, fileList);
         },
         handlePreview(file) {
             console.log(file);
+        },
+        async handleUploadHttpRequest (param) {
+            const fileObj = param.file
+            const response = await uploadPic(fileObj)
+            if(response.status == 0){
+                console.log(response)
+                this.reasonImageLists.push(response.result.url)
+                this.reasonImageListId.push(response.result.id)
+                // console.log(this.reasonImageLists)
+            }else{
+                this.$message({
+                    message: response.message,
+                    type: 'error',
+                    duration: 5 * 1000
+                })
+            }
+        },
+        beforeUpload(file) {
+            const _self = this
+            const _URL = window.URL || window.webkitURL
+            const fileName = file.uid
+            this.listObj[fileName] = {}
+            return new Promise((resolve) => {
+                const img = new Image()
+                img.src = _URL.createObjectURL(file)
+                img.onload = function() {
+                _self.listObj[fileName] = { hasSuccess: false, uid: file.uid, width: this.width, height: this.height }
+                }
+                resolve(true)
+            })
         },
         handleCreate(){
             var arr = [];
@@ -217,23 +267,30 @@ export default {
             })
             this.$store.dispatch('refund/create', {
                 orderFormProductList:arr,
-                reasonType:this.reasonType,
-                reasionDescription: this.reasionDescription,
-                imageIdList:[],
+                reasonType:this.value,
+                reasionDescription: this.desc,
+                imageIdList:this.reasonImageListId,
                 id:this.id
+            }).then(() =>{
+                this.$message({
+                    message: '提交成功!',
+                    type: 'success',
+                    duration: 5 * 200
+                })
+                this.state = 2
             })
         },
-        beforeUpload(file) {
-            const isImg = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/gif'
-            const isLt20M = file.size / 1024 / 1024 < 20
-            if (!isImg) {
-                this.$message.error('上传图片只能是 JPG、PNG、GIF 格式之一!')
-            }
-            if (!isLt20M) {
-                this.$message.error('上传图片大小不能超过 20MB!')
-            }
-            return isImg && isLt20M
-        }
+        // beforeUpload(file) {
+        //     const isImg = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/gif'
+        //     const isLt20M = file.size / 1024 / 1024 < 20
+        //     if (!isImg) {
+        //         this.$message.error('上传图片只能是 JPG、PNG、GIF 格式之一!')
+        //     }
+        //     if (!isLt20M) {
+        //         this.$message.error('上传图片大小不能超过 20MB!')
+        //     }
+        //     return isImg && isLt20M
+        // }
     }
 }
 </script>

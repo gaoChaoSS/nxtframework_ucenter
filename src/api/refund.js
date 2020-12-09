@@ -24,3 +24,19 @@ export function create(data){
     data
   })
 }
+
+export function uploadPic(data){
+  return request({
+    url:'/api/user/uploadimage',
+    method: 'post',
+    data
+  })
+}
+
+export function allow(data){
+  return request({
+    url: '/api/order_form_refund/product_allow/list',
+    method: 'post',
+    data
+  })
+}
