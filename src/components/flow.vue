@@ -65,12 +65,15 @@ export default {
     width: 22px;
     height: 22px;
 }
+.active .title{
+    color: #014785;
+}
 .title{
     font-size: 14px;
     font-family: PingFang SC;
     font-weight: 500;
     line-height: 31px;
-    color: #014785;
+    color: #5F5F5F;
     padding: 0px;
     margin: 0px;
     width: 120px;

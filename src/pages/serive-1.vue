@@ -6,6 +6,7 @@
                 :arrorImg ="item.arrorImg"
                 :title ="item.title"
                 :time ="item.time"
+                :class ="{'active': item.active}"
             />
         </div>
         <div class="back">
@@ -57,6 +58,10 @@
                         </div>
                     </div>
                     <!-- <p class="content-p">广东省,深圳市,宝安区,南瓜街道,西瓜村89号</p> -->
+                </div>
+                <div class="item" v-if="state==2">
+                    <p class="title">退货状态：</p>
+                    <p class="content-p">等待受理</p>
                 </div>
                 <div class="item" v-if="state==3">
                     <p class="title">图片信息：</p>
@@ -116,26 +121,31 @@ export default {
                 {
                     title:'申请退货', icon:require('@/assets/icon/refund/1-2.png'), 
                     arrorImg:require('@/assets/icon/arror.png'), 
+                    active: true,
                     time:''
                 },
                 {
                     title:'等待受理', icon:require('@/assets/icon/refund/2-1.png'), 
                     arrorImg:require('@/assets/icon/arror.png'), 
+                    active: false,
                     time:''
                 },
                 {
                     title:'买家退货', icon:require('@/assets/icon/refund/3-1.png'), 
                     arrorImg:require('@/assets/icon/arror.png'), 
+                    active: false,
                     time:''
                 },
                 {
                     title:'收到退货', icon:require('@/assets/icon/refund/4-1.png'), 
                     arrorImg:require('@/assets/icon/arror.png'),
+                    active: false,
                     time:''
                 },
                 {
                     title:'退款完成', icon:require('@/assets/icon/refund/5-1.png'), 
                     arrorImg:'', 
+                    active: false,
                     time:''
                 }
             ]
