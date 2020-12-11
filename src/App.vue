@@ -92,4 +92,7 @@ body{
 a{
   text-decoration: none;
 }
+.el-table td, .el-table th.is-leaf{
+  background: #F8F8F8;
+}
 </style>

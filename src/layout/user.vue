@@ -67,7 +67,7 @@ export default {
   margin-bottom: 20px;
 }
 .nav{
-  width: 200px;
+  min-width: 200px;
   height: 400px;
   padding: 30px 20px;
   box-sizing: border-box;

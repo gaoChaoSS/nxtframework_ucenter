@@ -37,6 +37,24 @@ const routes = [
     },{
       path: '/service',
       component: () => import('@/pages/service.vue')
+    },{
+      path: '/balance',
+      component: () => import('@/pages/balance.vue')
+    },{
+      path: '/credit',
+      component: () => import('@/pages/credit.vue')
+    },{
+      path: '/cash',
+      component: () => import('@/pages/cash.vue')
+    },{
+      path: '/profit',
+      component: () => import('@/pages/profit.vue')
+    },{
+      path: '/settlement',
+      component: () => import('@/pages/settlement.vue')
+    },{
+      path: '/user_address',
+      component: () => import('@/pages/userAddress.vue')
     }
     ]
   },{
