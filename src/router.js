@@ -27,6 +27,8 @@ const routes = [
   },{
     path: '/payresult', component: PayResult
   },{
+    path: '/evaluate', component: () => import('@/pages/evaluate.vue')
+  },{
     path: '/', component: () => import('@/layout/user.vue'),
     children: [{
       path: '/',

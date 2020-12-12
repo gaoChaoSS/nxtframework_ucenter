@@ -52,8 +52,8 @@
                             </el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="城市/City" prop="deliveryCity">
-                        <el-select v-model="loginForm.deliveryCity" clearable placeholder="请选择">
+                    <el-form-item label="城市/City" prop="deliveryCity" >
+                        <el-select v-model="loginForm.deliveryCity" clearable placeholder="请选择" @change="changePayType">
                             <el-option
                             v-for="item in deliveryCityOption"
                             :key="item.id"
@@ -71,15 +71,7 @@
                 </el-form>
             </div>
         </div>
-        <div class="info-card">
-            <div class="info-title">
-                配送方式
-            </div>
-            <div class="info-content">
-                <div class="back-btn" v-for="(item, index) in deliveryOption" :key="index" @click="changePayType(item.id)" :class="{active:loginForm.deliveryConfigId==item.id}">
-                    {{item.name}}
-                </div>
-            </div>
+        <div class="info-card">            
             <p class="default-p" style="margin-left:40px">配送费</p>
             <p class="price-p">￥{{deliveryCost}}</p>
         </div>

@@ -27,7 +27,7 @@
             <i class="el-icon-caret-bottom nav-item-title-icon"></i>
           </div>
           <div class="nav-content">
-            <router-link to="/order" class="nav-link">余额</router-link>
+            <router-link to="/balance"  class="nav-link">余额</router-link>
             <router-link to="/order" class="nav-link">收益</router-link>
           </div>
         </div>

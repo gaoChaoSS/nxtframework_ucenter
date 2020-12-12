@@ -31,6 +31,7 @@
         :num="item.quantity"
         :checkout="item.checkout"
         :productId="item.productId"
+        :invalid ="item.invalid"
     />
     <div class="cart-info">
         <div class="back-btn" @click="handleBack()">

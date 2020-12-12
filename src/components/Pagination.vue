@@ -3,7 +3,7 @@
       <div class="prov" @click="handleNumber(-1)">
           上一页
       </div>
-      <div class="number">{{ number }}/3</div>
+      <div class="number">{{ number }}</div>
       <div class="next" @click="handleNumber(1)">下一页</div>
   </div>
 </template>

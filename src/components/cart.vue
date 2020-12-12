@@ -1,5 +1,5 @@
 <template>
-  <div class="cart">
+  <div class="cart" :class="{'invalid': !invalid}">
     <div class="item" style="width:20px"></div>
         <div class="checkout" :class="{ checkouted: checkout }" @click="handleCheckout()" >
             <img class="checkout-img" src="@/assets/check.png" alt="">
@@ -74,6 +74,10 @@ export default {
         isEdit:{
             default: false,
             type:Boolean
+        },
+        invalid:{
+            default: true,
+            type: Boolean
         }
     },
     data() {
@@ -83,6 +87,9 @@ export default {
     },
     created(){
         this.nums = this.num;
+    },
+    mounted() {
+        console.log(this.invalid)
     },
     computed:{
         total: function() {
@@ -99,7 +106,9 @@ export default {
             this.$store.commit('cart/SET_PRODUCT_NUM', {id:this.id, num: value})
         },
         handleCheckout(){
-            this.$store.dispatch('cart/selectProduct',{id: this.id, selected: !this.checkout})
+            if(this.invalid){
+                this.$store.dispatch('cart/selectProduct',{id: this.id, selected: !this.checkout})
+            }
             // this.$store.commit('cart/CHECK_PRODUCT', {id: this.id})
         },
         handleDel() {
@@ -111,6 +120,9 @@ export default {
 </script>
 
 <style scoped>
+.invalid{
+    opacity: 0.5;
+}
 div{
     font-size: 12px;
 }

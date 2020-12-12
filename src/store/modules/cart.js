@@ -53,8 +53,10 @@ const mutations = {
   CHECK_ALL: (state, data) => {
     let arr = [];
     state.productList.map(element => {
-        element.checkout = data
-        arr.push(element)
+        if(element.invalid){
+            element.checkout = data
+            arr.push(element)
+        }        
     }); 
     state.productList = arr
   },
@@ -90,7 +92,11 @@ const actions = {
         detail({ guestToken:state.guestToken }).then(response => {
             const { itemList, guestToken} = response.result
             itemList.map(item =>{
-                item.checkout = item.selected
+                if(item.invalid){
+                    item.checkout = item.selected
+                }else{
+                    item.checkout = false
+                }                
              })
              if(guestToken != state.getGuestToken) {
                 setGuestToken(guestToken)
