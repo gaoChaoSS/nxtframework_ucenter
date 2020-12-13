@@ -1,43 +1,102 @@
 <template>
   <div class="balance-page">
-      <Card 
-        title = "收支明细">
-            <template v-slot:header>
-                <p>收支明细</p>
-                <Button>增加新地址</Button>
-            </template>
-            <el-table
-            ref="singleTable"
-            :data="tableData"
-            highlight-current-row
-            style="width: 100%">
-                <el-table-column
-                    type="index"
-                    label="收货人"
-                    width="120"
-                />
-                <el-table-column
-                    property="date"
-                    label="收货地址"
-                    width="360"
-                />
-                <el-table-column
-                    property="name"
-                    label="联系电话"
-                    width="160"
-                />
-                <el-table-column
-                    property="address"
-                    label="操作"                    
-                />
-            </el-table>
-      </Card>
+        <Card 
+            title = "收支明细">
+                <template v-slot:header>
+                    <p>收支明细</p>
+                    <Button @click.native="handleAddPage">增加新地址</Button>
+                </template>
+                <el-table
+                ref="singleTable"
+                :data="tableData"
+                highlight-current-row
+                style="width: 100%">
+                    <el-table-column
+                        type="deliveryPerson"
+                        label="收货人"
+                        width="120"
+                    />
+                    <el-table-column
+                        property="address"
+                        label="收货地址"
+                        width="460"
+                    />
+                    <el-table-column
+                        property="deliveryPhone"
+                        label="联系电话"
+                        width="160"
+                    />
+                    <el-table-column
+                        property=""
+                        label="操作"                    
+                    >
+                    <template slot-scope="scope">
+                        <el-button @click.native="handleClick(scope.row)" type="text" size="small" v-if="!scope.row.isDefault">设为默认</el-button>
+                        <el-button @click="handleDelete(scope.row)" type="text" size="small">删除</el-button>
+                    </template>
+                    </el-table-column>
+                </el-table>
+        </Card>
+        <el-dialog
+            title="提示"
+            :visible.sync="dialogVisible"
+            width="30%"
+            >
+            <div class="form-group" style="margin-top:20px">
+                <el-form label-position="right" label-width="160px" :model="loginForm" :rules="rules" ref="loginForm">
+                    <el-form-item label="姓名/Name" class="label" prop="deliveryPerson">
+                        <el-input v-model="loginForm.deliveryPerson" style="width:200px"></el-input>
+                    </el-form-item>
+                    <el-form-item label="国家地区/Country" prop="deliveryCountry">
+                        <el-select v-model="loginForm.deliveryCountry" clearable placeholder="请选择" @change="deliveryCountry">
+                            <el-option
+                            v-for="item in deliveryPersonOption"
+                            :key="item.id"
+                            :label="item.regionName"
+                            :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="省份/Province" prop="deliveryProvince">
+                        <el-select v-model="loginForm.deliveryProvince" clearable placeholder="请选择" @change="deliveryProvince">
+                            <el-option
+                            v-for="item in deliveryProvinceOption"
+                            :key="item.id"
+                            :label="item.regionName"
+                            :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="城市/City" prop="deliveryCity" >
+                        <el-select v-model="loginForm.deliveryCity" clearable placeholder="请选择" >
+                            <el-option
+                            v-for="item in deliveryCityOption"
+                            :key="item.id"
+                            :label="item.regionName"
+                            :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                     <el-form-item label="地址/Address" prop="deliveryAddress">
+                        <el-input  v-model="loginForm.deliveryAddress" style="width:200px"></el-input>
+                    </el-form-item>
+                    <el-form-item label="电话/Phone" prop="deliveryPhone">
+                        <el-input  v-model="loginForm.deliveryPhone" style="width:200px"></el-input>
+                    </el-form-item>
+                </el-form>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click.native="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="hendleAdd">确 定</el-button>
+            </span>
+        </el-dialog>
   </div>
 </template>
 
 <script>
 import Card from '@/components/card'
 import Button from '@/components/button'
+import { mapState } from 'vuex'
 export default {
     data(){
         return {
@@ -55,7 +114,43 @@ export default {
                     {icon:require('@/assets/icon/1.png'), title:'可用金额', num:11}
                 ],
             ],
-            tableData:[]
+            dialogVisible:false,
+            loginForm:{
+                deliveryPerson:null,
+                deliveryCountry:"",
+                deliveryProvince:null,
+                deliveryCity:null,
+                deliveryProvinceName:'',
+                deliveryCityName:'',
+                deliveryAddress: '5',
+                deliveryPhone:'13555',
+                deliveryConfigId:1,
+                deliveryConfig:'',
+                dealPlatform:1,
+                deliveryRemark:'dddd',
+                deliveryPostcode:"cccc"
+            },
+            rules:{
+                deliveryCity:[
+                    { type: 'date', required: true, message: '请选择城市！', trigger: 'change' },
+                ],
+                deliveryCountry:[
+                    { type: 'date', required: true, message: '请选择国家或者地区！', trigger: 'change' },
+                ],
+                deliveryProvince:[
+                      { type: 'date', required: true, message: '请选择省份！', trigger: 'change' },
+                ],
+                deliveryPerson:[
+                    { required: true, message: '请输入用户名!', trigger: 'blur' },
+                ],
+                deliveryAddress:[
+                    { required: true, message: '请输入地址!', trigger: 'blur' },
+                ],
+                deliveryPhone: [
+                    { required: true, message: '请输入手机号', trigger: 'blur' },
+                ]
+            }
+            // tableData:[]
         }
     },
     components:{
@@ -65,6 +160,57 @@ export default {
     filters:{
         price(value){
             return '￥'+value
+        }
+    },
+    computed:{
+        ...mapState({
+            tableData: state => state.address.list,
+            deliveryPersonOption:state =>state.order.deliveryPersonOption,
+            deliveryProvinceOption:state => state.order.deliveryProvinceOption,
+            deliveryCityOption: state => state.order.deliveryCityOption,
+            deliveryOption: state => state.order.deliveryOption,
+            deliveryCost: state => state.order.deliveryCost,
+            orderId: state => state.order.orderId
+        })
+    },
+    created() {
+        this.$store.dispatch('address/list')
+        this.$store.dispatch('order/deliveryConfigList')
+        this.$store.dispatch('order/deliveryRegionList', 0)
+    },
+    methods: {
+        deliveryCountry(){
+            if(this.loginForm.deliveryCountry)
+            this.$store.dispatch('order/deliveryProvince', this.loginForm.deliveryCountry)
+        },
+        deliveryProvince(){
+            if(this.loginForm.deliveryProvince)
+            this.$store.dispatch('order/deliveryCity', this.loginForm.deliveryProvince)
+        },
+        handleClick(row) {
+            this.$store.dispatch('address/defaults', {id: row.id}).then(() => {
+                this.$store.dispatch('address/list')
+            })
+        },
+        handleDelete(row) {
+            console.log(row)
+        },
+        handleAddPage()  {
+            this.dialogVisible = true
+        },
+        hendleAdd() {
+            this.$refs['loginForm'].validate((valid) => {
+                if (valid) {
+                    this.$store.dispatch('address/save',this.loginForm)                    
+                        .then(() => {
+                        })
+                        .catch(() => {
+                        })
+                } else {
+                    // console.log('error submit!!');
+                    return false;
+                }
+            });
         }
     }
 }
