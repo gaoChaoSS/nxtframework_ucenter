@@ -3,31 +3,32 @@
         <Card title = "充值">
             <div class="item">
                 <p class="title">当前余额:</p>
-                <p class="content">90.00</p>
+                <p class="content">{{balanceTotal}}</p>
             </div>
             <div class="item active">
                 <p class="title">充值金额：</p>
-                <el-input class="input"   style="width:260px"></el-input>
+                <el-input class="input" v-model="money" type="Number" style="width:260px" ></el-input>
             </div>
             <div class="item">
-                <div class="back-btn" v-for="(item,index) in moneyData" :key="index">{{item}}</div>
+                <div class="back-btn" v-for="(item,index) in moneyData" :key="index" @click="changeMoney(item)" :class="{active:money==item}">{{item}}</div>
             </div>
         </Card>
         <Card title = "选择支付方式">
             <div class="item">
-                <div class="back-btn" v-for="(item, index) in payType" :key="index">
+                <div class="back-btn" v-for="(item, index) in payType" :key="index" @click="changePayType(item.title,item.value)" :class="{active:valuePay==item.title}"> 
                     <img :src="item.img" alt="" class="back-img">
                     {{item.title}}
                 </div>
             </div>
         </Card>
-        <Button style="margin-top:20px">立即支付</Button>
+        <Button @click.native="handlePay" style="margin-top:20px">立即支付</Button>
   </div>
 </template>
 
 <script>
 import Card from '@/components/card'
 import Button from '@/components/button'
+import { mapState } from 'vuex'
 export default {
     data(){
         return {
@@ -38,12 +39,36 @@ export default {
                 {img: require("@/assets/weixin.png"),title: '微信', value: 'wxpay'},
                 {img: require("@/assets/alipay.png"),title: '支付宝', value: 'alipay'},
                 {img: require("@/assets/paypal.png"),title: 'Paypal', value: 'paypal'}
-            ]
+            ],
+            money:'',
+            valuePay:'微信',
+            paymentMethod:0
         }
     },
     components:{
         Card,
         Button
+    },
+    computed:{
+        ...mapState({
+            balanceTotal: state => state.balance.balanceTotal  
+        })
+    },
+    created(){
+        this.$store.dispatch('balance/detail')
+    },
+    methods:{
+        changeMoney(value){
+            this.money = value
+        },
+        changePayType(value,type){
+            console.log(value)
+            this.valuePay = value
+            this.paymentMethod = type
+        },
+        handlePay(){
+            this.$store.dispatch('recharge/create',{amount:this.money, paymentMethod:this.paymentMethod})
+        }
     }
 }
 </script>

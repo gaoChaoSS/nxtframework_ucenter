@@ -3,20 +3,21 @@
         <Card >
             <div class="user-item">
                 <p class="title">可结算的</p>
-                <p class="content">{{price | price}}</p>
+                <p class="content">{{balanceAllowTransfer | price}}</p>
             </div>
         </Card>
         <Card>
             <p class="title">温馨提示:</p>
             <p class="title">1.受理时间一般3~5工作日</p>
         </Card>
-        <Button style="margin-top: 10px">全部结算</Button>
+        <Button @click.native="handleCash" style="margin-top: 10px">全部结算</Button>
   </div>
 </template>
 
 <script>
 import Card from '@/components/card'
 import Button from '@/components/button'
+import { mapState } from 'vuex'
 export default {
     data(){
         return {
@@ -42,9 +43,22 @@ export default {
         Card,
         Button
     },
+    computed: {
+        ...mapState({
+            balanceAllowTransfer: state => state.commission.balanceAllowTransfer
+        })
+    },
     filters:{
         price(value){
             return '￥'+value
+        }
+    },
+    created() {
+        this.$store.dispatch('commission/detail')
+    },
+    methods: {
+        handleCash(){
+            this.$store.dispatch('commission/cash')
         }
     }
 }

@@ -7,26 +7,26 @@
                     <img :src="require('@/assets/icon/1.png')" alt="" class="icon">
                     <div class="row">
                         <p class="title">我的全部收益</p>
-                        <p class="price">{{price | price}}</p>
+                        <p class="price">{{balanceAll | price}}</p>
                     </div>
                 </div>
             </div>
             <div class="user-item">
                 <div class="back">
                     <p class="title">可结算收益</p>
-                    <p class="price">￥0.05</p>
+                    <p class="price">{{balanceAllowTransfer | price}}</p>
                 </div>
                 <div class="back">
                     <p class="title">锁定收益</p>
-                    <p class="price">￥0.05</p>
+                    <p class="price">{{balanceIsRejected | price}}</p>
                 </div>
                 <div class="back">
                     <p class="title">结转中</p>
-                    <p class="price">￥0.05</p>
+                    <p class="price">{{balanceIsTransfering | price}}</p>
                 </div>
             </div>
             <div class="user-item">
-                <Button>结算到余额</Button>
+                <Button @click.native="handleSettlement">结算到余额</Button>
                 <p class="title">先转入余额，再申请提现</p>
             </div>
         </div>
@@ -65,6 +65,7 @@
 <script>
 import Card from '@/components/card'
 import Button from '@/components/button'
+import { mapState } from 'vuex'
 export default {
     data(){
         return {
@@ -90,9 +91,25 @@ export default {
         Card,
         Button
     },
+    computed:{
+        ...mapState({
+            balanceAll: state => state.commission.balanceAll,
+            balanceAllowTransfer: state => state.commission.balanceAllowTransfer,
+            balanceIsRejected: state => state.commission.balanceIsRejected,
+            balanceIsTransfering: state => state.commission.balanceIsTransfering, 
+        })
+    },
     filters:{
         price(value){
             return '￥'+value
+        }
+    },
+    created() {
+        this.$store.dispatch('commission/detail')
+    },
+    methods:{
+        handleSettlement(){
+            this.$router.push('/settlement')
         }
     }
 }

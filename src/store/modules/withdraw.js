@@ -1,23 +1,11 @@
-import { detail, cash } from '@/api/commisson'
-const state = {
-    balanceAll: 0,
-    balanceAllowTransfer: 0,
-    balanceIsRejected: 0,
-    balanceIsTransfering: 0,
-}
+import { create, code } from '@/api/withdraw'
 
-const mutations = {
-    SET_DATA:(state, data) =>{
-        state = {...data}
-    }
-}
 
 const actions = {
     // eslint-disable-next-line no-empty-pattern
-    detail({ commit }) {
+    create({ }, data) {
         return new Promise((resolve, reject) => {
-        detail({ guestToken:state.guestToken }).then(response => {
-            commit('SET_DATA', response.result)
+            create({ ...data}).then(() => {
             resolve()
           }).catch(error => {
               reject(error)
@@ -25,20 +13,19 @@ const actions = {
         })
     },
     // eslint-disable-next-line no-empty-pattern
-    cash({}) {
+    code({  }, data) {
         return new Promise((resolve, reject) => {
-            cash({}).then(() => {
+            code({...data}).then(() => {
                 resolve()
             }).catch(error => {
                 reject(error)
             })
         })
     }
+  
 }
 
 export default {
   namespaced: true,
-  state,
-  mutations,
   actions
 }

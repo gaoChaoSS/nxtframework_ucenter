@@ -14,8 +14,8 @@
         </div>
         <div class="user-info-right">
             <div class="right-item">
-                <Button>充 值</Button>
-                <Button style="margin-top:10px">充 值</Button>
+                <Button @click.native="goCredit()">充 值</Button>
+                <Button @click.native="goCash()" solid style="margin-top:12px">提 现</Button>
             </div>
             <div class="right-item">
                 <p style="color:#5F5F5F; font-size: 16px;">帐户</p>
@@ -31,26 +31,26 @@
             highlight-current-row
             style="width: 100%">
                 <el-table-column
-                    type="index"
+                    type="datelineReadable"
                     label="时间"
                     width="300"
                 />
                 <el-table-column
-                    property="date"
+                    property="amount"
                     label="金额"
                     width="160"
                 />
                 <el-table-column
-                    property="name"
+                    property="typeText"
                     label="类型"
                     width="160"
                 />
                 <el-table-column
-                    property="address"
+                    property="eventText"
                     label="状态"
                     width="160"
                 />
-                <el-table-column property="event" label="事件"  />
+                <el-table-column property="eventText" label="事件"  />
             </el-table>
       </Card>
   </div>
@@ -59,24 +59,24 @@
 <script>
 import Card from '@/components/card'
 import Button from '@/components/button'
+import { mapState } from 'vuex'
 export default {
     data(){
         return {
             itemData: [
                 [
                     {icon:require('@/assets/icon/1.png'), title:'可用金额', num:11},
-                    {icon:require('@/assets/icon/1.png'), title:'可用金额', num:11}
+                    {icon:require('@/assets/icon/1.png'), title:'累计充值', num:11}
                 ],
                 [
-                    {icon:require('@/assets/icon/1.png'), title:'可用金额', num:11},
-                    {icon:require('@/assets/icon/1.png'), title:'可用金额', num:11}
+                    {icon:require('@/assets/icon/1.png'), title:'冻结金额', num:11},
+                    {icon:require('@/assets/icon/1.png'), title:'累计提现', num:11}
                 ],
                 [
-                    {icon:require('@/assets/icon/1.png'), title:'可用金额', num:11},
-                    {icon:require('@/assets/icon/1.png'), title:'可用金额', num:11}
+                    {icon:require('@/assets/icon/1.png'), title:'可提现', num:11},
+                    {icon:require('@/assets/icon/1.png'), title:'提现中', num:11}
                 ],
             ],
-            tableData:[]
         }
     },
     components:{
@@ -86,6 +86,37 @@ export default {
     filters:{
         price(value){
             return '￥'+value
+        }
+    },
+    computed:{
+        ...mapState({
+            balanceTotal: state => state.balance.balanceTotal,
+            totalWithdrawRejected: state => state.balance.totalWithdrawRejected,
+            totalRechargeSuccess: state => state.balance.totalRechargeSuccess,
+            balanceCanWithdraw: state => state.balance.balanceCanWithdraw,
+            totalWithdrawing: state => state.balance.totalWithdrawing,
+            totalWithdrawSuccess: state => state.balance.totalWithdrawSuccess,
+            tableData: state => state.balance.list
+        })
+    },
+    created() {
+        this.$store.dispatch('balance/detail').then(() =>{            
+            this.itemData[0][0].num = this.balanceTotal
+            this.itemData[0][1].num = this.balanceCanWithdraw
+            this.itemData[1][0].num = this.totalWithdrawRejected
+            this.itemData[1][1].num = this.totalRechargeSuccess
+            this.itemData[2][0].num = this.totalWithdrawing
+            this.itemData[2][1].num = this.totalWithdrawSuccess
+        })
+        // this.$store.dispatch('balance/list',{offset:0, limit: 10})
+        // this.$store.dispatch('balance/list',{offset:1, limit: 10})
+    },
+    methods: { 
+        goCredit() {
+            this.$router.push('/credit')
+        },
+        goCash() {
+            this.$router.push('/cash')
         }
     }
 }
@@ -138,11 +169,14 @@ p{
     content :'';
     position: absolute;
     width: 1px;
-    height: 80%;
-    top:10px;
+    height: 60%;
+    top:20px;
     right: 0px;
-    background: #000;
-
+    background: #888;
+    opacity: 0.5;
+}
+.user-item:last-child:after{
+    display: none;
 }
 .back{
     width: 200px;

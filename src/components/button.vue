@@ -31,6 +31,8 @@ export default {
     font-size: 12px;
 }
 .solid{
-    color: #333;
+    background: #fff;
+    border: 1px solid #014785;
+    color: #014785;
 }
 </style>
