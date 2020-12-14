@@ -1,9 +1,9 @@
 <template>
   <div class="balance-page">
         <Card 
-            title = "收支明细">
+            title = "地址管理">
                 <template v-slot:header>
-                    <p>收支明细</p>
+                    <p>地址管理</p>
                     <Button @click.native="handleAddPage">增加新地址</Button>
                 </template>
                 <el-table

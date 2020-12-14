@@ -57,8 +57,17 @@ const routes = [
     },{
       path: '/user_address',
       component: () => import('@/pages/userAddress.vue')
+    },{
+      path: '/user_info',
+      component: () => import('@/pages/userInfo.vue')
+    },{
+      path: '/invited',
+      component: () => import('@/pages/invited.vue')
+    },{
+      path: '/code',
+      component: () => import('@/pages/code.vue')
     }
-    ]
+  ]
   },{
     path: '/detail', component: () => import('@/pages/orderDetail.vue')
   },{

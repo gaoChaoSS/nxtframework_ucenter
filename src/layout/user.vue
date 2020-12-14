@@ -31,6 +31,29 @@
             <router-link to="/profit" class="nav-link">收益</router-link>
           </div>
         </div>
+        <div class="nav-item">
+          <div class="nav-item-title">
+            <img src="@/assets/user-icon-2.png" alt="" class="nav-item-title-img">
+            <p class="nav-item-p">资料</p>
+            <i class="el-icon-caret-bottom nav-item-title-icon"></i>
+          </div>
+          <div class="nav-content">
+            <router-link to="/user_info"  class="nav-link">个人信息</router-link>
+            <router-link to="/user_address" class="nav-link">收货地址</router-link>
+          </div>
+        </div>
+        <div class="nav-item">
+          <div class="nav-item-title">
+            <img src="@/assets/user-icon-2.png" alt="" class="nav-item-title-img">
+            <p class="nav-item-p">赚钱</p>
+            <i class="el-icon-caret-bottom nav-item-title-icon"></i>
+          </div>
+          <div class="nav-content">
+            <router-link to="/invited"  class="nav-link">我的下家</router-link>
+            <router-link to="/profit" class="nav-link">我的收益</router-link>
+            <router-link to="/code" class="nav-link">我的推广码</router-link>
+          </div>
+        </div>
       </div>
       <div class="main-content">
         <router-view />
@@ -68,7 +91,7 @@ export default {
 }
 .nav{
   min-width: 200px;
-  height: 400px;
+  /* height: 600px; */
   padding: 30px 20px;
   box-sizing: border-box;
   background: #fff;

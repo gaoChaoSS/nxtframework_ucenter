@@ -1,6 +1,14 @@
-import { login, logout, register, balance } from '@/api/user'
+import {
+  login, logout, register,
+  balance, info, verify_code,
+  email_update, email_code,
+  email_move, phone_code,
+  phone_update, phone_remove_code,
+  phone_remove, pwd_code,
+  pwd_reset
+} from '@/api/user'
 import { getToken, setToken, removeToken, setUserId } from '@/utils/auth'
-import  { resetRouter } from '@/router'
+import { resetRouter } from '@/router'
 
 const state = {
   token: getToken(),
@@ -9,7 +17,14 @@ const state = {
   avatar: '',
   introduction: '',
   balance: 0,
-  roles: []
+  roles: [],
+  username: '',
+  avatarPicUrl: '',
+  email: '',
+  phone: '',
+  inviteCode: '',
+  inviteUrl: '',
+  inviteUrlQrImageUrl: ''
 }
 
 const mutations = {
@@ -33,71 +48,195 @@ const mutations = {
   },
   SET_BALANCE: (state, balance) => {
     state.balance = balance
+  },
+  SET_INFO: (state, data) => {
+    Object.keys(state).forEach(key => { state[key] = data[key] })
   }
 }
 
 const actions = {
-    // user login
-    login({ commit }, userInfo) {
-        const { username, password } = userInfo
-        return new Promise((resolve, reject) => {
-        login({ username: username.trim(), password: password }).then(response => {
-            console.log(response)
-            const { token, user_id } = response.result
-            commit('SET_TOKEN', token)
-            commit('SET_USER_ID', user_id)
-            setToken(token)
-            setUserId(user_id)
-            console.log(getToken())
-            resolve()
-          }).catch(error => {
-              reject(error)
-          })
-        })
-    },
-    register({ state }, userInfo) {
-      const {username, password} = userInfo
-      return new Promise((resolve, reject) => {
-        register({ username: username.trim(), password: password }).then(() => {
-            console.log(state)
-            resolve()
-          }).catch(error => {
-              reject(error)
-          })
-        })
-    },
-
-    // user logout
-    logout({ commit, state }) {
-        return new Promise((resolve, reject) => {
-        logout({ user_id: state.userid, token: state.token }).then(() => {
-            commit('SET_TOKEN', '')
-            commit('SET_ROLES', [])
-            commit('SET_USER_ID', '')
-            removeToken()
-            resetRouter()
-
-            resolve()
-        }).catch(error => {
-            commit('SET_TOKEN', '')
-            commit('SET_ROLES', [])
-            commit('SET_USER_ID', '')
-            removeToken()
-            reject(error)
-        })
-        })
-    },
-    balance({commit}) {
-      return new Promise((resolve, reject) =>{
-        balance().then((res) => {
-          commit('SET_BALANCE', res.result)
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
+  // user login
+  login({ commit }, userInfo) {
+    const { username, password } = userInfo
+    return new Promise((resolve, reject) => {
+      login({ username: username.trim(), password: password }).then(response => {
+        console.log(response)
+        const { token, user_id } = response.result
+        commit('SET_TOKEN', token)
+        commit('SET_USER_ID', user_id)
+        setToken(token)
+        setUserId(user_id)
+        console.log(getToken())
+        resolve()
+      }).catch(error => {
+        reject(error)
       })
-    }
-    
+    })
+  },
+  register({ state }, userInfo) {
+    const { username, password } = userInfo
+    return new Promise((resolve, reject) => {
+      register({ username: username.trim(), password: password }).then(() => {
+        console.log(state)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
+  // user logout
+  logout({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      logout({ user_id: state.userid, token: state.token }).then(() => {
+        commit('SET_TOKEN', '')
+        commit('SET_ROLES', [])
+        commit('SET_USER_ID', '')
+        removeToken()
+        resetRouter()
+
+        resolve()
+      }).catch(error => {
+        commit('SET_TOKEN', '')
+        commit('SET_ROLES', [])
+        commit('SET_USER_ID', '')
+        removeToken()
+        reject(error)
+      })
+    })
+  },
+  balance({ commit }) {
+    return new Promise((resolve, reject) => {
+      balance().then((res) => {
+        commit('SET_BALANCE', res.result)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  info({ commit }) {
+    return new Promise((resolve, reject) => {
+      info().then((res) => {
+        commit('SET_INFO', res.result)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  // eslint-disable-next-line no-empty-pattern
+  verify_code({ }, data) {
+    return new Promise((resolve, reject) => {
+      verify_code({ ...data }).then((res) => {
+        console.log(res)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  // eslint-disable-next-line no-empty-pattern
+  email_update({ }, data) {
+    return new Promise((resolve, reject) => {
+      email_update({ ...data }).then((res) => {
+        console.log(res)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  // eslint-disable-next-line no-empty-pattern
+  email_code({ }, data) {
+    return new Promise((resolve, reject) => {
+      email_code({ ...data }).then((res) => {
+        console.log(res)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  // eslint-disable-next-line no-empty-pattern
+  email_move({ }, data) {
+    return new Promise((resolve, reject) => {
+      email_move({ ...data }).then((res) => {
+        console.log(res)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
+  // eslint-disable-next-line no-empty-pattern
+  phone_code({ }, data) {
+    return new Promise((resolve, reject) => {
+      phone_code({ ...data }).then((res) => {
+        console.log(res)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  // eslint-disable-next-line no-empty-pattern
+  phone_update({ }, data) {
+    return new Promise((resolve, reject) => {
+      phone_update({ ...data }).then((res) => {
+        console.log(res)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  // eslint-disable-next-line no-empty-pattern
+  phone_remove_code({ }, data) {
+    return new Promise((resolve, reject) => {
+      phone_remove_code({ ...data }).then((res) => {
+        console.log(res)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  // eslint-disable-next-line no-empty-pattern
+  phone_remove({ }, data) {
+    return new Promise((resolve, reject) => {
+      phone_remove({ ...data }).then((res) => {
+        console.log(res)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  // eslint-disable-next-line no-empty-pattern
+  pwd_code({ }, data) {
+    return new Promise((resolve, reject) => {
+      pwd_code({ ...data }).then((res) => {
+        console.log(res)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  // eslint-disable-next-line no-empty-pattern
+  pwd_reset({ }, data) {
+    return new Promise((resolve, reject) => {
+      pwd_reset({ ...data }).then((res) => {
+        console.log(res)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
 
 
 }
