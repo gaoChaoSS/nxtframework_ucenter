@@ -1,5 +1,5 @@
 <template>
-  <div class="cart" :class="{'invalid': !invalid}">
+  <div class="cart" :class="{'invalid': invalid}">
     <div class="item" style="width:20px"></div>
         <div class="checkout" :class="{ checkouted: checkout }" @click="handleCheckout()" >
             <img class="checkout-img" src="@/assets/check.png" alt="">
