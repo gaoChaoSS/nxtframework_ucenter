@@ -32,7 +32,7 @@
               width="300"
             />
             <el-table-column property="amount" label="用户名" width="320" />
-            <el-table-column property="typeText" label="下家数"  width="320"/>
+            <el-table-column property="typeText" label="下家数" width="320" />
           </el-table>
           <Pagination
             @handleNumber="changeNumber($event)"
@@ -133,10 +133,11 @@ export default {
   computed: {
     ...mapState({
       balanceTotal: (state) => state.balance.balanceTotal,
+      invited_list: (state) => state.user.invited_list,
     }),
   },
   created() {
-    this.$store.dispatch("balance/detail");
+    this.loadData({item:0,number: 1})
   },
   methods: {
     handleCash() {
@@ -151,6 +152,20 @@ export default {
       console.log(value);
       this.valuePay = value;
       this.from.platform = type;
+    },
+    handleClick(tab) {
+      this.loadData({item:tab.$attrs.item,number: 1})
+    },
+    loadData(value) {
+      this.number[value.item] = value.number;
+      let data = { offset: (this.number[value.item] - 1) * 10, limit: 10 };
+      data.inviterLevel = value.item + 1;
+      this.$store.dispatch("user/invited_list", data).then(() => {
+        // console.log(value);
+        this.lists[value.item] = this.list;
+        // console.log(this.lists[value.item]);
+        this.$forceUpdate();
+      });
     },
   },
 };

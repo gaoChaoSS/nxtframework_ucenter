@@ -52,7 +52,7 @@
             width="30%"
             >
             <div class="form-group" style="margin-top:20px">
-                <el-form label-position="right" label-width="160px" :model="loginForm" :rules="rules" ref="loginForm">
+                <el-form label-position="right" label-width="160px" >
                     <el-form-item label="旧密码" class="label" prop="deliveryPerson">
                         <el-input v-model="pwdFrom.deliveryPerson" style="width:200px"></el-input>
                     </el-form-item>
@@ -73,41 +73,41 @@
             width="40%"
             >
             <div class="form-group" style="margin-top:20px">
-                <el-form label-position="right" label-width="160px" :model="loginForm" :rules="rules" ref="loginForm">
+                <el-form label-position="right" label-width="160px" >
                     <el-form-item label="原邮箱" class="label" prop="deliveryPerson">
                         <p>{{email}}</p>
                     </el-form-item>
                 </el-form>
-                <el-form :inline="true" label-width="160px" :model="loginForm" :rules="rules" ref="loginForm">
+                <el-form :inline="true" label-width="160px" >
                     <el-form-item label="验证码" class="label" prop="deliveryPerson">
-                        <el-input v-model="pwdFrom.deliveryPerson" style="width:200px"></el-input>
+                        <el-input v-model="pwdFrom.removecode" style="width:200px"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <Button>获取验证码</Button>
+                        <Button @click.native="handleEmailCode">获取验证码</Button>
                     </el-form-item>
                 </el-form>
-                <el-form label-position="right" label-width="160px" :model="loginForm" :rules="rules" ref="loginForm">
+                <el-form label-position="right" label-width="160px" >
                     <el-form-item>
-                        <Button>解绑</Button>
+                        <Button @click.native="handleEmailMove">解绑</Button>
                     </el-form-item>
                 </el-form>
-                <el-form label-position="right" label-width="160px" :model="loginForm" :rules="rules" ref="loginForm">
+                <el-form label-position="right" label-width="160px" >
                     <el-form-item label="新邮箱" class="label" prop="deliveryPerson">
-                        <el-input v-model="pwdFrom.deliveryPerson" style="width:200px"></el-input>
+                        <el-input v-model="pwdFrom.newEmail" style="width:200px"></el-input>
                     </el-form-item>
                 </el-form>
-                <el-form :inline="true" label-width="160px" :model="loginForm" :rules="rules" ref="loginForm">
+                <el-form :inline="true" label-width="160px" >
                     <el-form-item label="验证码" class="label" prop="deliveryPerson">
-                        <el-input v-model="pwdFrom.deliveryPerson" style="width:200px"></el-input>
+                        <el-input v-model="pwdFrom.code" style="width:200px"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <Button>获取验证码</Button>
+                        <Button @click.native="handleEmailVerifyCode">获取验证码</Button>
                     </el-form-item>
                 </el-form>
             </div>
             <span slot="footer" class="dialog-footer">
                 <el-button @click.native="dialogVisible.email = false">取 消</el-button>
-                <el-button type="primary" >确 定</el-button>
+                <el-button type="primary" @click.native="handelEmailUpdate" >确 定</el-button>
             </span>
         </el-dialog>
         <el-dialog
@@ -116,41 +116,41 @@
             width="40%"
             >
             <div class="form-group" style="margin-top:20px">
-                <el-form label-position="right" label-width="160px" :model="loginForm" :rules="rules" ref="loginForm">
+                <el-form label-position="right" label-width="160px" >
                     <el-form-item label="原手机号" class="label" prop="deliveryPerson">
                         <p>{{phone}}</p>
                     </el-form-item>
                 </el-form>
-                <el-form :inline="true" label-width="160px" :model="loginForm" :rules="rules" ref="loginForm">
+                <el-form :inline="true" label-width="160px" >
                     <el-form-item label="验证码" class="label" prop="deliveryPerson">
-                        <el-input v-model="pwdFrom.deliveryPerson" style="width:200px"></el-input>
+                        <el-input v-model="phoneFrom.removecode" style="width:200px"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <Button>获取验证码</Button>
+                        <Button  @click.native="handlePhoneCode">获取验证码</Button>
                     </el-form-item>
                 </el-form>
-                <el-form label-position="right" label-width="160px" :model="loginForm" :rules="rules" ref="loginForm">
+                <el-form label-position="right" label-width="160px" >
                     <el-form-item>
-                        <Button>解绑</Button>
+                        <Button @click.native="handlePhoneMove">解绑</Button>
                     </el-form-item>
                 </el-form>
-                <el-form label-position="right" label-width="160px" :model="loginForm" :rules="rules" ref="loginForm">
+                <el-form label-position="right" label-width="160px" >
                     <el-form-item label="新手机号" class="label" prop="deliveryPerson">
-                        <el-input v-model="pwdFrom.deliveryPerson" style="width:200px"></el-input>
+                        <el-input v-model="phoneFrom.newPhone" style="width:200px"></el-input>
                     </el-form-item>
                 </el-form>
-                <el-form :inline="true" label-width="160px" :model="loginForm" :rules="rules" ref="loginForm">
+                <el-form :inline="true" label-width="160px" >
                     <el-form-item label="验证码" class="label" prop="deliveryPerson">
-                        <el-input v-model="pwdFrom.deliveryPerson" style="width:200px"></el-input>
+                        <el-input v-model="phoneFrom.code" style="width:200px"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <Button>获取验证码</Button>
+                        <Button @click.native="handlePhoneVerifyCode"> 获取验证码</Button>
                     </el-form-item>
                 </el-form>
             </div>
             <span slot="footer" class="dialog-footer">
                 <el-button @click.native="dialogVisible.phone = false">取 消</el-button>
-                <el-button type="primary" >确 定</el-button>
+                <el-button type="primary"  @click.native="handelPhoneUpdate" >确 定</el-button>
             </span>
         </el-dialog>
   </div>
@@ -178,7 +178,14 @@ export default {
                 ],
             ],
             pwdFrom:{
-                deliveryPerson: ''  
+                removecode: '',
+                newEmail: '',                
+                code:'',                
+            },
+            phoneFrom:{
+                removecode: '',
+                newPhone: '',                
+                code:'',                
             },
             dialogVisible: {
                 pwd: false,
@@ -186,7 +193,9 @@ export default {
                 phone: false,
             },
             tableData:[],
-            price: 123
+            price: 123,
+            loginForm:[],
+            rules:[]
         }
     },
     components:{
@@ -219,7 +228,35 @@ export default {
     methods:{
         handleSettlement(){
             this.$router.push('/settlement')
+        },
+        handleEmailCode(){
+            console.log('sss');
+            this.$store.dispatch('user/email_code',{})
+        },
+        handleEmailMove(){            
+            this.$store.dispatch('user/email_move',{verifyCode: this.pwdFrom.removecode})
+            
+        },
+        handleEmailVerifyCode() {
+            this.$store.dispatch('user/verify_code',{email: this.pwdFrom.newEmail})
+        },
+        handelEmailUpdate() {
+            this.$store.dispatch('user/email_update',{email: this.pwdFrom.newEmail,verifyCode: this.pwdFrom.code})            
+        },
+        handlePhoneCode() {
+            this.$store.dispatch('user/phone_remove_code',{})
+            //
+        },
+        handlePhoneMove(){
+            this.$store.dispatch('user/phone_remove',{verifyCode: this.phoneFrom.removecode})
+        },
+        handlePhoneVerifyCode() {
+            this.$store.dispatch('user/phone_code',{phone: this.phoneFrom.newPhone})
+        },
+        handelPhoneUpdate(){
+            this.$store.dispatch('user/phone_update',{phone: this.phoneFrom.newPhone,verifyCode: this.phoneFrom.code})
         }
+
     }
 }
 </script>

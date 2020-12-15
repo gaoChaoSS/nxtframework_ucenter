@@ -5,7 +5,7 @@ import {
   email_move, phone_code,
   phone_update, phone_remove_code,
   phone_remove, pwd_code,
-  pwd_reset
+  pwd_reset,invited_list
 } from '@/api/user'
 import { getToken, setToken, removeToken, setUserId } from '@/utils/auth'
 import { resetRouter } from '@/router'
@@ -24,7 +24,8 @@ const state = {
   phone: '',
   inviteCode: '',
   inviteUrl: '',
-  inviteUrlQrImageUrl: ''
+  inviteUrlQrImageUrl: '',
+  invited_list:[]
 }
 
 const mutations = {
@@ -51,6 +52,9 @@ const mutations = {
   },
   SET_INFO: (state, data) => {
     Object.keys(state).forEach(key => { state[key] = data[key] })
+  },
+  SET_INVITED_LISS: (state, data) => {
+    state.invited_list =  data
   }
 }
 
@@ -236,7 +240,16 @@ const actions = {
       })
     })
   },
-
+  invited_list({commit}, data) {
+    return new Promise((resolve, reject) => {
+      invited_list({...data}).then((res) => {
+        commit('SET_INVITED_LISS', res.result)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  }
 
 
 }

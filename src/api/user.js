@@ -124,3 +124,11 @@ export function pwd_reset(data) {
     data
   })
 }
+
+export function invited_list(data) {
+  return request({
+    url:'/api/user/invited/list',
+    method: 'post',
+    data
+  })
+}
