@@ -106,7 +106,7 @@ export default {
             this.$store.commit('cart/SET_PRODUCT_NUM', {id:this.id, num: value})
         },
         handleCheckout(){
-            if(this.invalid){
+            if(!this.invalid){
                 this.$store.dispatch('cart/selectProduct',{id: this.id, selected: !this.checkout})
             }
             // this.$store.commit('cart/CHECK_PRODUCT', {id: this.id})
