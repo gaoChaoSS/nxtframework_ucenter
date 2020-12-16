@@ -19,7 +19,7 @@
             </div>
             <div class="right-item">
                 <p style="color:#5F5F5F; font-size: 16px;">帐户</p>
-                <p style="color: #00AE9C; font-size: 16px; margin-top: 10px;">账户状态</p>
+                <p style="color: #00AE9C; font-size: 16px; margin-top: 10px;">{{statusText}}</p>
             </div>
         </div>
       </div>
@@ -31,24 +31,19 @@
             highlight-current-row
             style="width: 100%">
                 <el-table-column
-                    type="datelineReadable"
+                    property="datelineReadable"
                     label="时间"
-                    width="300"
+                    width="320"
                 />
                 <el-table-column
                     property="amount"
                     label="金额"
-                    width="160"
+                    width="180"
                 />
                 <el-table-column
                     property="typeText"
                     label="类型"
-                    width="160"
-                />
-                <el-table-column
-                    property="eventText"
-                    label="状态"
-                    width="160"
+                    width="180"
                 />
                 <el-table-column property="eventText" label="事件"  />
             </el-table>
@@ -96,19 +91,21 @@ export default {
             balanceCanWithdraw: state => state.balance.balanceCanWithdraw,
             totalWithdrawing: state => state.balance.totalWithdrawing,
             totalWithdrawSuccess: state => state.balance.totalWithdrawSuccess,
-            tableData: state => state.balance.list
+            tableData: state => state.balance.list,
+            statusText: state => state.user.statusText
         })
     },
     created() {
+        this.$store.dispatch('user/info')
         this.$store.dispatch('balance/detail').then(() =>{            
             this.itemData[0][0].num = this.balanceTotal
-            this.itemData[0][1].num = this.balanceCanWithdraw
+            this.itemData[0][1].num = this.totalRechargeSuccess
             this.itemData[1][0].num = this.totalWithdrawRejected
-            this.itemData[1][1].num = this.totalRechargeSuccess
-            this.itemData[2][0].num = this.totalWithdrawing
-            this.itemData[2][1].num = this.totalWithdrawSuccess
+            this.itemData[1][1].num = this.totalWithdrawSuccess
+            this.itemData[2][0].num = this.balanceCanWithdraw
+            this.itemData[2][1].num = this.totalWithdrawing
         })
-        // this.$store.dispatch('balance/list',{offset:0, limit: 10})
+        this.$store.dispatch('balance/list',{offset:0, limit: 10})
         // this.$store.dispatch('balance/list',{offset:1, limit: 10})
     },
     methods: { 

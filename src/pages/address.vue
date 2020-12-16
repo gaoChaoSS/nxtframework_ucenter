@@ -12,13 +12,13 @@
                         <el-input  type="password" v-model="login.password" style="width:300px"></el-input>                        
                     </el-form-item>
                     <el-form-item>
-                        <div class="buy-btn" @click="handleSign">立即注册</div>
+                        <div class="buy-btn" @click="handleSign">确定登录</div>
                     </el-form-item>
                 </el-form>
                 <el-form label-position="right" label-width="160px" :model="login">
                     <el-form-item label="">
-                        <p class="default-p-1">已有账号？</p>
-                        <router-link to="/login" class="p-bank">登录</router-link>
+                        <!-- <p class="default-p-1">已有账号？</p> -->
+                        <router-link to="/sign" class="p-bank">立即注册</router-link>
                     </el-form-item>
                 </el-form>
             </div>
@@ -244,6 +244,7 @@ export default {
                             // });
                         })
                 } else {
+                    window.scrollTo(0, 0)
                     // console.log('error submit!!');
                     return false;
                 }
@@ -262,11 +263,10 @@ export default {
             this.$router.push('/cart')
         },
         handleSign(){
-            this.$store.dispatch("user/register", this.login)
+            this.$store.dispatch("user/login", this.login)
                 .then(() => {
-                    this.$store.dispatch("user/login", this.loginForm)
                     this.$message({
-                        message: '注册成功！',
+                        message: '登录成功！',
                         type: 'success'
                     });
                 })

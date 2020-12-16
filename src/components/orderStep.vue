@@ -15,7 +15,7 @@
                         <p class="product-name">{{item.productName}}</p>
                         <div class="product-arr">
                             <div class="arr-item" v-for="(arr, key) in item.sku" :key="key">
-                                {{arr.skuValueName}} {{arr.skuKeyName}}
+                                {{arr.skuValueName}}: <span style="margin-left: 4px">{{arr.skuKeyName}}</span>
                             </div>
                         </div>
                   </div>
@@ -187,8 +187,8 @@ p {
     
 }
 .product img{
-    width: 100px;
-    height: 110px;
+    width: 80px;
+    height: 80px;
 }
 .product-name{
     width: 100%;

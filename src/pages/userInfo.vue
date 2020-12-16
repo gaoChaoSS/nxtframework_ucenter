@@ -6,11 +6,13 @@
             <div class="info-content">
                 <div class="item">
                     <p class="title">邮箱:</p>
-                    <p class="content">{{email}}</p>
+                    <p class="content" v-if="email">{{email}}</p>
+                    <p class="content" v-else>无</p>
                 </div>
                 <div class="item">
                     <p class="title">手机:</p>
-                    <p class="content">{{phone}}</p>
+                    <p class="content" v-if="phone">{{phone}}</p>
+                    <p class="content" else>无 <a style="text-decoration: underline;color: #014785;margin-left: 20px;" @click="dialogVisible.phone = true">添加</a></p>
                 </div>
             </div>
         </div>
@@ -31,8 +33,11 @@
             <p class="card-item-title">
                 邮箱验证
             </p>
-            <div class="card-item-content">
+            <div class="card-item-content" v-if="email">
                 您已经绑定邮箱
+            </div>
+            <div class="card-item-content" v-else>
+                您没有绑定邮箱。互联网账号存在被盗风险，建议您立即绑定一保护账户安全
             </div>
             <Button @click.native="dialogVisible.email = true">修改</Button>
         </div>
@@ -40,7 +45,10 @@
             <p class="card-item-title">
                 手机验证
             </p>
-            <div class="card-item-content">
+            <div class="card-item-content" v-if="phone">
+                您已经绑定手机。
+            </div>
+            <div class="card-item-content" v-else>
                 您没有绑定手机。互联网账号存在被盗风险，建议您立即绑定一保护账户安全。
             </div>
             <Button @click.native="dialogVisible.phone = true">修改</Button>
@@ -54,17 +62,17 @@
             <div class="form-group" style="margin-top:20px">
                 <el-form label-position="right" label-width="160px" >
                     <el-form-item label="旧密码" class="label" prop="deliveryPerson">
-                        <el-input v-model="pwdFrom.deliveryPerson" style="width:200px"></el-input>
+                        <el-input v-model="pwd.oldPwd" style="width:200px" show-password></el-input>
                     </el-form-item>
                     <el-form-item label="新密码" class="label" prop="deliveryPerson">
-                        <el-input v-model="pwdFrom.deliveryPerson" style="width:200px"></el-input>
+                        <el-input v-model="pwd.newPwd" style="width:200px" show-password ></el-input>
                     </el-form-item>
                     
                 </el-form>
             </div>
             <span slot="footer" class="dialog-footer">
                 <el-button @click.native="dialogVisible.pwd = false">取 消</el-button>
-                <el-button type="primary" >确 定</el-button>
+                <el-button type="primary" @click.native="handlePwdReset" >确 定</el-button>
             </span>
         </el-dialog>
         <el-dialog
@@ -73,12 +81,12 @@
             width="40%"
             >
             <div class="form-group" style="margin-top:20px">
-                <el-form label-position="right" label-width="160px" >
+                <el-form label-position="right" label-width="160px"  v-if="email">
                     <el-form-item label="原邮箱" class="label" prop="deliveryPerson">
                         <p>{{email}}</p>
                     </el-form-item>
                 </el-form>
-                <el-form :inline="true" label-width="160px" >
+                <el-form :inline="true" label-width="160px" v-if="email" >
                     <el-form-item label="验证码" class="label" prop="deliveryPerson">
                         <el-input v-model="pwdFrom.removecode" style="width:200px"></el-input>
                     </el-form-item>
@@ -86,7 +94,7 @@
                         <Button @click.native="handleEmailCode">获取验证码</Button>
                     </el-form-item>
                 </el-form>
-                <el-form label-position="right" label-width="160px" >
+                <el-form label-position="right" label-width="160px" v-if="email">
                     <el-form-item>
                         <Button @click.native="handleEmailMove">解绑</Button>
                     </el-form-item>
@@ -116,12 +124,12 @@
             width="40%"
             >
             <div class="form-group" style="margin-top:20px">
-                <el-form label-position="right" label-width="160px" >
+                <el-form label-position="right" label-width="160px" v-if="phone">
                     <el-form-item label="原手机号" class="label" prop="deliveryPerson">
                         <p>{{phone}}</p>
                     </el-form-item>
                 </el-form>
-                <el-form :inline="true" label-width="160px" >
+                <el-form :inline="true" label-width="160px" v-if="phone" >
                     <el-form-item label="验证码" class="label" prop="deliveryPerson">
                         <el-input v-model="phoneFrom.removecode" style="width:200px"></el-input>
                     </el-form-item>
@@ -129,7 +137,7 @@
                         <Button  @click.native="handlePhoneCode">获取验证码</Button>
                     </el-form-item>
                 </el-form>
-                <el-form label-position="right" label-width="160px" >
+                <el-form label-position="right" label-width="160px" v-if="phone" >
                     <el-form-item>
                         <Button @click.native="handlePhoneMove">解绑</Button>
                     </el-form-item>
@@ -177,6 +185,10 @@ export default {
                     {icon:require('@/assets/icon/1.png'), title:'可用金额', num:11}
                 ],
             ],
+            pwd:{
+                oldPwd:'',
+                newPwd:'',
+            },
             pwdFrom:{
                 removecode: '',
                 newEmail: '',                
@@ -228,6 +240,9 @@ export default {
     methods:{
         handleSettlement(){
             this.$router.push('/settlement')
+        },
+        handlePwdReset(){
+            this.$store.dispatch('user/pwd_reset',{passwordOld:this.pwd.oldPwd, passwordNew:this.pwd.newPwd})
         },
         handleEmailCode(){
             console.log('sss');
@@ -365,7 +380,9 @@ p{
 .item{
     display: flex;
     align-items: center;
+    justify-self: start;
     margin-bottom: 10px;
+    width: 100%;
 }
 p{
     font-size: #1B1B1B;

@@ -64,7 +64,7 @@ body{
   padding-bottom: 2px !important;
 }
 .el-form-item{
-  margin-bottom: 16px;
+  margin-bottom: 26px;
 }
 .el-breadcrumb{
   font-size: 16px;

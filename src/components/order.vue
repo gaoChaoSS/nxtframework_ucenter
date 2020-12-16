@@ -23,13 +23,14 @@
              <p>{{amountFinally | price}}</p>
           </div>
           <div class="row">
-              <p>{{statusText}}</p>
+              <p>{{statusText | state}}</p>
               <div class="button" @click="handleDetail()">订单详情</div>
           </div>
           <div class="row">
             <div>
-              <router-link :to="{path:'/',query:{orderid:this.id}}">评价</router-link>
-              <router-link :to="{path:'serive_detail',query:{orderid:this.id}}">申请售后</router-link>
+              <router-link :to="{name:'pay',query:{id:this.id}}" v-if="!paid " >付款</router-link>
+              <router-link :to="{path:'/evaluate',query:{orderid:this.id}}" v-if="!reviews && paid " >评价</router-link>
+              <router-link :to="{path:'serive_detail',query:{orderid:this.id}}" v-if="paid">申请售后</router-link>
             </div>
           </div>
       </div>
@@ -84,20 +85,41 @@ export default {
         statusText:{
             default:'',
             type:String
+        },
+        paid:{
+            default: false,
+            type: Boolean
+        },
+        refund:{
+            default: false,
+            type: Boolean
+        },
+        reviews:{
+            default: false,
+            type: Boolean
         }
     },
     filters: {
         state: function (value) {
-            if (!value) return ''
-            if(value == 1) return '已完成'
+            if(value == '订单付款'){
+                value = '等待付款'
+            }
+            return value
         },
         price: function (value) {
             return  '￥'+value;
         }
     },
+    created() {
+        
+    },
     methods: {
         handleDetail(){
-            this.$router.push({path:'/detail', query:{id: this.id}})
+            if(this.statusText == '订单付款'){
+                this.$router.push({ name: 'pay',query:{id: this.id}})
+            }else {
+                this.$router.push({path:'/detail', query:{id: this.id}})
+            }
         }
     }
 }
@@ -145,6 +167,7 @@ p {
 .product-list{
     display: flex;
     flex-direction: column;
+    justify-content: center;
     width: 100%;
 }
 .product{
@@ -205,6 +228,7 @@ p {
     padding-top: 20px;
     padding-left: 30px;
     padding-right: 30px;
+    padding-bottom: 30px;
     box-sizing: border-box;
     border-left: 1px solid #70707079;
 }

@@ -35,26 +35,26 @@
         title = "收支明细">
             <el-table
             ref="singleTable"
-            :data="tableData"
+            :data="list"
             highlight-current-row
             style="width: 100%">
                 <el-table-column
-                    type="index"
+                    type="datelineReadable"
                     label="时间"
                     width="300"
                 />
                 <el-table-column
-                    property="date"
+                    property="amount"
                     label="金额"
                     width="160"
                 />
                 <el-table-column
-                    property="name"
+                    property="statusText"
                     label="类型"
                     width="200"
                 />
                 <el-table-column
-                    property="address"
+                    property="productName"
                     label="来源订单商品"
                 />
             </el-table>
@@ -97,6 +97,7 @@ export default {
             balanceAllowTransfer: state => state.commission.balanceAllowTransfer,
             balanceIsRejected: state => state.commission.balanceIsRejected,
             balanceIsTransfering: state => state.commission.balanceIsTransfering, 
+            list: state => state.commission.list
         })
     },
     filters:{
@@ -106,6 +107,7 @@ export default {
     },
     created() {
         this.$store.dispatch('commission/detail')
+        this.$store.dispatch('commission/list',{offset:0, limit: 10})
     },
     methods:{
         handleSettlement(){

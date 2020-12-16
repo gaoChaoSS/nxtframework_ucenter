@@ -78,11 +78,11 @@
             </div>
         </div>
         <div class="cart-info">
-            <div class="back-btn" @click="handleBack()"> 
+            <div class="back-btn" @click="handleBack()" v-show="false"> 
                 <i class="el-icon-back" style="font-size: 30px;margin-right:20px"></i>
                 返回修改
             </div>
-            <div class="buy-info">
+            <div class="buy-info" style="float: right">
                 <div class="buy-btn-1" @click="handleGoBuy()">已核对,立即付款</div>
             </div>
         </div>
@@ -122,7 +122,8 @@ export default {
             deliveryPhone: state => state.order.deliveryPhone,
             orderId: state => state.order.orderId,
             balance: state => state.user.balance,
-            productList: state => state.order.productList
+            productList: state => state.order.productList,
+            paid: state => state.order.paid
         }),
     },
     created(){
@@ -222,6 +223,8 @@ export default {
     text-align: center;
     margin-right: 20px;
     font-size:10px;
+        display: inline-flex;
+    /* line-height: 36px; */
 }
 .back-btn.active{
     border: 2px solid #014785;
@@ -310,8 +313,8 @@ export default {
 }
 
 .cart-info{
-    display: flex; 
-    justify-content: space-between;
+    /* display: flex; 
+    justify-content: space-between; */
     width: 1200px;
     box-sizing: border-box;
     /* padding: 0 100px; */

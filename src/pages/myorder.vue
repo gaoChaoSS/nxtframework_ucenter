@@ -8,6 +8,9 @@
           :orderId = "item.serialNum"
           :id = "item.id"
           :statusText = "item.statusText"
+          :paid = "item.paid"
+          :refund = "item.refund"
+          :reviews = "item.reviews"
          />
         <Pagination 
           @handleNumber="changeNumber($event)"
@@ -23,6 +26,9 @@
           :orderId = "item.serialNum"
           :id = "item.id"
           :statusText = "item.statusText"
+          :paid = "item.paid"
+          :refund = "item.refund"
+          :reviews = "item.reviews"
          />
         <Pagination 
           @handleNumber="changeNumber($event)"
@@ -38,6 +44,9 @@
           :orderId = "item.serialNum"
           :id = "item.id"
           :statusText = "item.statusText"
+          :paid = "item.paid"
+          :refund = "item.refund"
+          :reviews = "item.reviews"
          />
         <Pagination 
           @handleNumber="changeNumber($event)"
@@ -53,6 +62,9 @@
           :orderId = "item.serialNum"
           :id = "item.id"
           :statusText = "item.statusText"
+          :paid = "item.paid"
+          :refund = "item.refund"
+          :reviews = "item.reviews"
          />
         <Pagination 
           @handleNumber="changeNumber($event)"
@@ -103,13 +115,16 @@
         this.number[value.item] = value.number
         let data = {offset:(this.number[value.item] - 1)*10, limit: 10}
         if(value.item == 1){
-          data.isPaid = true
+          data.isPaid = false
         }
         if(value.item == 2){
           data.isDelivery = true
         }
         if(value.item == 3){
-          data.isReviews = true
+          data.isReviews = false
+          data.isDelivery = true
+
+
         }
         this.$store.dispatch('order/list', data).then(() => {
             console.log(value)

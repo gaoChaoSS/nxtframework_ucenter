@@ -32,7 +32,7 @@
                     <p class="content-p" v-else>{{reasonTypeTexts}}</p>
                 </div>
                 <div class="item">
-                    <p class="title">问题描述：:</p>
+                    <p class="title">问题描述：</p>
                     <el-input type="textarea" v-model="desc" v-if="state==1" :rows="6" resize="none" style="width:700px; "></el-input>
                     <p class="content-p" v-else>{{reasionDescriptions}}</p>
                 </div>
@@ -61,7 +61,7 @@
                 </div>
                 <div class="item" v-if="state==2">
                     <p class="title">退货状态：</p>
-                    <p class="content-p">等待受理</p>
+                    <p class="content-p">{{statusText}}</p>
                 </div>
                 <div class="item" v-if="state==3">
                     <p class="title">图片信息：</p>
@@ -117,6 +117,8 @@ export default {
                 'user_id':getUserId(),
                 // 'Content-Type':'application/octet-stream'
             },
+            reasonTypeTexts:'',
+            reasionDescriptions: '',
             flow:[
                 {
                     title:'申请退货', icon:require('@/assets/icon/refund/1-2.png'), 
@@ -183,14 +185,32 @@ export default {
            clearInterval(this.debouncedGetAnswer);
         },
         datelineCreateReadable:function(){
-            console.log('sdfsd');
+        },
+        status:function() {
+            console.log(this.status)
+            if(this.status == 0){
+                this.flow[1].active = true
+                this.flow[1].icon = require('@/assets/icon/refund/2-2.png')
+            }
+            if(this.status == 2 || this.status == 5) {
+                this.flow[1].active = true
+                this.flow[2].active = true
+                this.flow[1].icon = require('@/assets/icon/refund/2-2.png')
+                this.flow[2].icon = require('@/assets/icon/refund/3-2.png')
+            }
+            if(this.status == 3 || this.status == 4 || this.status == 1) {
+                for(let i = 0; i < this.flow.length ; i++) {
+                    this.flow[i].active = true;
+                    this.flow[i].icon = require('@/assets/icon/refund/'+(i+1)+'-2.png')
+                }
+            }
         }
     },
     created() {
         if(this.$route.query.id){
             this.id = this.$route.query.id
             this.$store.dispatch('refund/detail',{id: this.id}).then(() => {
-                console.log(this.$store.state.refund)
+                // console.log(this.$store.state.refund)
                 this.reasonImageLists = this.reasonImageList
                 this.reasonTypeTexts = this.reasonTypeText
                 this.reasionDescriptions = this.reasionDescription
@@ -220,21 +240,12 @@ export default {
       clearInterval(this.debouncedGetAnswer);
     },
     methods:{
-        changePayType(value){
-            console.log(value)
-        },
         handleGoInfo(){
             this.$router.push('/info')
         },
         submitUpload() {
             // console.log(this.$refs);
             this.$refs.upload.submit(this.listObj);
-        },
-        handleRemove(file, fileList) {
-            console.log(file, fileList);
-        },
-        handlePreview(file) {
-            console.log(file);
         },
         async handleUploadHttpRequest (param) {
             const fileObj = param.file

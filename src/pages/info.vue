@@ -2,7 +2,7 @@
   <div class="info-page">
     <div class="info-item">
       <img src="@/assets/info/1.png" alt="" class="info-item-img">
-      <p class="info-item-title">帐户余额   {{balance}}</p>
+      <p class="info-item-title">帐户余额<span style="margin-left: 14px;">{{balance}}</span></p>
       <div class="btn-group">
         <div class="btn">充值</div>
         <div class="btns">提现</div>
@@ -10,7 +10,7 @@
     </div>
     <div class="info-item">
       <img src="@/assets/info/2.png" alt="" class="info-item-img">
-      <p class="info-item-title">推广收益   {{balanceAll}}</p>
+      <p class="info-item-title">推广收益<span style="margin-left: 14px">{{balanceAll}}</span></p>
       <div class="btn-group">
         <div class="btn">转到余额</div>
       </div>
@@ -94,8 +94,8 @@ import Order from '@/components/order'
 }
 
 .info-item-img{
-  width: 40px;
-  height: 40px;
+  width: 26px;
+  height: 26px;
 }
 .info-item-title{
   width: 100%;
@@ -120,7 +120,7 @@ import Order from '@/components/order'
     margin-top: 20px;
 }
 .btn{
-  height: 36px;
+  height: 32px;
   padding: 0px 16px;
   background: #014785;
   border: 1px solid #014785;
@@ -132,7 +132,7 @@ import Order from '@/components/order'
   cursor: pointer;
 }
 .btns{
-  height: 36px;
+  height: 32px;
   padding: 0px 16px;
   background: #fff;
   border: 1px solid #014785;

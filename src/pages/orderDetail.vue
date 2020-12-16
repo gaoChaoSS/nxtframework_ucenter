@@ -187,7 +187,7 @@ export default {
             {img: require("@/assets/weixin.png"),title: '微信'},
             {img: require("@/assets/alipay.png"),title: '支付宝'},
             {img: require("@/assets/paypal.png"),title: 'Paypal'},
-            {img: require("@/assets/balance.png"),title: '全额：'+ this.value}
+            {img: require("@/assets/balance.png"),title: '金额：'+ this.value}
         ]
     },
     mounted(){

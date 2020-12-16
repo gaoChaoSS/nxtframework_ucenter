@@ -1,14 +1,18 @@
-import { detail, cash } from '@/api/commisson'
+import { detail, cash, list } from '@/api/commisson'
 const state = {
     balanceAll: 0,
     balanceAllowTransfer: 0,
     balanceIsRejected: 0,
     balanceIsTransfering: 0,
+    list:[]
 }
 
 const mutations = {
     SET_DATA:(state, data) =>{
         state = {...data}
+    },
+    SET_LIST:(state, data) => {
+        state.list = data
     }
 }
 
@@ -28,6 +32,16 @@ const actions = {
     cash({}) {
         return new Promise((resolve, reject) => {
             cash({}).then(() => {
+                resolve()
+            }).catch(error => {
+                reject(error)
+            })
+        })
+    },
+    list({ commit }, data) {
+        return new Promise((resolve, reject) => {
+            list({...data}).then((res) => {
+                commit('SET_LIST', res.result)
                 resolve()
             }).catch(error => {
                 reject(error)

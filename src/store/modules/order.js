@@ -29,6 +29,7 @@ const state = {
     datelinePaidReadable:'',
     datelineDeliveryReadable:'',
     datelineReceivedReadable:'',
+    paid:false
 }
 
 const mutations = {
@@ -37,7 +38,7 @@ const mutations = {
             deliveryAddress,deliveryPhone,deliveryConfigId,
             datelineCreateReadable,datelinePaidReadable,
             datelineDeliveryReadable,datelineReceivedReadable,
-            deliveryConfig,dealPlatform,deliveryRemark,deliveryCountry,deliveryConfigName} = data;
+            deliveryConfig,dealPlatform,deliveryRemark,deliveryCountry,deliveryConfigName,paid} = data;
         state.deliveryPerson = deliveryPerson
         state.deliveryProvince = deliveryProvince
         state.deliveryCity = deliveryCity
@@ -53,6 +54,7 @@ const mutations = {
         state.datelinePaidReadable = datelinePaidReadable
         state.datelineDeliveryReadable = datelineDeliveryReadable
         state.datelineReceivedReadable = datelineReceivedReadable
+        state.paid = paid
     },
     SET_PERSON_OPTION: (state, data) => {
         state.deliveryPersonOption = data

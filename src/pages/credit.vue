@@ -42,7 +42,7 @@ export default {
             ],
             money:'',
             valuePay:'微信',
-            paymentMethod:0
+            paymentMethod:'wxpay'
         }
     },
     components:{

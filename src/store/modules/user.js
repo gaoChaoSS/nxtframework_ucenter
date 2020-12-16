@@ -25,7 +25,8 @@ const state = {
   inviteCode: '',
   inviteUrl: '',
   inviteUrlQrImageUrl: '',
-  invited_list:[]
+  invited_list:[],
+  statusText:''
 }
 
 const mutations = {

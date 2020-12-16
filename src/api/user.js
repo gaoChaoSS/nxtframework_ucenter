@@ -119,7 +119,7 @@ export function pwd_code(data) {
 //找回密码（重置密码）
 export function pwd_reset(data) {
   return request({
-    url: '/api/user/pwd_reset',
+    url: '/api/user/pwd/update',
     method: 'post',
     data
   })

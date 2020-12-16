@@ -18,3 +18,11 @@ export function cash(data) {
     data
   })
 }
+
+export function list(data) {
+  return request({
+    url: '/api/user/commission/list',
+    method: 'post',
+    data
+  })
+}
