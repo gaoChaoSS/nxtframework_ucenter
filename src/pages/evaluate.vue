@@ -10,51 +10,51 @@
             />
         </div>
         <div class="back">
-            <p style="margin-right:30px">2010-10-30 20:30:17</p> 
-            <p>订单号: 1231231231</p>
+            <p style="margin-right:30px">{{datelineCreateReadable}}</p> 
+            <p>订单号:  {{serialNum}}</p>
         </div>
-        <div class="back">
+        <div class="back" v-for="(item, index) in orderFormProductLists" :key="index">
             <div class="product-back">
-                <img class="product-img" src="/public_pic/2020/12/04/1230938335.png" alt="">
-                <p class="product-name">机器人</p>
-                <p class="att">颜色： 白色</p>
-                <p class="att">x1</p>
-                <p class="att">￥588.00</p>
+                <img class="product-img" :src="item.picUrl" alt="">
+                <p class="product-name">{{item.productName}}</p>                
+                <p class="att" v-for="(arrItem, arrIndex) in item.productSku" :key="arrIndex">{{arrItem.skuKeyName}}:{{arrItem.skuValueName}}</p>
+                <p class="att">x{{item.quantity}}</p>
+                <p class="att">￥{{item.productPrice}}</p>
             </div>
             <div class="message-back">
                 <div class="chat-back">
-                    <img class="user-img" src="/public_pic/2020/12/04/1230938335.png" alt="">
+                    <img class="user-img" :src="item.reviewsItem.avatar" alt="">
                     <div class="chat-info">
-                        <p>2010-10-30 20:30:17</p>
-                        <p>感谢</p>
+                        <p>{{item.reviewsItem.date}}</p>
+                        <p>{{item.reviewsItem.content}}</p>
                         <div class="img-group">
-                            <img class="chat-img" src="/public_pic/2020/12/04/1230938335.png" alt="">
-                            <img class="chat-img" src="/public_pic/2020/12/04/1230938335.png" alt="">
-                            <img class="chat-img" src="/public_pic/2020/12/04/1230938335.png" alt="">
+                            <img class="chat-img" :src="pic" alt="" v-for="(pic, picIndex) in item.reviewsItem.picUrlList" :key="picIndex">
                         </div>
                     </div>
                 </div>
-                <div class="col"> 
+                <div class="col" v-if="item.reviewsItem==[]"> 
                     <div class="row">
-                        <el-input type="textarea" v-model="desc"  :rows="6" resize="none" style="width:700px; "></el-input>
+                        <el-input type="textarea" v-model="desc[index]"  :rows="6" resize="none" style="width:700px; "></el-input>
                     </div>
                     <div class="row">
-                        <div class="blacks" v-for="(item, index) in reasonImageLists" :key="index">
-                            <el-avatar shape="square" :size="60" :src="item" />
+                        <div class="blacks" v-for="(itemImg, indexs) in item.reasonImageLists" :key="indexs">
+                            <el-avatar shape="square" :size="60" :src="itemImg" />
                         </div>
                         <div class="upload-item" >
                             <el-upload
                                 class="upload-demo"
                                 ref="upload"
+                                :data="{key:index}"
                                 action="/api/user/uploadimage"                                
                                 :http-request="handleUploadHttpRequest"
-                                :auto-upload="false">
+                                :show-file-list="false"
+                                :auto-upload="true">
                                 <i class="el-icon-plus"></i>
                             </el-upload>
                         </div>
                     </div>
                     <div class="row">
-                        <Button>提交评价</Button>
+                        <Button @click.native="handlePost(item, index)">提交评价</Button>
                     </div>
                 </div>
             </div>
@@ -80,7 +80,7 @@ export default {
             value: 0,
             payType:[
             ],
-            desc:'',
+            desc:[],
             imgarr:[
                 '/image/login.png',
                 '/image/login.png',
@@ -94,7 +94,8 @@ export default {
             state:2,
             fileList: [],
             reasonImageListId:[],
-            reasonImageLists:['/public_pic/2020/12/04/1230938335.png','/public_pic/2020/12/04/1230938335.png'],
+            reasonImageLists:[],
+            orderFormProductLists:[],
             flow:[
                 {
                     title:'申请退货', icon:require('@/assets/icon/refund/1-1.png'), 
@@ -135,31 +136,24 @@ export default {
     },
     computed:{
         ...mapState({
-            amountFinally: state => state.refund.amountFinally ,
-            amountRefundTotal: state => state.refund.amountRefundTotal,
-            datelineCreate: state => state.refund.datelineCreate,
-            datelineCreateReadable: state => state.refund.datelineCreateReadable,
-            datelineEnd: state => state.refund.datelineEnd,
-            datelineEndReadable: state => state.refund.datelineEndReadable,
-            deliveryPerson: state => state.refund.deliveryPerson,
-            deliveryPhone: state => state.refund.deliveryPhone,
-            orderFormId: state => state.refund.orderFormId,
-            orderFormRefundProductList: state => state.refund.orderFormRefundProductList,
-            orderFormSerialNum: state => state.refund.orderFormSerialNum,
-            reasionDescription: state => state.refund.reasionDescription,
-            reasonImageList: state => state.refund.reasonImageList,
-            reasonType: state => state.refund.reasonType,
-            reasonTypeText: state => state.refund.reasonTypeText,
-            status: state => state.refund.status,
-            statusText: state => state.refund.statusText,
-            refundList: state => state.refund.refundList,
-            productList: state => state.order.productList,
+            orderFormProductList: state => state.reviews.orderFormProductList,
+            orderFormDelivery: state => state.reviews.orderFormDelivery,
+            datelineCreateReadable:  state => state.reviews.datelineCreateReadable,
+            serialNum: state => state.reviews.serialNum
         })
     },
     watch:{
     },
     created() {
-        this.id = this.$route.query.id
+        this.id = this.$route.query.orderid
+        this.$store.dispatch('reviews/detail',{id:this.id}).then(()=>{
+            this.orderFormProductLists =  this.orderFormProductList;
+            this.orderFormProductLists.map(item => {
+                item.reasonImageLists = [];
+                item.reasonImageListId = [];
+                this.desc.push('');
+            })
+        })
     },
     mounted(){
         // console.log(this.$store.state.refund.datelineCreateReadable)
@@ -167,13 +161,16 @@ export default {
     },
     methods: {
         async handleUploadHttpRequest (param) {
+            console.log(param)
             const fileObj = param.file
             const response = await uploadPic(fileObj)
             if(response.status == 0){
                 console.log(response)
-                this.reasonImageLists.push(response.result.url)
-                this.reasonImageListId.push(response.result.id)
-                // console.log(this.reasonImageLists)
+                console.log(this.orderFormProductList[param.data.key])
+                this.orderFormProductList[param.data.key].reasonImageLists.push(response.result.url)
+                this.orderFormProductList[param.data.key].reasonImageListId.push(response.result.id)
+                // console.log(this.reasonImageLists)]
+                this.$forceUpdate()
             }else{
                 this.$message({
                     message: response.message,
@@ -181,6 +178,15 @@ export default {
                     duration: 5 * 1000
                 })
             }
+        },
+        handlePost(value,item) {
+            console.log(value)
+            this.$store.dispatch('reviews/create',{
+                orderFormId: this.id,
+                content: this.desc[item],
+                orderFormProductId: value.id,
+                imageIdList: value.reasonImageListId
+            })
         }
     },
 }
@@ -439,7 +445,7 @@ export default {
 }
 .upload-item{
     width:100%;
-    margin-top:10px;
+    /* margin-top:10px; */
     display: inline-block;
 }
 p{
@@ -461,11 +467,13 @@ p{
 .product-img{
     height: 80px;
     width: 80px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+
 }
 .product-name{
-    font-size: 12px;
+    font-size: 14px;
     margin-bottom: 10px;
+    font-weight: 600;
     color:#1B1B1B;
 }
 .att{
@@ -510,5 +518,14 @@ p{
     width: 50px;
     height: 50px;
     margin-right: 10px;
+}
+.upload-demo{
+    display: inline-flex;
+    border: 1px solid #5f5f5f;
+    width: 60px;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.5;
 }
 </style>
