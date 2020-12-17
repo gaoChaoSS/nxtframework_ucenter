@@ -1,6 +1,6 @@
 import { create, deliveryConfigList, deliveryRegionList,
     deliveryCost, pay, statusPaid,
-    detail, list
+    detail, list, confirmReceived
 } from '@/api/order'
 
 const state = {
@@ -82,6 +82,16 @@ const mutations = {
     },
     SET_ORDER_LIST: (state, data) => {
         state.orderList = data
+    },
+    SET_DONE: (state, data) =>{
+        let arr = []
+        state.list.map(item => {
+            if(item.id == data) {
+                item.done = true
+            }
+            arr.push(item)
+        })
+        state.list = arr
     }
 }
 
@@ -202,7 +212,19 @@ const actions = {
                 reject(error)
             })
         })
-    }
+    },
+    // eslint-disable-next-line no-empty-pattern
+    confirmReceived({ commit }, data) {
+        return new Promise((resolve, reject) => {
+            confirmReceived({ ...data }).then((response) => {                
+                console.log(response)
+                commit('SET_DONE', data.id)
+                resolve()
+            }).catch(error => {
+                reject(error)
+            })
+        })
+    },
 }
 
 export default {

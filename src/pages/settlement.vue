@@ -58,7 +58,9 @@ export default {
     },
     methods: {
         handleCash(){
-            this.$store.dispatch('commission/cash')
+            this.$store.dispatch('commission/cash').then(() => {
+                this.$router.push('/balance')
+            })
         }
     }
 }

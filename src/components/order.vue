@@ -29,7 +29,8 @@
           <div class="row">
             <div>
               <router-link :to="{name:'pay',query:{id:this.id}}" v-if="!paid " >付款</router-link>
-              <router-link :to="{path:'/evaluate',query:{orderid:this.id}}" v-if="reviews && paid " >评价</router-link>
+              <router-link :to="{path:'/evaluate',query:{orderid:this.id}}" v-if="!reviews && done " >评价</router-link>
+              <a @click="confirmReceived" v-if="!done && delivery " style="color: -webkit-link;cursor: pointer;" >确认收货</a>
               <router-link :to="{path:'serive_detail',query:{orderid:this.id}}" v-if="paid">申请售后</router-link>
             </div>
           </div>
@@ -97,6 +98,14 @@ export default {
         reviews:{
             default: false,
             type: Boolean
+        },
+        done:{
+            default: false,
+            type: Boolean
+        },
+        delivery:{
+            default: false,
+            type: Boolean
         }
     },
     filters: {
@@ -120,6 +129,10 @@ export default {
             }else {
                 this.$router.push({path:'/detail', query:{id: this.id}})
             }
+        },
+        confirmReceived() {
+            this.$store.dispatch('order/confirmReceived',{id: this.id})
+            this.$forceUpdate()
         }
     }
 }

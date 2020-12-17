@@ -1,24 +1,25 @@
 <template>
     <div class="address-page">
         <div class="info-card" v-if="!token">
+        <!-- <div class="info-card"> -->
             <div class="form-group" >
                 <el-form label-position="right" label-width="160px" :model="login">
                     <el-form-item label="用户名" class="label">
                         <el-input v-model="login.username" style="width:470px"></el-input>
                     </el-form-item>
                 </el-form>
-                <el-form :inline="true" :model="formInline" label-width="160px"  class="demo-form-inline">
+                <el-form :inline="true" :model="login" label-width="160px"  class="demo-form-inline">
                     <el-form-item label="密码">
                         <el-input  type="password" v-model="login.password" style="width:300px"></el-input>                        
                     </el-form-item>
                     <el-form-item>
-                        <div class="buy-btn" @click="handleSign">确定登录</div>
+                        <div class="buy-btn" @click="handleSign">{{isLogin ? '立即注册':'确定登录'}}</div>
                     </el-form-item>
                 </el-form>
                 <el-form label-position="right" label-width="160px" :model="login">
                     <el-form-item label="">
-                        <!-- <p class="default-p-1">已有账号？</p> -->
-                        <p class="default-p-1"  @click="handleLogin">立即注册</p>
+                        <p class="default-p-1">{{isLogin ? '已有账号?' : '没有账号?'}}</p>
+                        <a class="default-p-1" style="text-decoration: underline"  @click="handleLogin">{{isLogin ? '登录' : '注册'}}</a>
                         <!-- <router-link to="/sign" class="p-bank"></router-link> -->
                     </el-form-item>
                 </el-form>
@@ -164,6 +165,7 @@ export default {
                 }
             ],
             value:'',
+            isLogin: false,
             rules:{
                 deliveryCity:[
                     { type: 'date', required: true, message: '请选择城市！', trigger: 'change' },
@@ -264,25 +266,28 @@ export default {
             this.$router.push('/cart')
         },
         handleSign(){
-            this.$store.dispatch("user/register", this.login)
-                .then(() => {
-                    this.$store.dispatch("user/login", this.loginForm)
-                    this.$message({
-                        message: '注册成功！',
-                        type: 'success'
-                    });
-                })
-                .catch(() => {});
+            if(this.isLogin){
+                this.$store.dispatch("user/register", this.login)
+                    .then(() => {
+                        this.$store.dispatch("user/login", this.login)
+                        this.$message({
+                            message: '注册成功！',
+                            type: 'success'
+                        });
+                    })
+                    .catch(() => {});
+            }else{
+                this.$store.dispatch("user/login", this.login)
+                    .then(() => {
+                        this.$message({
+                            message: '登录成功！',
+                            type: 'success'
+                        });
+                    })
+            }
         },
         handleLogin(){
-            this.$store.dispatch("user/login", this.login)
-                .then(() => {
-                    this.$message({
-                        message: '登录成功！',
-                        type: 'success'
-                    });
-                })
-                .catch(() => {});
+            this.isLogin = !this.isLogin
         }
     }
 }

@@ -68,3 +68,11 @@ export function list(data) {
     data
   })
 }
+
+export function confirmReceived(data) {
+  return request({
+    url: '/api/order_form/confirm_received',
+    method: 'post',
+    data
+  })
+}

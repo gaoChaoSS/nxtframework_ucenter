@@ -29,6 +29,11 @@
               :orderId = "item.serialNum"
               :id = "item.id"
               :statusText = "item.statusText"
+              :paid = "item.paid"
+              :refund = "item.refund"
+              :reviews = "item.reviews"
+              :done = "item.done"
+              :delivery = "item.delivery"
             />
           </template>
           <template v-else> 

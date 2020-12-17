@@ -32,7 +32,7 @@
         </div>
       </div>
       <Card 
-        title = "收支明细">
+        title = "收益明细">
             <el-table
             ref="singleTable"
             :data="tableData"

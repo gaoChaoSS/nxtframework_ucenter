@@ -15,7 +15,7 @@
                         <p class="product-name">{{item.productName}}</p>
                         <div class="product-arr">
                             <div class="arr-item" v-for="(arr, key) in item.sku" :key="key">
-                                {{arr.skuValueName}}: <span style="margin-left: 4px">{{arr.skuKeyName}}</span>
+                                {{arr.skuKeyName}}: <span style="margin-left: 4px">{{arr.skuValueName}}</span>
                             </div>
                         </div>
                   </div>

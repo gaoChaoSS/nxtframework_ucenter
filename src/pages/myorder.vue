@@ -11,6 +11,8 @@
           :paid = "item.paid"
           :refund = "item.refund"
           :reviews = "item.reviews"
+          :done = "item.done"
+          :delivery = "item.delivery"
          />
         <Pagination 
           @handleNumber="changeNumber($event)"
@@ -29,6 +31,8 @@
           :paid = "item.paid"
           :refund = "item.refund"
           :reviews = "item.reviews"
+          :done = "item.done"
+          :delivery = "item.delivery"
          />
         <Pagination 
           @handleNumber="changeNumber($event)"
@@ -47,6 +51,8 @@
           :paid = "item.paid"
           :refund = "item.refund"
           :reviews = "item.reviews"
+          :done = "item.done"
+          :delivery = "item.delivery"
          />
         <Pagination 
           @handleNumber="changeNumber($event)"
@@ -65,6 +71,8 @@
           :paid = "item.paid"
           :refund = "item.refund"
           :reviews = "item.reviews"
+          :done = "item.done"
+          :delivery = "item.delivery"
          />
         <Pagination 
           @handleNumber="changeNumber($event)"
