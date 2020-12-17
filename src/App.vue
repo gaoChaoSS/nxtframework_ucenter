@@ -1,6 +1,9 @@
 <template>
     <el-container>
-      <Header />
+      <Header 
+        :token="token"
+        :countAll = "countAll"
+      />
       <el-main><router-view /></el-main>
       <Footer />
     </el-container>
@@ -9,12 +12,21 @@
 <script>
 import Header from './layout/header'
 import Footer from './layout/footer'  
+import { mapGetters, mapState } from 'vuex'
 export default {
   name: 'App',
   components:{
     Header, 
     Footer
-  }
+  },
+  computed: {
+    ...mapGetters([
+      'token',
+    ]),
+    ...mapState({
+      countAll: state => state.cart.countAll
+    })
+  },
 }
 </script>
 

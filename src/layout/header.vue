@@ -54,15 +54,18 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { getToken } from '@/utils/auth'
 export default {
-  computed: {
-    ...mapGetters([
-      'token',
-    ]),
-    ...mapState({
-      countAll: state => state.cart.countAll
-    })
+  data() {
+    return {
+      token:getToken()
+    }
+  },
+  props:{
+    countAll:{
+      type:Number,
+      default:0,
+    },
   },
   methods:{
     handleLogout(){
@@ -80,7 +83,12 @@ export default {
     handleCart(){
       this.$router.push({ path: '/cart'})
     }
-  }
+  },
+  created() {
+    console.log('ssss')
+    console.log(this.token);
+    console.log('ssss')
+  },
 }
 </script>
 

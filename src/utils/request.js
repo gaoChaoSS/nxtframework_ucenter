@@ -1,5 +1,5 @@
 import axios from 'axios'
-import store from '@/store'
+// import store from '@/store'
 import { Message } from 'element-ui'
 import { getToken, getUserId } from '@/utils/auth'
 import { Loading } from 'element-ui';
@@ -12,10 +12,11 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    if (store.getters.token) {
-      config.headers['token'] = getToken()
-      config.headers['user_id'] = getUserId()
-    }
+    // if (store.getters.token) {
+      
+    // }
+    config.headers['token'] = getToken()
+    config.headers['user_id'] = getUserId()
     startLoading()
     return config
   },

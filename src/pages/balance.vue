@@ -72,6 +72,7 @@ export default {
                     {icon:require('@/assets/icon/1.png'), title:'提现中', num:11}
                 ],
             ],
+            tableData:[],
         }
     },
     components:{
@@ -91,7 +92,7 @@ export default {
             balanceCanWithdraw: state => state.balance.balanceCanWithdraw,
             totalWithdrawing: state => state.balance.totalWithdrawing,
             totalWithdrawSuccess: state => state.balance.totalWithdrawSuccess,
-            tableData: state => state.balance.list,
+            tableDatas: state => state.balance.list,
             statusText: state => state.user.statusText
         })
     },
@@ -105,7 +106,10 @@ export default {
             this.itemData[2][0].num = this.balanceCanWithdraw
             this.itemData[2][1].num = this.totalWithdrawing
         })
-        this.$store.dispatch('balance/list',{offset:0, limit: 10})
+        this.$store.dispatch('balance/list',{offset:0, limit: 10}).then(() =>{
+            this.tableData = this.tableDatas
+            this.$forceUpdate()
+        })
         // this.$store.dispatch('balance/list',{offset:1, limit: 10})
     },
     methods: { 
