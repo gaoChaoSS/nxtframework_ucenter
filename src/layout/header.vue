@@ -61,6 +61,17 @@ export default {
       token:getToken()
     }
   },
+  watch:{
+    $route() {
+      // console.log(route)
+      
+        this.$forceUpdate()
+        this.token = getToken()
+        console.log('sssssssss')      
+    },
+    token(){
+    }
+  },
   props:{
     countAll:{
       type:Number,

@@ -59,6 +59,7 @@ export default {
           });
 
           this.isLoading = false
+          this.$forceUpdate()
           this.$router.push({ path: '/'})
         })
         .catch(() => {          
