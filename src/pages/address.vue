@@ -18,7 +18,8 @@
                 <el-form label-position="right" label-width="160px" :model="login">
                     <el-form-item label="">
                         <!-- <p class="default-p-1">已有账号？</p> -->
-                        <router-link to="/sign" class="p-bank">立即注册</router-link>
+                        <p class="default-p-1"  @click="handleLogin">立即注册</p>
+                        <!-- <router-link to="/sign" class="p-bank"></router-link> -->
                     </el-form-item>
                 </el-form>
             </div>
@@ -263,6 +264,17 @@ export default {
             this.$router.push('/cart')
         },
         handleSign(){
+            this.$store.dispatch("user/register", this.login)
+                .then(() => {
+                    this.$store.dispatch("user/login", this.loginForm)
+                    this.$message({
+                        message: '注册成功！',
+                        type: 'success'
+                    });
+                })
+                .catch(() => {});
+        },
+        handleLogin(){
             this.$store.dispatch("user/login", this.login)
                 .then(() => {
                     this.$message({
@@ -412,7 +424,7 @@ export default {
     display: inline-block;
 }
 .default-p-1{
-    font-size: 10px;
+    font-size: 14px;
     font-family: PingFang SC;
     font-weight: 400;
     line-height: 29px;

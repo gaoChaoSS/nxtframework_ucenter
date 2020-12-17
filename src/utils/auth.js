@@ -24,10 +24,19 @@ export function setUserId(id) {
   return Cookies.set(UserId, id)
 }
 
+export function removeUserId() {
+  return Cookies.remove(UserId)
+}
+
+
 export function getGuestToken() {
   return Cookies.get(GuestToken) == '' ? null :Cookies.get(GuestToken)
 }
 
 export function setGuestToken(token) {
   return Cookies.set(GuestToken, token)
+}
+
+export function removeGuestToken() {
+  return Cookies.remove(GuestToken)
 }

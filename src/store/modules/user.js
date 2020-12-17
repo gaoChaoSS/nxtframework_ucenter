@@ -7,7 +7,7 @@ import {
   phone_remove, pwd_code,
   pwd_reset,invited_list
 } from '@/api/user'
-import { getToken, setToken, removeToken, setUserId } from '@/utils/auth'
+import { getToken, setToken, removeToken, removeGuestToken, removeUserId, setUserId } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
 const state = {
@@ -98,6 +98,8 @@ const actions = {
         commit('SET_ROLES', [])
         commit('SET_USER_ID', '')
         removeToken()
+        removeGuestToken()
+        removeUserId()
         resetRouter()
 
         resolve()
@@ -106,6 +108,8 @@ const actions = {
         commit('SET_ROLES', [])
         commit('SET_USER_ID', '')
         removeToken()
+        removeGuestToken()
+        removeUserId()
         reject(error)
       })
     })

@@ -9,7 +9,7 @@ const state = {
 
 const mutations = {
     SET_DATA:(state, data) =>{
-        state = {...data}
+        Object.keys(state).forEach(key=>{state[key] = data[key]})
     },
     SET_LIST:(state, data) => {
         state.list = data

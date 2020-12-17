@@ -12,11 +12,10 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    // if (store.getters.token) {
-      
-    // }
-    config.headers['token'] = getToken()
-    config.headers['user_id'] = getUserId()
+    if (getToken()) {
+      config.headers['token'] = getToken()
+      config.headers['user_id'] = getUserId()
+    }
     startLoading()
     return config
   },

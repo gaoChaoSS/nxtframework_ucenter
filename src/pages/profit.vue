@@ -27,7 +27,7 @@
             </div>
             <div class="user-item">
                 <Button @click.native="handleSettlement">结算到余额</Button>
-                <p class="title">先转入余额，再申请提现</p>
+                <p class="title" style="margin-bottom: 26px">先转入余额，再申请提现</p>
             </div>
         </div>
       </div>
@@ -35,11 +35,11 @@
         title = "收支明细">
             <el-table
             ref="singleTable"
-            :data="list"
+            :data="tableData"
             highlight-current-row
             style="width: 100%">
                 <el-table-column
-                    type="datelineReadable"
+                    property="datelineReadable"
                     label="时间"
                     width="300"
                 />
@@ -108,6 +108,9 @@ export default {
     created() {
         this.$store.dispatch('commission/detail')
         this.$store.dispatch('commission/list',{offset:0, limit: 10})
+            .then(() => {
+                this.tableData = this.list
+            })
     },
     methods:{
         handleSettlement(){

@@ -21,7 +21,7 @@
           <router-link to="/order" class="info-title-a">查看所有订单</router-link>
       </div>
       <div class="info-content">
-          <template  v-if="list">
+          <template  v-if="list.length">
             <Order v-for="(item, index) in list" :key="index"
               :Lists="item.orderFormProductList"
               :amountFinally = "item.amountFinally"
@@ -60,6 +60,11 @@ import Order from '@/components/order'
     },
     components:{
       Order
+    },
+    watch:{
+      list(){
+        console.log(this.list)
+      }
     },
     created(){
       this.$store.dispatch('user/balance')

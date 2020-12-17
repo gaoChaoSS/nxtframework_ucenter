@@ -29,7 +29,7 @@
           <div class="row">
             <div>
               <router-link :to="{name:'pay',query:{id:this.id}}" v-if="!paid " >付款</router-link>
-              <router-link :to="{path:'/evaluate',query:{orderid:this.id}}" v-if="!reviews && paid " >评价</router-link>
+              <router-link :to="{path:'/evaluate',query:{orderid:this.id}}" v-if="reviews && paid " >评价</router-link>
               <router-link :to="{path:'serive_detail',query:{orderid:this.id}}" v-if="paid">申请售后</router-link>
             </div>
           </div>
