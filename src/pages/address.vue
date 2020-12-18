@@ -131,6 +131,7 @@
 <script>
 import Cart from '@/components/cartShow.vue'
 import { mapGetters, mapState} from 'vuex';
+import { getGuestToken } from '@/utils/auth'
 export default {
     data(){
         return {
@@ -274,6 +275,7 @@ export default {
                             message: '注册成功！',
                             type: 'success'
                         });
+                        this.$store.dispatch('cart/detail',{guestToken:getGuestToken()})
                     })
                     .catch(() => {});
             }else{
@@ -283,6 +285,7 @@ export default {
                             message: '登录成功！',
                             type: 'success'
                         });
+                        this.$store.dispatch('cart/detail',{guestToken:getGuestToken()})
                     })
             }
         },

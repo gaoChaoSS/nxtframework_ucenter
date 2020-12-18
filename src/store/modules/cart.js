@@ -87,9 +87,9 @@ const mutations = {
 }
 
 const actions = {
-    detail({ state,commit }) {
+    detail({ state,commit }, data ={}) {
         return new Promise((resolve, reject) => {
-        detail({ guestToken:state.guestToken }).then(response => {
+        detail({ guestToken:state.guestToken,...data }).then(response => {
             const { itemList, guestToken} = response.result
             itemList.map(item =>{
                 if(!item.invalid){
