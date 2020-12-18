@@ -91,7 +91,7 @@
 
 <script>
 import Cart from '@/components/cartShow.vue'
-import { mapState} from 'vuex';
+import { mapState, mapGetters} from 'vuex';
 export default {
     data(){
         return {
@@ -121,10 +121,12 @@ export default {
             deliveryAddress: state => state.order.deliveryAddress,
             deliveryPhone: state => state.order.deliveryPhone,
             orderId: state => state.order.orderId,
-            balance: state => state.user.balance,
             productList: state => state.order.productList,
             paid: state => state.order.paid
         }),
+        ...mapGetters([
+           'balance'
+        ])
     },
     created(){
         this.id = this.$route.query.id 

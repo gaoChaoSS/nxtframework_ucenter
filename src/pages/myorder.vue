@@ -85,7 +85,7 @@
 <script>
  import Order from '@/components/order'
  import Pagination from '@/components/Pagination'
- import { mapGetters } from 'vuex'
+ import { mapGetters, mapState } from 'vuex'
   export default {
     data() {
       return {
@@ -95,13 +95,22 @@
         ],
         lists:[
           [],[],[],[]
-        ]
+        ],
+        reqData:{}
       };
     },
     computed: {
       ...mapGetters({
          list: 'orderList'
+      }),
+      ...mapState({
+        isUpdate: state => state.order.isUpdate
       })
+    },
+    watch:{
+      isUpdate() {
+        this.loadData(this.reqData)
+      }
     },
     components:{
         Order,
@@ -131,9 +140,8 @@
         if(value.item == 3){
           data.isReviews = false
           data.isDelivery = true
-
-
         }
+        this.reqData = value
         this.$store.dispatch('order/list', data).then(() => {
             console.log(value)
             this.lists[value.item] = this.list

@@ -141,9 +141,9 @@ const actions = {
         })
     },
     // eslint-disable-next-line no-empty-pattern
-    info({ commit }) {
+    info({ commit, state }) {
         return new Promise((resolve, reject) => {
-            info({}).then((res) => {
+            info({ guestToken:state.guestToken }).then((res) => {
                 commit('SET_COUNT',res.result.countAll)
                 // console.log(res)
                 resolve()

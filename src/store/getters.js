@@ -7,7 +7,8 @@ const getters = {
     roles: state => state.user.roles,
     productList: state => state.cart.productList,
     cartProductList: state => state.cart.cartProductList,
-    orderList: state => state.order.orderList
+    orderList: state => state.order.orderList,
+    balance: state => state.user.balance
   }
   export default getters
   

@@ -55,19 +55,25 @@
 
 <script>
 import { getToken } from '@/utils/auth'
+import { mapState } from 'vuex'
 export default {
   data() {
     return {
       token:getToken()
     }
   },
+  computed:{
+    ...mapState({
+      tokenKey: state => state.user.token
+    })
+  },
   watch:{
     $route() {
-      // console.log(route)
-      
-        this.$forceUpdate()
-        this.token = getToken()
-        console.log('sssssssss')      
+        console.log('11111111111111')
+    },
+    tokenKey(){
+      this.$forceUpdate()
+      this.token = getToken()
     },
     token(){
     }

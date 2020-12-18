@@ -1,6 +1,7 @@
 import { create, deliveryConfigList, deliveryRegionList,
     deliveryCost, pay, statusPaid,
-    detail, list, confirmReceived
+    detail, list, 
+    confirmReceived
 } from '@/api/order'
 
 const state = {
@@ -29,7 +30,8 @@ const state = {
     datelinePaidReadable:'',
     datelineDeliveryReadable:'',
     datelineReceivedReadable:'',
-    paid:false
+    paid:false,
+    isUpdate:1
 }
 
 const mutations = {
@@ -83,15 +85,8 @@ const mutations = {
     SET_ORDER_LIST: (state, data) => {
         state.orderList = data
     },
-    SET_DONE: (state, data) =>{
-        let arr = []
-        state.list.map(item => {
-            if(item.id == data) {
-                item.done = true
-            }
-            arr.push(item)
-        })
-        state.list = arr
+    IS_UPDATE:(state) =>{
+        state.isUpdate += 1
     }
 }
 
@@ -218,7 +213,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             confirmReceived({ ...data }).then((response) => {                
                 console.log(response)
-                commit('SET_DONE', data.id)
+                commit('IS_UPDATE');
                 resolve()
             }).catch(error => {
                 reject(error)
