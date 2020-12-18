@@ -271,12 +271,14 @@ export default {
             if(this.isLogin){
                 this.$store.dispatch("user/register", this.login)
                     .then(() => {
-                        this.$store.dispatch("user/login", this.login)
+                        this.$store.dispatch("user/login", this.login).then(() =>{
+                            this.$store.dispatch('cart/detail',{guestToken:getGuestToken(),'user-id':this.getUserId})
+                        })
                         this.$message({
                             message: '注册成功！',
                             type: 'success'
                         });
-                        this.$store.dispatch('cart/detail',{guestToken:getGuestToken(),'user-id':this.getUserId})
+                        
                     })
                     .catch(() => {});
             }else{
