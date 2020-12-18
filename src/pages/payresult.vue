@@ -19,15 +19,15 @@
                 </div>
                 <div class="item">
                     <p class="title">姓名:</p>
-                    <p class="content-p">张三</p>
+                    <p class="content-p">{{deliveryPerson}}</p>
                 </div>
                 <div class="item">
                     <p class="title">收货地址：</p>
-                    <p class="content-p">广东省,深圳市,宝安区,南瓜街道,西瓜村89号</p>
+                    <p class="content-p">{{deliveryCountry}} , {{deliveryProvince}} , {{deliveryCity}} , {{deliveryAddress}}</p>
                 </div>
                 <div class="item">
                     <p class="title">联系电话：</p>
-                    <p class="content-p">136xxxxxxxx</p>
+                    <p class="content-p">{{deliveryPhone}}</p>
                 </div>
                 <div class="item">
                     <p class="title">支付方式：</p>
@@ -39,7 +39,7 @@
                 </div>
                 <div class="item">
                     <p class="title">备注：</p>
-                    <p class="content-p">sssss@aaa.com</p>
+                    <p class="content-p">{{deliveryRemark}}</p>
                 </div>  
             </div>
         </div>
@@ -115,7 +115,12 @@ export default {
             deliveryAddress: state => state.order.deliveryAddress,
             deliveryPhone: state => state.order.deliveryPhone,
             balance: state => state.user.balance,
-            productList: state => state.order.productList
+            productList: state => state.order.productList,
+            deliveryConfigName: state => state.order.deliveryConfigName,
+            datelineCreateReadable: state => state.order.datelineCreateReadable,
+            datelinePaidReadable: state => state.order.datelinePaidReadable,
+            datelineDeliveryReadable: state => state.order.datelineDeliveryReadable,
+            datelineReceivedReadable: state => state.order.datelineReceivedReadable
         })
     },
     watch:{
@@ -132,7 +137,7 @@ export default {
             {img: require("@/assets/weixin.png"),title: '微信'},
             {img: require("@/assets/alipay.png"),title: '支付宝'},
             {img: require("@/assets/paypal.png"),title: 'Paypal'},
-            {img: require("@/assets/balance.png"),title: '金额：'+ this.value}
+            {img: require("@/assets/balance.png"),title: '余额：'+ this.value}
         ]
     },
     mounted(){

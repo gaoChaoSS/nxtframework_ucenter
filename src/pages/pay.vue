@@ -130,14 +130,16 @@ export default {
     },
     created(){
         this.id = this.$route.query.id 
-        this.$store.dispatch('user/balance')
+        this.$store.dispatch('user/balance').then(() => {
+            this.payType= [
+                {img: require("@/assets/weixin.png"),title: '微信', value: 'wxpay'},
+                {img: require("@/assets/alipay.png"),title: '支付宝', value: 'alipay'},
+                {img: require("@/assets/paypal.png"),title: 'Paypal', value: 'paypal'},
+                {img: require("@/assets/balance.png"),title: '余额：'+ this.balance, value: 'balance'}
+            ]
+        })
         this.$store.dispatch('order/detail',this.id);
-        this.payType= [
-            {img: require("@/assets/weixin.png"),title: '微信', value: 'wxpay'},
-            {img: require("@/assets/alipay.png"),title: '支付宝', value: 'alipay'},
-            {img: require("@/assets/paypal.png"),title: 'Paypal', value: 'paypal'},
-            {img: require("@/assets/balance.png"),title: '金额：'+ this.balance, value: 'balance'}
-        ]
+        
         console.log(this.payType)
         console.log(this.id)
     },
