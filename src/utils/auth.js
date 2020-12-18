@@ -17,7 +17,7 @@ export function removeToken() {
 }
 
 export function getUserId() {
-  return Cookies.get(UserId)
+  return Cookies.get(UserId) 
 }
 
 export function setUserId(id) {

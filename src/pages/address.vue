@@ -131,10 +131,11 @@
 <script>
 import Cart from '@/components/cartShow.vue'
 import { mapGetters, mapState} from 'vuex';
-import { getGuestToken } from '@/utils/auth'
+import { getGuestToken, getUserId } from '@/utils/auth'
 export default {
     data(){
         return {
+            getUserId:getUserId(),
             login:{
                 username:'',
                 password:'',
@@ -275,7 +276,7 @@ export default {
                             message: '注册成功！',
                             type: 'success'
                         });
-                        this.$store.dispatch('cart/detail',{guestToken:getGuestToken()})
+                        this.$store.dispatch('cart/detail',{guestToken:getGuestToken(),'user-id':this.getUserId})
                     })
                     .catch(() => {});
             }else{
@@ -285,7 +286,7 @@ export default {
                             message: '登录成功！',
                             type: 'success'
                         });
-                        this.$store.dispatch('cart/detail',{guestToken:getGuestToken()})
+                        this.$store.dispatch('cart/detail',{guestToken:getGuestToken(),'user-id':this.getUserId})
                     })
             }
         },
