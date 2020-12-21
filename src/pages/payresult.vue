@@ -67,12 +67,13 @@
                     :name="item.productName"
                     :image="item.picUrl"
                     :skus="item.sku"
-                    :price="item.productPrice"
+                    :price="item.productPriceDeal"
                     :num="item.quantity"
                     :checkout="item.checkout"
                     :productId="item.productId"
                 />
             </div>
+            <div class="buy-info-item"><p class="default-p">总计:    </p><span class="price-p">￥{{amountFinally}}</span></div>
         </div>
         <div class="cart-info">
             <div class="buy-btn-1" @click="handleGoInfo()">到个人中心查看订单列表</div>
@@ -120,7 +121,8 @@ export default {
             datelineCreateReadable: state => state.order.datelineCreateReadable,
             datelinePaidReadable: state => state.order.datelinePaidReadable,
             datelineDeliveryReadable: state => state.order.datelineDeliveryReadable,
-            datelineReceivedReadable: state => state.order.datelineReceivedReadable
+            datelineReceivedReadable: state => state.order.datelineReceivedReadable,
+            amountFinally: state => state.order.amountFinally,
         })
     },
     watch:{

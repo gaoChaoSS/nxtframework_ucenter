@@ -125,9 +125,25 @@ export function pwd_reset(data) {
   })
 }
 
+//
+export function pwdReset(data) {
+  return request({
+    url:'/api/user/pwd_reset',
+    method: 'post',
+    data
+  })
+}
 export function invited_list(data) {
   return request({
     url:'/api/user/invited/list',
+    method: 'post',
+    data
+  })
+}
+
+export function avatar(data) {
+  return request({
+    url: '/api/user/avatar/update',
     method: 'post',
     data
   })

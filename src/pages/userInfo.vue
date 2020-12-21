@@ -2,7 +2,20 @@
   <div class="balance-page">
       <div class="user-info">
         <div class="user-info-left">
-            <img :src="avatarPicUrl" alt="" class="avatar">
+            <el-upload
+                class="upload-demo"
+                ref="upload"
+                action="/api/user/uploadimage"
+                :http-request="handleUploadHttpRequest"
+                :show-file-list="false"
+                :auto-upload="true">
+                <div class="avatar-item">
+                    <img :src="avatarPicUrl" alt="" class="avatar">
+                    <p class="avatar-title">修改头像</p>
+                </div>
+                    
+            </el-upload>
+            
             <div class="info-content">
                 <div class="item">
                     <p class="title">邮箱:</p>
@@ -11,8 +24,8 @@
                 </div>
                 <div class="item">
                     <p class="title">手机:</p>
-                    <p class="content" v-if="phone">{{phone}}</p>
-                    <p class="content" else>无 <a style="text-decoration: underline;color: #014785;margin-left: 20px;" @click="dialogVisible.phone = true">添加</a></p>
+                    <p class="content" v-if="phone!=''">{{phone}}</p>
+                    <p class="content" v-else>无 <a style="text-decoration: underline;color: #014785;margin-left: 20px;" @click="dialogVisible.phone = true">添加</a></p>
                 </div>
             </div>
         </div>
@@ -57,22 +70,22 @@
         <el-dialog
             title="密码修改"
             :visible.sync="dialogVisible.pwd"
-            width="30%"
+            width="40%"
             >
             <div class="form-group" style="margin-top:20px">
-                <el-form label-position="right" label-width="160px" >
+                <el-form label-position="right" label-width="100px" >
                     <el-form-item label="旧密码" class="label" prop="deliveryPerson">
-                        <el-input v-model="pwd.oldPwd" style="width:200px" show-password></el-input>
+                        <el-input v-model="pwd.oldPwd" style="width:400px" show-password></el-input>
                     </el-form-item>
                     <el-form-item label="新密码" class="label" prop="deliveryPerson">
-                        <el-input v-model="pwd.newPwd" style="width:200px" show-password ></el-input>
+                        <el-input v-model="pwd.newPwd" style="width:400px" show-password ></el-input>
                     </el-form-item>
                     
                 </el-form>
             </div>
             <span slot="footer" class="dialog-footer">
-                <el-button @click.native="dialogVisible.pwd = false">取 消</el-button>
-                <el-button type="primary" @click.native="handlePwdReset" >确 定</el-button>
+                <Button type="primary" @click.native="handlePwdReset"   style="margin-right:10px;">确 定</Button>
+                <Button @click.native="dialogVisible.pwd = false" solid>取 消</Button>
             </span>
         </el-dialog>
         <el-dialog
@@ -81,32 +94,32 @@
             width="40%"
             >
             <div class="form-group" style="margin-top:20px">
-                <el-form label-position="right" label-width="160px"  v-if="email">
+                <el-form label-position="right" label-width="100px"  v-if="email">
                     <el-form-item label="原邮箱" class="label" prop="deliveryPerson">
                         <p>{{email}}</p>
                     </el-form-item>
                 </el-form>
-                <el-form :inline="true" label-width="160px" v-if="email" >
+                <el-form :inline="true" label-width="100px" v-if="email" >
                     <el-form-item label="验证码" class="label" prop="deliveryPerson">
-                        <el-input v-model="pwdFrom.removecode" style="width:200px"></el-input>
+                        <el-input v-model="pwdFrom.removecode" style="width:240px"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <Button @click.native="handleEmailCode">获取验证码</Button>
                     </el-form-item>
                 </el-form>
-                <el-form label-position="right" label-width="160px" v-if="email">
+                <el-form label-position="right" label-width="100px" v-if="email">
                     <el-form-item>
                         <Button @click.native="handleEmailMove">解绑</Button>
                     </el-form-item>
                 </el-form>
-                <el-form label-position="right" label-width="160px" >
+                <el-form label-position="right" label-width="100px" >
                     <el-form-item label="新邮箱" class="label" prop="deliveryPerson">
-                        <el-input v-model="pwdFrom.newEmail" style="width:200px"></el-input>
+                        <el-input v-model="pwdFrom.newEmail" style="width:240px"></el-input>
                     </el-form-item>
                 </el-form>
-                <el-form :inline="true" label-width="160px" >
+                <el-form :inline="true" label-width="100px" >
                     <el-form-item label="验证码" class="label" prop="deliveryPerson">
-                        <el-input v-model="pwdFrom.code" style="width:200px"></el-input>
+                        <el-input v-model="pwdFrom.code" style="width:240px"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <Button @click.native="handleEmailVerifyCode">获取验证码</Button>
@@ -114,8 +127,8 @@
                 </el-form>
             </div>
             <span slot="footer" class="dialog-footer">
-                <el-button @click.native="dialogVisible.email = false">取 消</el-button>
-                <el-button type="primary" @click.native="handelEmailUpdate" >确 定</el-button>
+                <Button type="primary" @click.native="handelEmailUpdate" style="margin-right:10px">确 定</Button>
+                <Button @click.native="dialogVisible.email = false" solid>取 消</Button>
             </span>
         </el-dialog>
         <el-dialog
@@ -124,32 +137,32 @@
             width="40%"
             >
             <div class="form-group" style="margin-top:20px">
-                <el-form label-position="right" label-width="160px" v-if="phone">
+                <el-form label-position="right" label-width="100px" v-if="phone">
                     <el-form-item label="原手机号" class="label" prop="deliveryPerson">
                         <p>{{phone}}</p>
                     </el-form-item>
                 </el-form>
-                <el-form :inline="true" label-width="160px" v-if="phone" >
+                <el-form :inline="true" label-width="100px" v-if="phone" >
                     <el-form-item label="验证码" class="label" prop="deliveryPerson">
-                        <el-input v-model="phoneFrom.removecode" style="width:200px"></el-input>
+                        <el-input v-model="phoneFrom.removecode" style="width:240px"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <Button  @click.native="handlePhoneCode">获取验证码</Button>
                     </el-form-item>
                 </el-form>
-                <el-form label-position="right" label-width="160px" v-if="phone" >
+                <el-form label-position="right" label-width="100px" v-if="phone" >
                     <el-form-item>
                         <Button @click.native="handlePhoneMove">解绑</Button>
                     </el-form-item>
                 </el-form>
-                <el-form label-position="right" label-width="160px" >
+                <el-form label-position="right" label-width="100px" >
                     <el-form-item label="新手机号" class="label" prop="deliveryPerson">
-                        <el-input v-model="phoneFrom.newPhone" style="width:200px"></el-input>
+                        <el-input v-model="phoneFrom.newPhone" style="width:240px"></el-input>
                     </el-form-item>
                 </el-form>
-                <el-form :inline="true" label-width="160px" >
+                <el-form :inline="true" label-width="100px" >
                     <el-form-item label="验证码" class="label" prop="deliveryPerson">
-                        <el-input v-model="phoneFrom.code" style="width:200px"></el-input>
+                        <el-input v-model="phoneFrom.code" style="width:240px"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <Button @click.native="handlePhoneVerifyCode"> 获取验证码</Button>
@@ -157,8 +170,8 @@
                 </el-form>
             </div>
             <span slot="footer" class="dialog-footer">
-                <el-button @click.native="dialogVisible.phone = false">取 消</el-button>
-                <el-button type="primary"  @click.native="handelPhoneUpdate" >确 定</el-button>
+                <Button type="primary"  @click.native="handelPhoneUpdate" style="margin-right:10px">确 定</Button>
+                <Button @click.native="dialogVisible.phone = false" solid>取 消</Button>
             </span>
         </el-dialog>
   </div>
@@ -168,6 +181,7 @@
 import Card from '@/components/card'
 import Button from '@/components/button'
 import { mapState } from 'vuex'
+import { avatar }  from '@/api/user'
 export default {
     data(){
         return {
@@ -236,13 +250,36 @@ export default {
     },
     created() {
         this.$store.dispatch('user/info')
+            .then()
     },
     methods:{
+        async handleUploadHttpRequest (param) {
+            const fileObj = param.file
+            const response = await avatar(fileObj)
+            if(response.status == 0){
+                console.log(response)
+                this.$store.commit('user/SET_AVATAR', response.result)
+                // this.avatarPicUrl = 
+                // this.reasonImageListId.push(response.result.id)
+                // console.log(this.reasonImageLists)
+            }else{
+                this.$message({
+                    message: response.message,
+                    type: 'error',
+                    duration: 5 * 1000
+                })
+            }
+        },
         handleSettlement(){
             this.$router.push('/settlement')
         },
         handlePwdReset(){
             this.$store.dispatch('user/pwd_reset',{passwordOld:this.pwd.oldPwd, passwordNew:this.pwd.newPwd})
+                .then(() => {
+                    this.pwd.oldPwd = ''
+                    this.pwd.newPwd = ''
+                    this.dialogVisible.pwd = false
+                })
         },
         handleEmailCode(){
             console.log('sss');
@@ -256,7 +293,13 @@ export default {
             this.$store.dispatch('user/verify_code',{email: this.pwdFrom.newEmail})
         },
         handelEmailUpdate() {
-            this.$store.dispatch('user/email_update',{email: this.pwdFrom.newEmail,verifyCode: this.pwdFrom.code})            
+            this.$store.dispatch('user/email_update',{email: this.pwdFrom.newEmail,verifyCode: this.pwdFrom.code})
+                .then(() => {
+                    this.pwdFrom.newEmail= ''
+                    this.pwdfrom.code = ''
+                    this.pwdfrom.removecode = ''
+                    this.dialogVisible.email = false
+                })  
         },
         handlePhoneCode() {
             this.$store.dispatch('user/phone_remove_code',{})
@@ -270,6 +313,12 @@ export default {
         },
         handelPhoneUpdate(){
             this.$store.dispatch('user/phone_update',{phone: this.phoneFrom.newPhone,verifyCode: this.phoneFrom.code})
+                .then(() => {
+                    this.phoneFrom.code = ''
+                    this.phoneFrom.newPhone = ''
+                    this.phoneFrom.removecode = ''
+                    this.dialogVisible.phone = false
+                })
         }
 
     }
@@ -368,7 +417,8 @@ p{
 .avatar{
     width: 80px;
     height: 80px;
-    margin-right: 40px;
+    
+    border-radius: 50%;
 }
 .info-content{
     display: flex;
@@ -419,5 +469,29 @@ p{
     width: 100%;    
     color: #1B1B1B;
 }
+.dialog-footer{
+    justify-content: center;
+    display: flex;
+}
+.avatar-item{
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 40px;
+     width: 80px;
+    height: 80px;
+}
+.avatar-title{
+       position: absolute;
+    width: 100%;
+    text-align: center;
+    bottom: 0px;
+    height: 25px;
+    line-height: 21px;
+    background: rgba(0, 0, 0, 0.384);
+    font-size: 10px;
+    font-weight: 600;
+    color: #fff;
 
+}
 </style>

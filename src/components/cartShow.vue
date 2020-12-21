@@ -8,7 +8,7 @@
                     <p class="name">{{name}}</p>
                 </div>
                 <div class="info-item">
-                    <p class="att" v-for="( item, index) in skus" :key="index">{{item.skuKeyName}}:{{item.skuValueName}}</p>
+                    <p class="att" v-for="( item, index) in skus" :key="index">{{item.skuKeyName}}: {{item.skuValueName}}</p>
                 </div>
             </div>
         </div>
@@ -159,7 +159,7 @@ p{
     height: auto;
 }
 .att{
-    display: inline-block;
+    display: block;
     margin-right: 10px;
     color: #1B1B1B;
 }

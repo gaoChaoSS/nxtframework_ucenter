@@ -4,21 +4,21 @@
       <div class="main-item">
         <div class="form-group">
           <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
-            <el-form-item label="用户名" class="label" label-width="100px">
+            <el-form-item label="手机/邮箱" class="label" label-width="100px">
               <el-input v-model="formLabelAlign.name"></el-input>
             </el-form-item>
             <el-form-item label="验证码" class="label" label-width="100px">
-              <el-input v-model="formLabelAlign.name" style="width:220px"></el-input>
-              <button class="btn">获取验证码</button>
+              <el-input v-model="formLabelAlign.code" style="width:220px" ></el-input>
+              <button class="btn" @click="handleCode">获取验证码</button>
             </el-form-item>
             <el-form-item label="密码" class="label" label-width="100px">
-              <el-input v-model="formLabelAlign.region"></el-input>
+              <el-input v-model="formLabelAlign.pwd" type="password"></el-input>
             </el-form-item>
             <el-form-item label="确认新密码" label-width="100px">
-              <el-input v-model="formLabelAlign.region"></el-input>
+              <el-input v-model="formLabelAlign.newPwd" type="password"></el-input>
             </el-form-item>
             <el-form-item>
-              <button class="btn">登录</button>
+              <button class="btn" @click="handleReset">登录</button>
             </el-form-item>
           </el-form>
         </div>
@@ -48,7 +48,9 @@ export default {
       labelPosition: 'right',
       formLabelAlign: {
         name: '',
-        region: '',
+        pwd:'',
+        newPwd:'',
+        code:'',
         type: ''
       },
       isSuccess: true
@@ -59,6 +61,28 @@ export default {
   methods:{
     goLogin(){
       this.$router.push({ path: '/login'})
+    },
+    handleCode() {
+      this.$store.dispatch('user/pwd_code',{phoneOrEmail:this.formLabelAlign.name})
+        .then(() => {
+
+        })
+    },
+    handleReset() {
+      if(this.formLabelAlign.pwd != this.formLabelAlign.newPwd){
+        this.$message({
+          message: '二次密码不一致！',
+          type: 'error'
+        })
+        return false
+      }
+      this.$store.dispatch('user/pwdReset',{
+        phoneOrEmail:this.formLabelAlign.name,
+        verifyCode:this.formLabelAlign.code,
+        password:this.formLabelAlign.newPwd
+      }).then(() => {
+        this.isSuccess = false;
+      })
     }
   }
 };

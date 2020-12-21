@@ -28,6 +28,7 @@ export default {
     line-height: 32px;
     /* letter-spacing: 20px; */
     background: #014785;
+    border: 1px solid #014785;
     font-size: 12px;
 }
 .solid{

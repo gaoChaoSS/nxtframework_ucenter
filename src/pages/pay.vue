@@ -70,12 +70,13 @@
                     :name="item.productName"
                     :image="item.picUrl"
                     :skus="item.sku"
-                    :price="item.productPrice"
+                    :price="item.productPriceDeal"
                     :num="item.quantity"
                     :checkout="item.checkout"
                     :productId="item.productId"
                 />
             </div>
+            <div class="buy-info-item"><p class="default-p">总计:    </p><span class="price-p">￥{{amountFinally}}</span></div>
         </div>
         <div class="cart-info">
             <div class="back-btn" @click="handleBack()" v-show="false"> 
@@ -122,7 +123,8 @@ export default {
             deliveryPhone: state => state.order.deliveryPhone,
             orderId: state => state.order.orderId,
             productList: state => state.order.productList,
-            paid: state => state.order.paid
+            paid: state => state.order.paid,
+            amountFinally: state => state.order.amountFinally,
         }),
         ...mapGetters([
            'balance'

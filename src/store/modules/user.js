@@ -5,7 +5,7 @@ import {
   email_move, phone_code,
   phone_update, phone_remove_code,
   phone_remove, pwd_code,
-  pwd_reset,invited_list
+  pwd_reset,invited_list, pwdReset
 } from '@/api/user'
 import { getToken, setToken, removeToken, removeGuestToken, removeUserId, setUserId } from '@/utils/auth'
 import { resetRouter } from '@/router'
@@ -40,7 +40,7 @@ const mutations = {
     state.name = name
   },
   SET_AVATAR: (state, avatar) => {
-    state.avatar = avatar
+    state.avatarPicUrl = avatar
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
@@ -56,7 +56,7 @@ const mutations = {
   },
   SET_INVITED_LISS: (state, data) => {
     state.invited_list =  data
-  }
+  },
 }
 
 const actions = {
@@ -245,6 +245,18 @@ const actions = {
       })
     })
   },
+  // eslint-disable-next-line no-empty-pattern
+  pwdReset({ }, data) {
+    return new Promise((resolve, reject) => {
+      pwdReset({ ...data }).then((res) => {
+        console.log(res)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  
   invited_list({commit}, data) {
     return new Promise((resolve, reject) => {
       invited_list({...data}).then((res) => {

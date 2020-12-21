@@ -1,7 +1,7 @@
 import axios from 'axios'
 // import store from '@/store'
 import { Message } from 'element-ui'
-import { getToken, getUserId } from '@/utils/auth'
+import { getToken, getUserId ,getGuestToken} from '@/utils/auth'
 import { Loading } from 'element-ui';
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
@@ -14,8 +14,9 @@ service.interceptors.request.use(
   config => {
     if (getToken()) {
       config.headers['token'] = getToken()
-      config.headers['user_id'] = getUserId()
+      config.headers['user_id'] = getUserId()      
     }
+    config.headers['shopping_cart_token'] = getGuestToken()
     startLoading()
     return config
   },

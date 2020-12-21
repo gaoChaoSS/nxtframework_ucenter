@@ -37,8 +37,8 @@ export default {
   data() {
     return {
       loginForm: {
-        username: "admin",
-        password: "nxtframework.com",
+        username: "",
+        password: "",
       },
       labelPosition: 'top',
       isSuccess: true,
