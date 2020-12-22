@@ -28,7 +28,7 @@
           <p class="content-p">{{inviteUrl}}</p>
         </div>
         <div class="item">
-          <p class="title">邀请二维码</p>
+          <p class="title" style="align-self: self-start;">邀请二维码</p>
           <p class="content-p">
               <img :src="inviteUrlQrImageUrl" alt="">
           </p>

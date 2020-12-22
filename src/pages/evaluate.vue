@@ -21,8 +21,8 @@
                 <p class="att">x{{item.quantity}}</p>
                 <p class="att">￥{{item.productPrice}}</p>
             </div>
-            <div class="message-back">
-                <div class="chat-back">
+            <div class="message-back" >
+                <div class="chat-back" v-if="item.reviewsItem">
                     <img class="user-img" :src="item.reviewsItem.avatar" alt="">
                     <div class="chat-info">
                         <p>{{item.reviewsItem.date}}</p>
@@ -32,7 +32,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col" v-if="item.reviewsItem==[]"> 
+                <div class="col" v-if="!item.reviewsItem"> 
                     <div class="row">
                         <el-input type="textarea" v-model="desc[index]"  :rows="6" resize="none" style="width:700px; "></el-input>
                     </div>
@@ -145,21 +145,24 @@ export default {
     watch:{
     },
     created() {
-        this.id = this.$route.query.orderid
-        this.$store.dispatch('reviews/detail',{id:this.id}).then(()=>{
-            this.orderFormProductLists =  this.orderFormProductList;
-            this.orderFormProductLists.map(item => {
-                item.reasonImageLists = [];
-                item.reasonImageListId = [];
-                this.desc.push('');
-            })
-        })
+        this.LoadData()
     },
+    
     mounted(){
-        // console.log(this.$store.state.refund.datelineCreateReadable)
-        
+        // console.log(this.$store.state.refund.datelineCreateReadable)        
     },
     methods: {
+        LoadData(){
+            this.id = this.$route.query.orderid
+            this.$store.dispatch('reviews/detail',{id:this.id}).then(()=>{
+                this.orderFormProductLists =  this.orderFormProductList;
+                this.orderFormProductLists.map(item => {
+                    item.reasonImageLists = [];
+                    item.reasonImageListId = [];
+                    this.desc.push('');
+                })
+            })
+        },
         async handleUploadHttpRequest (param) {
             console.log(param)
             const fileObj = param.file

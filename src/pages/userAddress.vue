@@ -12,7 +12,7 @@
                 highlight-current-row
                 style="width: 100%">
                     <el-table-column
-                        type="deliveryPerson"
+                        property="deliveryPerson"
                         label="收货人"
                         width="120"
                     />

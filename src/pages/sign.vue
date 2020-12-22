@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 export default {
   data() {
     return {
@@ -50,16 +51,30 @@ export default {
         type: ''
       },
       isSuccess: true,
-      isLoading: false
+      isLoading: false,
+      inviter_code:''
     };
   },
   created() {
-    console.log(this.$store.getters.token);
+    if(this.$route.query.inviter_code){
+      this.inviter_code =  this.$route.query.inviter_code
+    }else{
+      if(Cookies.get('inviter_code') != undefined)
+        this.inviter_code = Cookies.get('inviter_code')
+    }    
+    console.log(this.inviter_code)
+    // console.log(this.$route.query.inviter_code)
   },
   methods:{
     handleSign(){
       this.isLoading = true
-      this.$store.dispatch("user/register", this.loginForm)
+      let reqData = {...this.loginForm}
+      if(this.inviter_code){
+        reqData = {...reqData, inviterCode: this.inviter_code}
+        console.log(reqData)
+        // return false
+      }
+      this.$store.dispatch("user/register", reqData)
         .then(() => {
           this.$message({
             message: '注册成功！',

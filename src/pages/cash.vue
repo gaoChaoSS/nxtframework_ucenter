@@ -21,7 +21,7 @@
             </div>
             <div class="item">
                 <el-input class="input" v-model="from.amount" style="width:300px"></el-input>
-                <Button>全部提现</Button>
+                <Button @click.native="handleAll">全部提现</Button>
             </div>
         </Card>
         <Card title="验证码">
@@ -43,7 +43,7 @@
             <p>1.提现金额须大于 1 元。</p>
             <p>2.提现审核一般3 - 5个工作日到账。</p>
         </Card>
-        <Button style="margin-top:20px" @click="handleCash">立即支付</Button>
+        <Button style="margin-top:20px" @click.native="handleCash">立即提现</Button>
   </div>
 </template>
 
@@ -87,14 +87,23 @@ export default {
         })
     },
     created(){
-        this.$store.dispatch('balance/detail')
+        this.$store.dispatch('balance/detail')        
     },
     methods:{
         handleCash() {
             this.$store.dispatch('withdraw/create', {...this.from})
+                .then(() => {
+                    this.$message({
+                        message: '提现成功！',
+                        type: 'success'
+                    });
+                })
         },
         handleCode() {
             this.$store.dispatch('withdraw/code', {verifyCodeType: this.from.verifyCodeType})
+        },
+        handleAll() {
+            this.from.amount = this.balanceTotal
         },
         changePayType(value,type){
             console.log(value)

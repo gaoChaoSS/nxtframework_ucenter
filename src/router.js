@@ -15,7 +15,7 @@ const routes = [
   {
     path: '/login', component: Login
   },{
-    path: '/sign', component: Sign
+    path: '/sign', component: Sign,props: true
   },{
     path: '/reset', component: Reset
   },{

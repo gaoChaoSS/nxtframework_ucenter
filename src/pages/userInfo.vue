@@ -24,7 +24,7 @@
                 </div>
                 <div class="item">
                     <p class="title">手机:</p>
-                    <p class="content" v-if="phone!=''">{{phone}}</p>
+                    <p class="content" v-if="phone">{{phone}}</p>
                     <p class="content" v-else>无 <a style="text-decoration: underline;color: #014785;margin-left: 20px;" @click="dialogVisible.phone = true">添加</a></p>
                 </div>
             </div>
@@ -85,7 +85,7 @@
             </div>
             <span slot="footer" class="dialog-footer">
                 <Button type="primary" @click.native="handlePwdReset"   style="margin-right:10px;">确 定</Button>
-                <Button @click.native="dialogVisible.pwd = false" solid>取 消</Button>
+                <Button @click.native="dialogVisible.pwd = false; pwd.oldPwd=''; pwd.newPwd=''" solid>取 消</Button>
             </span>
         </el-dialog>
         <el-dialog
@@ -287,7 +287,9 @@ export default {
         },
         handleEmailMove(){            
             this.$store.dispatch('user/email_move',{verifyCode: this.pwdFrom.removecode})
-            
+                .then(() => {
+                    this.$store.commit('user/SET_EMAIL', '')
+                })            
         },
         handleEmailVerifyCode() {
             this.$store.dispatch('user/verify_code',{email: this.pwdFrom.newEmail})
@@ -295,6 +297,7 @@ export default {
         handelEmailUpdate() {
             this.$store.dispatch('user/email_update',{email: this.pwdFrom.newEmail,verifyCode: this.pwdFrom.code})
                 .then(() => {
+                    this.$store.commit('user/SET_EMAIL', this.pwdFrom.newEmail)
                     this.pwdFrom.newEmail= ''
                     this.pwdfrom.code = ''
                     this.pwdfrom.removecode = ''
@@ -307,6 +310,9 @@ export default {
         },
         handlePhoneMove(){
             this.$store.dispatch('user/phone_remove',{verifyCode: this.phoneFrom.removecode})
+                .then(() => {
+                    this.$store.commit('user/SET_PHONE', '')
+                })
         },
         handlePhoneVerifyCode() {
             this.$store.dispatch('user/phone_code',{phone: this.phoneFrom.newPhone})
@@ -314,6 +320,8 @@ export default {
         handelPhoneUpdate(){
             this.$store.dispatch('user/phone_update',{phone: this.phoneFrom.newPhone,verifyCode: this.phoneFrom.code})
                 .then(() => {
+                    this.$store.commit('user/SET_PHONE', this.phoneFrom.newPhone)
+                    // this.phone = this.phoneFrom.newPhone
                     this.phoneFrom.code = ''
                     this.phoneFrom.newPhone = ''
                     this.phoneFrom.removecode = ''

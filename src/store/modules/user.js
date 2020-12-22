@@ -57,6 +57,12 @@ const mutations = {
   SET_INVITED_LISS: (state, data) => {
     state.invited_list =  data
   },
+  SET_EMAIL: (state, data) => {
+    state.email = data
+  },
+  SET_PHONE: (state, data) => {
+    state.phone =  data
+  }
 }
 
 const actions = {
@@ -79,9 +85,8 @@ const actions = {
     })
   },
   register({ state }, userInfo) {
-    const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      register({ username: username.trim(), password: password }).then(() => {
+      register({ ...userInfo }).then(() => {
         console.log(state)
         resolve()
       }).catch(error => {
