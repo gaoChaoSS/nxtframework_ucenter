@@ -58,6 +58,7 @@ export default {
   created() {
     if(this.$route.query.inviter_code){
       this.inviter_code =  this.$route.query.inviter_code
+      Cookies.set('inviter_code', this.inviter_code,{ expires:100000 })
     }else{
       if(Cookies.get('inviter_code') != undefined)
         this.inviter_code = Cookies.get('inviter_code')
