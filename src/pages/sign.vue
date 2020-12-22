@@ -63,6 +63,7 @@ export default {
         this.inviter_code = Cookies.get('inviter_code')
     }    
     console.log(this.inviter_code)
+    
     // console.log(this.$route.query.inviter_code)
   },
   methods:{
@@ -80,7 +81,7 @@ export default {
             message: '注册成功！',
             type: 'success'
           });
-
+          Cookies.set('inviter_code', this.inviter_code,{ expires:100000})
           this.isLoading = false
           this.isSuccess = false
           // this.$router.push({ path: '/'})

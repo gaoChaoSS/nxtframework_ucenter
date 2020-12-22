@@ -52,6 +52,7 @@ import Card from '@/components/card'
 import Button from '@/components/button'
 import { mapState }  from 'vuex'
 export default {
+    inject:['reload'],
     data(){
         return {
             moneyData:[
@@ -94,9 +95,10 @@ export default {
             this.$store.dispatch('withdraw/create', {...this.from})
                 .then(() => {
                     this.$message({
-                        message: '提现成功！',
+                        message: '已提交提现申请',
                         type: 'success'
                     });
+                    this.reload()
                 })
         },
         handleCode() {

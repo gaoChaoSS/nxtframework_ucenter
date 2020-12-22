@@ -299,8 +299,9 @@ export default {
                 .then(() => {
                     this.$store.commit('user/SET_EMAIL', this.pwdFrom.newEmail)
                     this.pwdFrom.newEmail= ''
-                    this.pwdfrom.code = ''
-                    this.pwdfrom.removecode = ''
+                    this.pwdFrom.code = ''
+                    this.pwdFrom.removecode = ''
+                    this.dialogVisible.email = false
                     this.dialogVisible.email = false
                 })  
         },

@@ -19,10 +19,10 @@
                 <p class="product-name">{{item.productName}}</p>                
                 <p class="att" v-for="(arrItem, arrIndex) in item.productSku" :key="arrIndex">{{arrItem.skuKeyName}}:{{arrItem.skuValueName}}</p>
                 <p class="att">x{{item.quantity}}</p>
-                <p class="att">￥{{item.productPrice}}</p>
+                <p class="att">￥{{item.productPriceDeal}}</p>
             </div>
             <div class="message-back" >
-                <div class="chat-back" v-if="item.reviewsItem">
+                <div class="chat-back" >
                     <img class="user-img" :src="item.reviewsItem.avatar" alt="">
                     <div class="chat-info">
                         <p>{{item.reviewsItem.date}}</p>
@@ -32,7 +32,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="col" v-if="!item.reviewsItem"> 
+                <div v-for="(chart, CIndex) in item.reviewsItem.replyList" :key="CIndex">
+                    <div class="chat-back" :class="{'right':chart.originType}">
+                        <img class="user-img" :src="chart.avatar" alt="">
+                        <div class="chat-info">
+                            <p>{{chart.date}}</p>
+                            <p>{{chart.content}}</p>
+                            <div class="img-group">
+                                <img class="chat-img" :src="pic" alt="" v-for="(pic, picIndex) in chart.picUrlList" :key="picIndex">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col"> 
                     <div class="row">
                         <el-input type="textarea" v-model="desc[index]"  :rows="6" resize="none" style="width:700px; "></el-input>
                     </div>
@@ -68,6 +80,7 @@ import Button from '@/components/button.vue'
 import {  mapState} from 'vuex';
 import { uploadPic } from '@/api/refund'
 export default {
+    inject:['reload'],
     data(){
         return {
             loginForm:{
@@ -189,6 +202,8 @@ export default {
                 content: this.desc[item],
                 orderFormProductId: value.id,
                 imageIdList: value.reasonImageListId
+            }).then(() => {
+                this.reload()
             })
         }
     },
@@ -530,5 +545,16 @@ p{
     justify-content: center;
     align-items: center;
     opacity: 0.5;
+}
+.chat-back.right{
+    display: flex;
+    float: right;
+    /* justify-content: stretch; */
+    /* align-items: center; */
+    flex-direction: row-reverse;
+}
+.chat-back.right>.user-img{
+    margin-right: 0px;
+    margin-left: 20px;
 }
 </style>

@@ -4,7 +4,7 @@
         :token="token"
         :countAll = "countAll"
       />
-      <el-main><router-view /></el-main>
+      <el-main><router-view v-if="isRouterAlive" /></el-main>
       <Footer />
     </el-container>
 </template>
@@ -15,6 +15,16 @@ import Footer from './layout/footer'
 import { mapGetters, mapState } from 'vuex'
 export default {
   name: 'App',
+  provide () {
+    return {
+      reload: this.reload
+    }
+  },
+  data() {
+    return {
+      isRouterAlive: true
+    }
+  },
   components:{
     Header, 
     Footer
@@ -27,6 +37,12 @@ export default {
       countAll: state => state.cart.countAll
     })
   },
+  methods:{
+    reload () {
+      this.isRouterAlive = false
+      this.$nextTick(() => (this.isRouterAlive = true))
+   }  
+  }
 }
 </script>
 
