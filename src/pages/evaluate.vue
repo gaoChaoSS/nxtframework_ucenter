@@ -1,3 +1,4 @@
+/* eslint-disable vue/no-use-v-if-with-v-for */
 <template>
     <div class="address-page">
         <div class="flow-card">
@@ -22,7 +23,7 @@
                 <p class="att">￥{{item.productPriceDeal}}</p>
             </div>
             <div class="message-back" >
-                <div class="chat-back" >
+                <div class="chat-back" v-if="item.reviewsItem" >
                     <img class="user-img" :src="item.reviewsItem.avatar" alt="">
                     <div class="chat-info">
                         <p>{{item.reviewsItem.date}}</p>
@@ -32,18 +33,20 @@
                         </div>
                     </div>
                 </div>
-                <div v-for="(chart, CIndex) in item.reviewsItem.replyList" :key="CIndex">
-                    <div class="chat-back" :class="{'right':chart.originType}">
-                        <img class="user-img" :src="chart.avatar" alt="">
-                        <div class="chat-info">
-                            <p>{{chart.date}}</p>
-                            <p>{{chart.content}}</p>
-                            <div class="img-group">
-                                <img class="chat-img" :src="pic" alt="" v-for="(pic, picIndex) in chart.picUrlList" :key="picIndex">
+                <template v-if="item.reviewsItem">
+                    <div v-for="(chart, CIndex) in item.reviewsItem.replyList" :key="CIndex" >
+                        <div class="chat-back" :class="{'right':chart.originType}">
+                            <img class="user-img" :src="chart.avatar" alt="">
+                            <div class="chat-info">
+                                <p>{{chart.date}}</p>
+                                <p>{{chart.content}}</p>
+                                <div class="img-group">
+                                    <img class="chat-img" :src="pic" alt="" v-for="(pic, picIndex) in chart.picUrlList" :key="picIndex">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </template>
                 <div class="col"> 
                     <div class="row">
                         <el-input type="textarea" v-model="desc[index]"  :rows="6" resize="none" style="width:700px; "></el-input>
