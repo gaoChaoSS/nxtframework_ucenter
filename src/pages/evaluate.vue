@@ -29,7 +29,7 @@
                         <p>{{item.reviewsItem.date}}</p>
                         <p>{{item.reviewsItem.content}}</p>
                         <div class="img-group">
-                            <img class="chat-img" :src="pic" alt="" v-for="(pic, picIndex) in item.reviewsItem.picUrlList" :key="picIndex">
+                            <img class="chat-img" :src="pic" alt="" v-for="(pic, picIndex) in item.reviewsItem.picUrlList" :key="picIndex" @mouseenter="handleOpenImage(pic,$event)" @mouseleave="handleCleanImage(pic, $event)">
                         </div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                                 <p>{{chart.date}}</p>
                                 <p>{{chart.content}}</p>
                                 <div class="img-group">
-                                    <img class="chat-img" :src="pic" alt="" v-for="(pic, picIndex) in chart.picUrlList" :key="picIndex">
+                                    <img class="chat-img" :src="pic" alt="" v-for="(pic, picIndex) in chart.picUrlList" :key="picIndex" @mouseenter="handleOpenImage(pic,$event)" @mouseleave="handleCleanImage(pic, $event)">
                                 </div>
                             </div>
                         </div>
@@ -74,6 +74,9 @@
                 </div>
             </div>
         </div>
+        <img :src="openImageSrc" class="open-image" v-if="openImage" 
+            v-bind:style="{ top: openImageY + 'px', left: openImageX + 'px' }"
+        >
     </div>
 </template>
 
@@ -82,6 +85,7 @@ import Flow from  '@/components/flow.vue'
 import Button from '@/components/button.vue'
 import {  mapState} from 'vuex';
 import { uploadPic } from '@/api/refund'
+import _ from 'lodash'
 export default {
     inject:['reload'],
     data(){
@@ -143,7 +147,11 @@ export default {
                     active: false,
                     time:''
                 }
-            ]
+            ],
+            openImage: false,
+            openImageSrc:'',
+            openImageX:511,
+            openImageY:359
         }
     },
     components:{
@@ -162,6 +170,8 @@ export default {
     },
     created() {
         this.LoadData()
+        this.handleOpenImage =  _.debounce(this.handleOpenImage, 500)
+        this.handleCleanImage =  _.debounce(this.handleCleanImage, 200)
     },
     
     mounted(){
@@ -208,6 +218,18 @@ export default {
             }).then(() => {
                 this.reload()
             })
+        },
+        handleOpenImage(image,event){
+            this.openImage = true
+            this.openImageSrc = image
+            this.openImageY = event.y
+            this.openImageX = event.x
+            console.log(event)
+        },
+        handleCleanImage(image, event){
+            this.openImage = false
+            this.openImageSrc = ''
+            console.log(event)
         }
     },
 }
@@ -559,5 +581,12 @@ p{
 .chat-back.right>.user-img{
     margin-right: 0px;
     margin-left: 20px;
+}
+.open-image{
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    top:0px;
+    left:0px;
 }
 </style>
